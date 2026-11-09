@@ -75,6 +75,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 .btn:hover { background: var(--primary-dark); }
 .btn-gold { background: var(--accent); color: #fff; }
 .btn-secondary { background: #7f8c8d; }
+.btn-danger { background: #e74c3c; }
 
 .badge-tag {
   display: inline-flex; align-items: center; gap: 5px; background: #fff8e1; color: #493b16;
@@ -90,6 +91,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 
 .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 15px; }
 .gallery-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; text-align: center; }
+.gallery-card img { width: 100%; height: 160px; object-fit: cover; }
 .gallery-card p { padding: 10px; margin: 0; font-size: 0.9rem; font-weight: bold; }
 
 .certificate-box {
@@ -116,7 +118,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 <nav class="no-print">
   <button class="active" onclick="switchTab('home-page', this)">🏡 الرئيسة</button>
   <button onclick="switchTab('calc-page', this)">🧮 حاسبة البصمة البيئية</button>
-  <button onclick="switchTab('action-page', this)">🌱 المبادرة الميدانية</button>
+  <button onclick="switchTab('action-page', this)">🌱 المبادرة والتقارير</button>
   <button onclick="switchTab('gallery-page', this)">📸 معرض الابتكارات</button>
   <button onclick="switchTab('learn-page', this)">📘 المسار التعليمي</button>
   <button onclick="switchTab('honor-page', this)">🏆 لوحة الشرف والأقسام</button>
@@ -141,7 +143,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
         </div>
       </div>
 
-      <!-- تسجيل بيانات التلميذ - قسم مفتوح -->
+      <!-- تسجيل بيانات التلميذ -->
       <div style="margin-top:15px; background:rgba(0,0,0,0.03); padding:15px; border-radius:10px;" class="no-print">
         <strong>تسجيل بيانات التلميذ(ة):</strong>
         <div style="display:flex; gap:10px; margin-top:8px; flex-wrap:wrap;">
@@ -152,7 +154,15 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       </div>
     </div>
 
-    <!-- بطاقة هل تعلم البيئية (جديد) -->
+    <!-- ملخصات نشاط الأستاذ الأسبوعية (جديد) -->
+    <div class="card" style="border: 2px dashed var(--primary); background: rgba(27, 122, 78, 0.03);">
+      <h3>📢 ملخصات وتوجيهات أستاذ النادي (الأستاذ جلال ذويبي)</h3>
+      <div id="weekly-summaries-container">
+        <p style="color: #666;">جاري تحميل أحدث ملخصات وتوجيهات الأسبوع...</p>
+      </div>
+    </div>
+
+    <!-- بطاقة هل تعلم البيئية -->
     <div class="card" style="background: linear-gradient(135deg, rgba(40,167,69,0.08), rgba(243,156,18,0.08)); border: 1px solid var(--primary-light);">
       <h3>💡 هل تعلم؟ (ومضات علوم الحياة والأرض)</h3>
       <p id="eco-tip-text" style="font-size: 1.05rem; font-weight: bold; color: var(--primary-dark);">جاري تحميل المعلومة البيئية...</p>
@@ -168,15 +178,6 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
         <button class="btn" onclick="askEcoAssistant()">استشارة المساعد الذكي</button>
       </div>
       <div id="ai-reply" style="margin-top:15px; display:none; background:rgba(27, 122, 78, 0.08); border-right: 4px solid var(--primary); padding:15px; border-radius:8px;"></div>
-    </div>
-
-    <h3>المحاور الـ 5 للمشاريع المستدامة:</h3>
-    <div class="grid-5">
-      <div class="axis-box">♻️<br><strong>الفرز والرسكلة</strong></div>
-      <div class="axis-box">☀️💧<br><strong>الطاقة والماء</strong></div>
-      <div class="axis-box">🌳<br><strong>المساحات الخضراء</strong></div>
-      <div class="axis-box">🎨<br><strong>الجمالية الفنية</strong></div>
-      <div class="axis-box">💻<br><strong>التحول الرقمي</strong></div>
     </div>
   </section>
 
@@ -221,16 +222,16 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
     </div>
   </section>
 
-  <!-- التحديات والمساهمة الميدانية -->
+  <!-- التحديات والمساهمة الميدانية مع رفع الصور والتقارير -->
   <section id="action-page" class="page">
     <div class="card">
       <h2>🚀 التحديات والمبادرات الميدانية (من التعلم إلى الفعل)</h2>
-      <p>اختر تحدياً بيئياً وقم بتنفيذه داخل المدرسة أو القسم، ثم وثق مبادرتك لتصل إلى الأستاذ جلال:</p>
+      <p>اختر تحدياً بيئياً، نفذه ميدانياً، وثق عملك بصورة وتقرير بحثي!</p>
       <div class="grid-3" id="challenges-container"></div>
     </div>
 
     <div class="card">
-      <h3>📝 إرسال توثيق مبادرة عمليّة</h3>
+      <h3>📝 إرسال مبادرة ميدانية، صورة، أو تقرير/بحث</h3>
       <select id="action-axis" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; margin-bottom:10px;">
         <option value="إدارة وتثمين النفايات والرسكلة">♻️ إدارة وتثمين النفايات والرسكلة</option>
         <option value="ترشيد استهلاك الطاقة والماء">💧 ترشيد استهلاك الطاقة والماء</option>
@@ -238,22 +239,33 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
         <option value="تحسين البيئة الفنية والجمالية">🎨 تحسين البيئة الفنية والجمالية</option>
         <option value="التحول الرقمي والتكنولوجيا الخضراء">💻 التحول الرقمي والتكنولوجيا الخضراء</option>
       </select>
-      <textarea id="action-description" placeholder="اكتب تفاصيل مبادرتك الميدانية هنا (مثال: قمنا بفرز الأوراق بقسم 8 أساسي 2)..." style="width:100%; height:90px; padding:10px; border-radius:8px; border:1px solid #ccc; margin-bottom:10px;"></textarea>
-      <button class="btn" onclick="submitFieldAction()">إرسال المبادرة للأستاذ (+20 نقطة)</button>
+      
+      <textarea id="action-description" placeholder="اكتب تفاصيل المبادرة أو التقرير البيئي هنا..." style="width:100%; height:80px; padding:10px; border-radius:8px; border:1px solid #ccc; margin-bottom:10px;"></textarea>
+      
+      <div style="display:flex; gap:15px; flex-wrap:wrap; margin-bottom:12px;">
+        <div style="flex:1; min-width:220px;">
+          <label style="display:block; font-weight:bold; margin-bottom:5px;">📸 صورة النشاط (اختياري):</label>
+          <input type="file" id="action-image" accept="image/*" style="padding:6px; border:1px solid #ccc; border-radius:6px; width:100%; background:#fafafa;">
+        </div>
+        <div style="flex:1; min-width:220px;">
+          <label style="display:block; font-weight:bold; margin-bottom:5px;">📁 ملف التقرير أو البحث (PDF أو نص):</label>
+          <input type="file" id="action-file" accept=".pdf,.doc,.docx,.txt" style="padding:6px; border:1px solid #ccc; border-radius:6px; width:100%; background:#fafafa;">
+        </div>
+      </div>
+
+      <button class="btn" onclick="submitFieldAction()">إرسال المبادرة والملفات للأستاذ (+20 نقطة)</button>
       <p id="action-msg" style="color:var(--primary); font-weight:bold; margin-top:10px;"></p>
     </div>
   </section>
 
-  <!-- معرض الابتكارات الخضراء -->
+  <!-- معرض الابتكارات الخضراء (يعرض الموافق عليها فقط) -->
   <section id="gallery-page" class="page">
     <div class="card">
       <h2>📸 معرض الابتكارات والمشاريع الخضراء بالإعدادية</h2>
-      <p>استعرض نماذج المبادرات الميدانية التي ينفذها نوادي وتلاميذ المدرسة الإعدادية بفائض:</p>
-      <div class="gallery-grid">
-        <div class="gallery-card"><div style="font-size:3.5rem; background:#e8f5e9; padding:20px;">🛞 🌺</div><p>إعادة تدوير العجلات المطاطية وتحويلها إلى أصص زينة</p></div>
-        <div class="gallery-card"><div style="font-size:3.5rem; background:#e3f2fd; padding:20px;">📦 ♻️</div><p>فرز النفايات الورقية داخل القاعات التدريسية</p></div>
-        <div class="gallery-card"><div style="font-size:3.5rem; background:#fff8e1; padding:20px;">☀️ 💡</div><p>نماذج طاقة شمسية مصغرة لترشيد الكهرباء</p></div>
-        <div class="gallery-card"><div style="font-size:3.5rem; background:#f3e5f5; padding:20px;">🎨 🌿</div><p>جداريات ورسومات بيئية لتجميل محيط الساحة</p></div>
+      <p>معرض المبادرات والأنشطة المعتمدة رسمياً من طرف الأستاذ جلال:</p>
+      <div class="gallery-grid" id="approved-gallery-grid">
+        <div class="gallery-card"><div style="font-size:3.5rem; background:#e8f5e9; padding:20px;">🛞 🌺</div><p>إعادة تدوير العجلات المطاطية</p></div>
+        <div class="gallery-card"><div style="font-size:3.5rem; background:#e3f2fd; padding:20px;">📦 ♻️</div><p>فرز النفايات الورقية بالقاعات</p></div>
       </div>
     </div>
   </section>
@@ -285,13 +297,11 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
         <thead>
           <tr>
             <th>القسم والتدرج</th>
-            <th>إجمالي المبادرات المنجزة</th>
+            <th>إجمالي المبادرات</th>
             <th>مجموع النقاط الحية</th>
           </tr>
         </thead>
-        <tbody id="class-ranking-body">
-          <!-- تحديث ديناميكي -->
-        </tbody>
+        <tbody id="class-ranking-body"></tbody>
       </table>
 
       <h3 style="margin-top:25px;">🥇 سجل المبادرين المتميزين:</h3>
@@ -333,28 +343,25 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
     </div>
   </section>
 
-  <!-- فضاء الأستاذ -->
+  <!-- فضاء الأستاذ المطور (لإضافة الملخصات ومراجعة وقبول المبادرات) -->
   <section id="teacher-page" class="page">
     <div class="card">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h2>🔒 لوحة متابعة الأستاذ جلال ذويبي</h2>
+        <h2>🔒 لوحة الإشراف والمتابعة للأستاذ جلال ذويبي</h2>
         <button class="btn btn-secondary" onclick="switchTab('home-page', document.querySelectorAll('nav button')[0])">خروج</button>
       </div>
-      
-      <div class="grid-3" style="margin:15px 0;">
-        <div style="background:rgba(13, 71, 161, 0.1); padding:15px; border-radius:10px; text-align:center;">
-          <h4>المبادرات الميدانية المسجلة</h4>
-          <span id="stat-actions" style="font-size:1.8rem; font-weight:bold; color:#1b5e20;">0</span>
-        </div>
+
+      <!-- قسم نشر الملخصات الأسبوعية للأستاذ -->
+      <div style="background: rgba(40,167,69,0.06); padding: 15px; border-radius: 10px; margin: 20px 0;">
+        <h3>✍️ نشر ملخص أو توجيه جديد لنشاط النادي</h3>
+        <input type="text" id="teacher-summary-title" placeholder="عنوان الملخص أو الأسبوع (مثال: ملخص نشاط الأسبوع الأول: حملة الفرز)" style="width:100%; padding:8px; margin-bottom:8px; border-radius:6px; border:1px solid #ccc;">
+        <textarea id="teacher-summary-desc" placeholder="اكتب تفاصيل الملخص أو التوجيه هنا ليظهر في الصفحة الرئيسية..." style="width:100%; height:70px; padding:8px; margin-bottom:8px; border-radius:6px; border:1px solid #ccc;"></textarea>
+        <button class="btn btn-gold" onclick="publishTeacherSummary()">نشر الملخص على الصفحة الرئيسية</button>
       </div>
 
-      <h3>📥 سجل التحديات والمبادرات الميدانية المقدمة من التلاميذ:</h3>
-      <div id="teacher-actions-list" style="background:var(--card-bg); border:1px solid var(--border-color); padding:15px; border-radius:8px;">
-        لا توجد مبادرات ميدانية مسجلة بعد.
-      </div>
-
-      <div style="margin-top:20px;" class="no-print">
-        <button class="btn btn-gold" onclick="exportDataReport()">💾 تصدير التقرير النهائي (بيانات المشاركة والنتائج)</button>
+      <h3>📥 مراجعة وموافقة مبادرات وتجارب التلاميذ:</h3>
+      <div id="teacher-pending-list" style="background:var(--card-bg); border:1px solid var(--border-color); padding:15px; border-radius:8px;">
+        لا توجد مبادرات قيد الانتظار حالياً.
       </div>
     </div>
   </section>
@@ -364,15 +371,16 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 <div id="teacherModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; justify-content:center; align-items:center;">
   <div style="background:var(--card-bg); padding:25px; border-radius:12px; max-width:350px; width:90%; text-align:center; border:1px solid var(--border-color);">
     <h3>فضاء الأستاذ جلال ذويبي</h3>
-    <input type="password" id="teacherPass" placeholder="كلمة السر (الافتراضية: 1234)" style="width:100%; padding:10px; margin:10px 0; border-radius:6px; border:1px solid #ccc;">
+    <input type="password" id="teacherPass" placeholder="كلمة السر (1234 أو فائض)" style="width:100%; padding:10px; margin:10px 0; border-radius:6px; border:1px solid #ccc;">
     <button class="btn" onclick="loginTeacher()">دخول</button>
     <button class="btn btn-secondary" onclick="closeTeacherModal()">إلغاء</button>
   </div>
 </div>
 
 <script>
-let studentData = JSON.parse(localStorage.getItem('studentData_v5') || '{"name":"تلميذ مشارك","class":"7 أساسي","points":0,"badges":["🌱 صديق البيئة"]}');
-let fieldActions = JSON.parse(localStorage.getItem('fieldActions_v5') || '[]');
+let studentData = JSON.parse(localStorage.getItem('studentData_v7') || '{"name":"تلميذ مشارك","class":"7 أساسي","points":0,"badges":["🌱 صديق البيئة"]}');
+let fieldActions = JSON.parse(localStorage.getItem('fieldActions_v7') || '[]');
+let teacherSummaries = JSON.parse(localStorage.getItem('teacherSummaries_v7') || '[{"title":"إطلاق المشروع البيئي بالإعدادية","desc":"مرحباً بكافة التلاميذ في منصة البصمة البيئية. ننتظر مبادراتكم الميدانية في فرز النفايات والعناية بالحديقة المدرسية.","date":"09/11/2026"}]');
 
 const ecoTips = [
   "💡 هل تعلم؟ تتطلب زجاجة بلاستيكية واحدة في الطبيعة أكثر من 450 سنة لتتحلل كلياً!",
@@ -417,6 +425,8 @@ function updateUI() {
 
   renderLeaderboard();
   renderClassRanking();
+  renderApprovedGallery();
+  renderTeacherSummariesOnHome();
 }
 
 function saveStudentProfile() {
@@ -425,7 +435,7 @@ function saveStudentProfile() {
   if(n && c) {
     studentData.name = n;
     studentData.class = c;
-    localStorage.setItem('studentData_v5', JSON.stringify(studentData));
+    localStorage.setItem('studentData_v7', JSON.stringify(studentData));
     updateUI();
     alert("تم حفظ بياناتك بنجاح في المنصة الوطنية!");
   } else {
@@ -447,8 +457,8 @@ function askEcoAssistant() {
 
   setTimeout(() => {
     let lowerQ = queryInput.toLowerCase();
-    let scientificAnalysis = "";
-    let fieldAction = "";
+    let scientificAnalysis = "🔬 <strong>التحليل العلمي البيئي:</strong> كل سلوك بشري يومي يخلق بصمة بيئية تؤثر مباشرة على استدامة الموارد للأجيال القادمة.";
+    let fieldAction = "💡 <strong>الحل الميداني المقترح:</strong> حول هذا التساؤل إلى مشروع مبادرة ميدانية صغيرة داخل قسمك وقم بتوثيقها في تبويب «المبادرة والتقارير»!";
 
     if(lowerQ.includes("بلاستيك") || lowerQ.includes("أكياس") || lowerQ.includes("نفايات")) {
       scientificAnalysis = "🔬 <strong>التحليل العلمي:</strong> البلاستيك مادة غير قابلة للتحلل الحيوي بسهولة، مما يتسبب في تلوث التربة وتدمير السلاسل الغذائية.";
@@ -457,10 +467,6 @@ function askEcoAssistant() {
     else if(lowerQ.includes("ماء") || lowerQ.includes("سقي") || lowerQ.includes("ترشيد")) {
       scientificAnalysis = "🔬 <strong>التحليل العلمي:</strong> الماء عذب ونادر، وهدره يهدد الموارد المائية الحيوية بالبلاد التونسية والتوازن البيئي.";
       fieldAction = "💡 <strong>الحل الميداني المقترح:</strong> قم بتركيب نظام تنقيط بسيط بعبوات بلاستيكية مثقوبة في حديقة الإعدادية.";
-    } 
-    else {
-      scientificAnalysis = "🔬 <strong>التحليل العلمي البيئي:</strong> كل سلوك بشري يومي يخلق بصمة بيئية تؤثر مباشرة على استدامة الموارد للأجيال القادمة.";
-      fieldAction = "💡 <strong>الحل الميداني المقترح:</strong> حول هذا التساؤل إلى مشروع مبادرة ميدانية صغيرة داخل قسمك وقم بتوثيقها في تبويب «المبادرة الميدانية»!";
     }
 
     replyBox.innerHTML = `
@@ -476,7 +482,7 @@ function addPoints(pts, badgeName) {
   if(badgeName && !studentData.badges.includes(badgeName)) {
     studentData.badges.push(badgeName);
   }
-  localStorage.setItem('studentData_v5', JSON.stringify(studentData));
+  localStorage.setItem('studentData_v7', JSON.stringify(studentData));
   updateUI();
 }
 
@@ -522,20 +528,107 @@ function acceptChallenge(badge) {
 function submitFieldAction() {
   let axis = document.getElementById('action-axis').value;
   let desc = document.getElementById('action-description').value.trim();
-  if(!desc) return alert("يرجى كتابة تفاصيل المبادرة أولاً!");
+  let imageInput = document.getElementById('action-image');
+  let fileInput = document.getElementById('action-file');
 
-  fieldActions.push({
+  if(!desc) {
+    alert("يرجى كتابة تفاصيل المبادرة أو التقرير أولاً!");
+    return;
+  }
+
+  let actionObj = {
+    id: Date.now(),
     student: studentData.name,
     class: studentData.class,
     axis: axis,
     desc: desc,
+    image: null,
+    fileName: null,
+    approved: false, // بانتظار موافقة الأستاذ
+    date: new Date().toLocaleDateString('ar-TN')
+  };
+
+  let readerImg = new FileReader();
+  let readerFile = new FileReader();
+
+  if(imageInput.files && imageInput.files[0]) {
+    readerImg.onload = function(e) {
+      actionObj.image = e.target.result;
+      processFile(actionObj, fileInput);
+    };
+    readerImg.readAsDataURL(imageInput.files[0]);
+  } else {
+    processFile(actionObj, fileInput);
+  }
+}
+
+function processFile(actionObj, fileInput) {
+  if(fileInput.files && fileInput.files[0]) {
+    actionObj.fileName = fileInput.files[0].name;
+  }
+  
+  fieldActions.push(actionObj);
+  localStorage.setItem('fieldActions_v7', JSON.stringify(fieldActions));
+  addPoints(20, "سفير المبادرة والتقارير الميدانية");
+
+  document.getElementById('action-description').value = "";
+  document.getElementById('action-image').value = "";
+  document.getElementById('action-file').value = "";
+  document.getElementById('action-msg').innerText = "تم إرسال مبادرتك وتقريك بنجاح! وهي قيد المراجعة من طرف الأستاذ جلال لنشرها (+20 نقطة).";
+  updateUI();
+}
+
+function renderTeacherSummariesOnHome() {
+  let container = document.getElementById('weekly-summaries-container');
+  if(teacherSummaries.length === 0) {
+    container.innerHTML = "<p>لا توجد ملخصات منشورة حالياً.</p>";
+    return;
+  }
+  container.innerHTML = teacherSummaries.map(s => `
+    <div style="background:var(--card-bg); padding:12px; border-radius:8px; margin-bottom:10px; border-right:4px solid var(--primary);">
+      <h4 style="margin:0 0 5px 0; color:var(--primary-dark);">${s.title}</h4>
+      <p style="margin:0 0 5px 0;">${s.desc}</p>
+      <small style="color:#7f8c8d;">تاريخ النشر: ${s.date}</small>
+    </div>
+  `).join('');
+}
+
+function publishTeacherSummary() {
+  let title = document.getElementById('teacher-summary-title').value.trim();
+  let desc = document.getElementById('teacher-summary-desc').value.trim();
+  if(!title || !desc) {
+    alert("يرجى إدخال عنوان ووصف الملخص!");
+    return;
+  }
+
+  teacherSummaries.unshift({
+    title: title,
+    desc: desc,
     date: new Date().toLocaleDateString('ar-TN')
   });
 
-  localStorage.setItem('fieldActions_v5', JSON.stringify(fieldActions));
-  addPoints(20, "سفير المبادرة الميدانية التونسية");
-  document.getElementById('action-description').value = "";
-  document.getElementById('action-msg').innerText = "تم تسجيل وإرسال مبادرتك الميدانية بنجاح للأستاذ جلال ذويبي (+20 نقطة).";
+  localStorage.setItem('teacherSummaries_v7', JSON.stringify(teacherSummaries));
+  document.getElementById('teacher-summary-title').value = "";
+  document.getElementById('teacher-summary-desc').value = "";
+  alert("تم نشر الملخص بنجاح على الصفحة الرئيسية!");
+  updateUI();
+}
+
+function renderApprovedGallery() {
+  let grid = document.getElementById('approved-gallery-grid');
+  let defaultCards = `
+    <div class="gallery-card"><div style="font-size:3.5rem; background:#e8f5e9; padding:20px;">🛞 🌺</div><p>إعادة تدوير العجلات المطاطية</p></div>
+    <div class="gallery-card"><div style="font-size:3.5rem; background:#e3f2fd; padding:20px;">📦 ♻️</div><p>فرز النفايات الورقية بالقاعات</p></div>
+  `;
+
+  let approvedCards = fieldActions.filter(a => a.approved && a.image).map(a => `
+    <div class="gallery-card">
+      <img src="${a.image}" alt="صورة معتمدة">
+      <p>${a.desc.substring(0, 30)}...<br><small style="color:var(--primary);">${a.student} (${a.class})</small></p>
+    </div>
+  `).join('');
+
+  grid.innerHTML = approvedCards + defaultCards;
 }
 
 function stepLesson(d) {
@@ -563,7 +656,6 @@ function renderLeaderboard() {
 
 function renderClassRanking() {
   let tbody = document.getElementById('class-ranking-body');
-  // حساب افتراضي تفاعلي يعتمد على تسجيل التلاميذ
   let cls = studentData.class;
   let pts = studentData.points;
   tbody.innerHTML = `
@@ -586,7 +678,7 @@ function closeTeacherModal() { document.getElementById('teacherModal').style.dis
 
 function loginTeacher() {
   let p = document.getElementById('teacherPass').value;
-  if(p === "1234" || p === "فائض") {
+  if(p === "جلالsvt" || p ==="جلالsvt") {
     closeTeacherModal();
     renderTeacherView();
     switchTab('teacher-page', document.querySelectorAll('nav button')[7]);
@@ -596,28 +688,45 @@ function loginTeacher() {
 }
 
 function renderTeacherView() {
-  document.getElementById('stat-actions').innerText = fieldActions.length;
-  let list = document.getElementById('teacher-actions-list');
+  let list = document.getElementById('teacher-pending-list');
   if(fieldActions.length === 0) {
-    list.innerHTML = "لا توجد مبادرات ميدانية مسجلة بعد.";
-  } else {
-    list.innerHTML = fieldActions.map(a => `
-      <div style="border-bottom:1px solid var(--border-color); padding:10px 0;">
+    list.innerHTML = "لا توجد مبادرات أو تقارير مرسلة بعد.";
+    return;
+  }
+  list.innerHTML = fieldActions.map(a => `
+    <div style="border-bottom:1px solid var(--border-color); padding:12px 0; display:flex; gap:15px; align-items:center; flex-wrap:wrap;">
+      ${a.image ? `<img src="${a.image}" style="width:70px; height:70px; object-fit:cover; border-radius:6px; border:1px solid #ccc;">` : '<div style="width:70px; height:70px; background:#eee; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:1.2rem;">📄</div>'}
+      <div style="flex:1;">
         <strong>${a.student} (${a.class})</strong> - <span style="color:var(--primary);">${a.axis}</span><br>
-        <small>${a.desc} - <i>بتاريخ: ${a.date}</i></small>
+        <small>${a.desc}</small><br>
+        ${a.fileName ? `<small style="color:#d35400;">📁 ملف مرفق: ${a.fileName}</small><br>` : ''}
+        <small style="color:#7f8c8d;">تاريخ الإرسال: ${a.date} | الحالة: <strong>${a.approved ? '✅ معتمد ومنشور' : '⏳ قيد الانتظار'}</strong></small>
       </div>
-    `).join('');
+      <div>
+        ${!a.approved ? `<button class="btn" style="padding:5px 12px; font-size:0.8rem;" onclick="approveAction(${a.id})">موافقة ونشر</button>` : `<button class="btn btn-secondary" style="padding:5px 12px; font-size:0.8rem;" onclick="approveAction(${a.id})">إلغاء الاعتماد</button>`}
+        <button class="btn btn-danger" style="padding:5px 12px; font-size:0.8rem; margin-top:5px;" onclick="deleteAction(${a.id})">حذف</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function approveAction(id) {
+  let act = fieldActions.find(x => x.id === id);
+  if(act) {
+    act.approved = !act.approved;
+    localStorage.setItem('fieldActions_v7', JSON.stringify(fieldActions));
+    renderTeacherView();
+    updateUI();
   }
 }
 
-function exportDataReport() {
-  let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fieldActions, null, 2));
-  let downloadAnchor = document.createElement('a');
-  downloadAnchor.setAttribute("href", dataStr);
-  downloadAnchor.setAttribute("download", "eco_faidh_tunisia_full_report.json");
-  document.body.appendChild(downloadAnchor);
-  downloadAnchor.click();
-  downloadAnchor.remove();
+function deleteAction(id) {
+  if(confirm("هل أنت متأكد من حذف هذه المشاركة؟")) {
+    fieldActions = fieldActions.filter(x => x.id !== id);
+    localStorage.setItem('fieldActions_v7', JSON.stringify(fieldActions));
+    renderTeacherView();
+    updateUI();
+  }
 }
 
 nextEcoTip();

@@ -90,7 +90,6 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 
 .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 15px; }
 .gallery-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; text-align: center; }
-.gallery-card img { width: 100%; height: 150px; object-fit: cover; }
 .gallery-card p { padding: 10px; margin: 0; font-size: 0.9rem; font-weight: bold; }
 
 .certificate-box {
@@ -153,10 +152,17 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       </div>
     </div>
 
+    <!-- بطاقة هل تعلم البيئية (جديد) -->
+    <div class="card" style="background: linear-gradient(135deg, rgba(40,167,69,0.08), rgba(243,156,18,0.08)); border: 1px solid var(--primary-light);">
+      <h3>💡 هل تعلم؟ (ومضات علوم الحياة والأرض)</h3>
+      <p id="eco-tip-text" style="font-size: 1.05rem; font-weight: bold; color: var(--primary-dark);">جاري تحميل المعلومة البيئية...</p>
+      <button class="btn btn-secondary" style="padding: 5px 12px; font-size: 0.8rem;" onclick="nextEcoTip()">معلومة أخرى 🔄</button>
+    </div>
+
     <!-- مساعد البيئة الذكي المطور -->
     <div class="card">
       <h3>🤖 مساعد البيئة الذكي للإعدادية (خبير علوم الحياة والأرض)</h3>
-      <p>اكتب أي تساؤل بيئي (عن النفايات، المياه، الطاقة، الغراسات، أو التلوث) وسيقدم لك المساعد تحليلاً علمياً وحلاً ميدانياً:</p>
+      <p>اكتب أي تساؤل بيئي وسيقدم لك المساعد تحليلاً علمياً وحلاً ميدانياً:</p>
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
         <input type="text" id="ai-query" placeholder="مثال: كيف نقلل من استهلاك البلاستيك في الإعدادية؟" style="padding:10px; border-radius:8px; border:1px solid #ccc; flex:1; min-width:250px;">
         <button class="btn" onclick="askEcoAssistant()">استشارة المساعد الذكي</button>
@@ -178,7 +184,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
   <section id="calc-page" class="page">
     <div class="card">
       <h2>🧮 مرصد البصمة البيئية الشخصية للتلميذ</h2>
-      <p>أجب عن الأسئلة اليومية البسيطة التالية لاحتساب بصمتك البيئية واكتشاف كيف تساهم في حماية البيئة التونسية:</p>
+      <p>أجب عن الأسئلة اليومية البسيطة التالية لاحتساب بصمتك البيئية:</p>
       
       <div style="margin:15px 0;">
         <label><strong>1. كيف تتنقل يومياً إلى الإعدادية؟</strong></label><br>
@@ -219,13 +225,12 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
   <section id="action-page" class="page">
     <div class="card">
       <h2>🚀 التحديات والمبادرات الميدانية (من التعلم إلى الفعل)</h2>
-      <p>اختر تحدياً بيئياً وقم بتنفيذه داخل المدرسة أو القسم، ثم وثق مبادرتك لتصل إلى الأستاذ جلال وتكسب أوسمة ونقاطاً جديدة!</p>
+      <p>اختر تحدياً بيئياً وقم بتنفيذه داخل المدرسة أو القسم، ثم وثق مبادرتك لتصل إلى الأستاذ جلال:</p>
       <div class="grid-3" id="challenges-container"></div>
     </div>
 
     <div class="card">
       <h3>📝 إرسال توثيق مبادرة عمليّة</h3>
-      <p>قم بشرح ما قمت به ميدانياً (مثال: قمت بفرز الأوراق بقسمي / ساهمت في سقي حديقة المدرسة...):</p>
       <select id="action-axis" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; margin-bottom:10px;">
         <option value="إدارة وتثمين النفايات والرسكلة">♻️ إدارة وتثمين النفايات والرسكلة</option>
         <option value="ترشيد استهلاك الطاقة والماء">💧 ترشيد استهلاك الطاقة والماء</option>
@@ -233,7 +238,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
         <option value="تحسين البيئة الفنية والجمالية">🎨 تحسين البيئة الفنية والجمالية</option>
         <option value="التحول الرقمي والتكنولوجيا الخضراء">💻 التحول الرقمي والتكنولوجيا الخضراء</option>
       </select>
-      <textarea id="action-description" placeholder="اكتب تفاصيل مبادرتك الميدانية هنا..." style="width:100%; height:90px; padding:10px; border-radius:8px; border:1px solid #ccc; margin-bottom:10px;"></textarea>
+      <textarea id="action-description" placeholder="اكتب تفاصيل مبادرتك الميدانية هنا (مثال: قمنا بفرز الأوراق بقسم 8 أساسي 2)..." style="width:100%; height:90px; padding:10px; border-radius:8px; border:1px solid #ccc; margin-bottom:10px;"></textarea>
       <button class="btn" onclick="submitFieldAction()">إرسال المبادرة للأستاذ (+20 نقطة)</button>
       <p id="action-msg" style="color:var(--primary); font-weight:bold; margin-top:10px;"></p>
     </div>
@@ -245,22 +250,10 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       <h2>📸 معرض الابتكارات والمشاريع الخضراء بالإعدادية</h2>
       <p>استعرض نماذج المبادرات الميدانية التي ينفذها نوادي وتلاميذ المدرسة الإعدادية بفائض:</p>
       <div class="gallery-grid">
-        <div class="gallery-card">
-          <div style="font-size:3.5rem; background:#e8f5e9; padding:20px;">🛞 🌺</div>
-          <p>إعادة تدوير العجلات المطاطية وتحويلها إلى أصص زينة</p>
-        </div>
-        <div class="gallery-card">
-          <div style="font-size:3.5rem; background:#e3f2fd; padding:20px;">📦 ♻️</div>
-          <p>فرز النفايات الورقية داخل القاعات التدريسية</p>
-        </div>
-        <div class="gallery-card">
-          <div style="font-size:3.5rem; background:#fff8e1; padding:20px;">☀️ 💡</div>
-          <p>نماذج طاقة شمسية مصغرة لترشيد الكهرباء</p>
-        </div>
-        <div class="gallery-card">
-          <div style="font-size:3.5rem; background:#f3e5f5; padding:20px;">🎨 🌿</div>
-          <p>جداريات ورسومات بيئية لتجميل محيط الساحة</p>
-        </div>
+        <div class="gallery-card"><div style="font-size:3.5rem; background:#e8f5e9; padding:20px;">🛞 🌺</div><p>إعادة تدوير العجلات المطاطية وتحويلها إلى أصص زينة</p></div>
+        <div class="gallery-card"><div style="font-size:3.5rem; background:#e3f2fd; padding:20px;">📦 ♻️</div><p>فرز النفايات الورقية داخل القاعات التدريسية</p></div>
+        <div class="gallery-card"><div style="font-size:3.5rem; background:#fff8e1; padding:20px;">☀️ 💡</div><p>نماذج طاقة شمسية مصغرة لترشيد الكهرباء</p></div>
+        <div class="gallery-card"><div style="font-size:3.5rem; background:#f3e5f5; padding:20px;">🎨 🌿</div><p>جداريات ورسومات بيئية لتجميل محيط الساحة</p></div>
       </div>
     </div>
   </section>
@@ -292,14 +285,12 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
         <thead>
           <tr>
             <th>القسم والتدرج</th>
-            <th>إجمالي المبادرات الميدانية</th>
-            <th>مجموع النقاط</th>
+            <th>إجمالي المبادرات المنجزة</th>
+            <th>مجموع النقاط الحية</th>
           </tr>
         </thead>
-        <tbody>
-          <tr><td>7 أساسي (جميع الفروع)</td><td>5 مبادرات</td><td><strong>140 نقطة</strong></td></tr>
-          <tr><td>9 أساسي (جميع الفروع)</td><td>4 مبادرات</td><td><strong>110 نقاط</strong></td></tr>
-          <tr><td>8 أساسي (جميع الفروع)</td><td>2 مبادرات</td><td><strong>60 نقطة</strong></td></tr>
+        <tbody id="class-ranking-body">
+          <!-- تحديث ديناميكي -->
         </tbody>
       </table>
 
@@ -352,10 +343,6 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       
       <div class="grid-3" style="margin:15px 0;">
         <div style="background:rgba(13, 71, 161, 0.1); padding:15px; border-radius:10px; text-align:center;">
-          <h4>التلاميذ المسجلون</h4>
-          <span id="stat-students" style="font-size:1.8rem; font-weight:bold; color:#0d47a1;">0</span>
-        </div>
-        <div style="background:rgba(27, 94, 32, 0.1); padding:15px; border-radius:10px; text-align:center;">
           <h4>المبادرات الميدانية المسجلة</h4>
           <span id="stat-actions" style="font-size:1.8rem; font-weight:bold; color:#1b5e20;">0</span>
         </div>
@@ -384,8 +371,20 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 </div>
 
 <script>
-let studentData = JSON.parse(localStorage.getItem('studentData_v4') || '{"name":"تلميذ مشارك","class":"7 أساسي","points":0,"badges":["🌱 صديق البيئة"]}');
-let fieldActions = JSON.parse(localStorage.getItem('fieldActions_v4') || '[]');
+let studentData = JSON.parse(localStorage.getItem('studentData_v5') || '{"name":"تلميذ مشارك","class":"7 أساسي","points":0,"badges":["🌱 صديق البيئة"]}');
+let fieldActions = JSON.parse(localStorage.getItem('fieldActions_v5') || '[]');
+
+const ecoTips = [
+  "💡 هل تعلم؟ تتطلب زجاجة بلاستيكية واحدة في الطبيعة أكثر من 450 سنة لتتحلل كلياً!",
+  "💡 هل تعلم؟ فرز الأوراق المستعملة في الإعدادية ينقذ الأشجار ويقلل استهلاك طاقة الرسكلة بنسبة 60%!",
+  "💡 هل تعلم؟ قطرة ماء واحدة فاسدة تسربت كل ثانية تهدر أكثر من 10,000 لتر من الماء سنوياً!",
+  "💡 هل تعلم؟ الغطاء النباتي المدرسي يخفض درجة حرارة الساحة وينقي الهواء من الملوثات السامة."
+];
+let tipIdx = 0;
+function nextEcoTip() {
+  tipIdx = (tipIdx + 1) % ecoTips.length;
+  document.getElementById('eco-tip-text').innerText = ecoTips[tipIdx];
+}
 
 const defaultChallenges = [
   { id: 1, title: "♻️ فرز الأوراق والعلب بالقسم", desc: "خصص حاوية بصفك لجمع الأوراق وحفظها للرسكلة.", badge: "وسام الفرز الانتقائي" },
@@ -417,6 +416,7 @@ function updateUI() {
   badgesDiv.innerHTML = studentData.badges.map(b => `<span class="badge-tag">🏆 ${b}</span>`).join('');
 
   renderLeaderboard();
+  renderClassRanking();
 }
 
 function saveStudentProfile() {
@@ -425,7 +425,7 @@ function saveStudentProfile() {
   if(n && c) {
     studentData.name = n;
     studentData.class = c;
-    localStorage.setItem('studentData_v4', JSON.stringify(studentData));
+    localStorage.setItem('studentData_v5', JSON.stringify(studentData));
     updateUI();
     alert("تم حفظ بياناتك بنجاح في المنصة الوطنية!");
   } else {
@@ -433,9 +433,7 @@ function saveStudentProfile() {
   }
 }
 
-// المساعد الذكي المطور بإجابات علمية وميدانية مفصلة
 function askEcoAssistant() {
-  let q = document.getElementById('input-name').value.trim(); // optional check
   let queryInput = document.getElementById('ai-query').value.trim();
   let replyBox = document.getElementById('ai-reply');
   
@@ -453,24 +451,16 @@ function askEcoAssistant() {
     let fieldAction = "";
 
     if(lowerQ.includes("بلاستيك") || lowerQ.includes("أكياس") || lowerQ.includes("نفايات")) {
-      scientificAnalysis = "🔬 <strong>التحليل العلمي:</strong> البلاستيك مادة غير قابلة للتحلل الحيوي بسهولة (تتطلب مئات السنين)، مما يتسبب في تلوث التربة والمحيطات وتدمير السلاسل الغذائية الطبيعية.";
-      fieldAction = "💡 <strong>الحل الميداني المقترح:</strong> اقترح على زملائك في النادي البيئي تعويض الأكياس البلاستيكية بقماش أو قفافاص تقليدية، وتخصيص صندوق لجمع القوارير البلاستيكية وتحويلها لأصص زراعية.";
+      scientificAnalysis = "🔬 <strong>التحليل العلمي:</strong> البلاستيك مادة غير قابلة للتحلل الحيوي بسهولة، مما يتسبب في تلوث التربة وتدمير السلاسل الغذائية.";
+      fieldAction = "💡 <strong>الحل الميداني المقترح:</strong> اقترح على زملائك في النادي تعويض الأكياس بأخرى قماشية وتخصيص صندوق لجمع القوارير وتحويلها لأصص زراعية.";
     } 
     else if(lowerQ.includes("ماء") || lowerQ.includes("سقي") || lowerQ.includes("ترشيد")) {
-      scientificAnalysis = "🔬 <strong>التحليل العلمي:</strong> الماء عذب ونادر، وهدره يهدد الموارد المائية الحيوية بالبلاد التونسية، ويهدد التوازن البيئي للغطاء النباتي.";
-      fieldAction = "💡 <strong>الحل الميداني المقترح:</strong> قم بتركيب نظام تنقيط بسيط بعبوات بلاستيكية مثقوبة في حديقة الإعدادية، واحرص على توعية قسمك بغلق الصنابير بعد الاستعمال.";
-    } 
-    else if(lowerQ.includes("طاقة") || lowerQ.includes("كهرباء") || lowerQ.includes("شمس")) {
-      scientificAnalysis = "🔬 <strong>التحليل العلمي:</strong> استهلاك الطاقة التقليدية يعتمد على المحروقات ويساهم في الانبعاثات الكربونية وظاهرة الاحتباس الحراري العالمي.";
-      fieldAction = "💡 <strong>الحل الميداني المقترح:</strong> ادعُ إلى إطفاء أضواء قاعات الدرس عند مغادرتها، وصمم نموذجاً مصغراً لفرن أو لوحة شمسية مدرسية بسيطة للاستفادة من طاقة الشمس التونسية الوفيرة.";
-    } 
-    else if(lowerQ.includes("شجار") || lowerQ.includes("نبات") || lowerQ.includes("حديقة") || lowerQ.includes("غرس")) {
-      scientificAnalysis = "🔬 <strong>التحليل العلمي:</strong> النباتات والتشجير تمثل الرئة الخضراء للكرة الأرضية، حيث تمتص غاز ثاني أكسيد الكربون وتطلق الاكسجين وتمنع تصحر التربة.";
-      fieldAction = "💡 <strong>الحل الميداني المقترح:</strong> بادر بغرس شتلات مقاومة للجفاف (كالزيتون أو نباتات الزينة المحلية) في ساحة الإعدادية وتتبنى سقيها دورياً مع زملائك بالقسم.";
+      scientificAnalysis = "🔬 <strong>التحليل العلمي:</strong> الماء عذب ونادر، وهدره يهدد الموارد المائية الحيوية بالبلاد التونسية والتوازن البيئي.";
+      fieldAction = "💡 <strong>الحل الميداني المقترح:</strong> قم بتركيب نظام تنقيط بسيط بعبوات بلاستيكية مثقوبة في حديقة الإعدادية.";
     } 
     else {
-      scientificAnalysis = "🔬 <strong>التحليل العلمي البيئي:</strong> كل سلوك بشري يومي (استهلاكاً أو طاقة أو نفايات) يخلق بصمة بيئية تؤثر مباشرة على التوازن البيئي واستدامة الموارد للأجيال القادمة.";
-      fieldAction = "💡 <strong>الحل الميداني المقترح:</strong> حول هذا التساؤل إلى مشروع مبادرة ميدانية صغيرة داخل قسمك أو ناديك المدرسي، وقم بتوثيقها في تبويب «المبادرة الميدانية» لكسب النقاط والأوسمة!";
+      scientificAnalysis = "🔬 <strong>التحليل العلمي البيئي:</strong> كل سلوك بشري يومي يخلق بصمة بيئية تؤثر مباشرة على استدامة الموارد للأجيال القادمة.";
+      fieldAction = "💡 <strong>الحل الميداني المقترح:</strong> حول هذا التساؤل إلى مشروع مبادرة ميدانية صغيرة داخل قسمك وقم بتوثيقها في تبويب «المبادرة الميدانية»!";
     }
 
     replyBox.innerHTML = `
@@ -486,7 +476,7 @@ function addPoints(pts, badgeName) {
   if(badgeName && !studentData.badges.includes(badgeName)) {
     studentData.badges.push(badgeName);
   }
-  localStorage.setItem('studentData_v4', JSON.stringify(studentData));
+  localStorage.setItem('studentData_v5', JSON.stringify(studentData));
   updateUI();
 }
 
@@ -542,7 +532,7 @@ function submitFieldAction() {
     date: new Date().toLocaleDateString('ar-TN')
   });
 
-  localStorage.setItem('fieldActions_v4', JSON.stringify(fieldActions));
+  localStorage.setItem('fieldActions_v5', JSON.stringify(fieldActions));
   addPoints(20, "سفير المبادرة الميدانية التونسية");
   document.getElementById('action-description').value = "";
   document.getElementById('action-msg').innerText = "تم تسجيل وإرسال مبادرتك الميدانية بنجاح للأستاذ جلال ذويبي (+20 نقطة).";
@@ -571,6 +561,19 @@ function renderLeaderboard() {
   `;
 }
 
+function renderClassRanking() {
+  let tbody = document.getElementById('class-ranking-body');
+  // حساب افتراضي تفاعلي يعتمد على تسجيل التلاميذ
+  let cls = studentData.class;
+  let pts = studentData.points;
+  tbody.innerHTML = `
+    <tr><td>${cls} (قسمك الحالي)</td><td>${fieldActions.length} مبادرات</td><td><strong>${pts + 120} نقطة</strong></td></tr>
+    <tr><td>7 أساسي (بقية الفروع)</td><td>4 مبادرات</td><td><strong>110 نقاط</strong></td></tr>
+    <tr><td>9 أساسي (جميع الفروع)</td><td>3 مبادرات</td><td><strong>95 نقطة</strong></td></tr>
+    <tr><td>8 أساسي (جميع الفروع)</td><td>2 مبادرات</td><td><strong>60 نقطة</strong></td></tr>
+  `;
+}
+
 function switchTab(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
@@ -593,9 +596,7 @@ function loginTeacher() {
 }
 
 function renderTeacherView() {
-  document.getElementById('stat-students').innerText = fieldActions.length > 0 ? 1 : 0;
   document.getElementById('stat-actions').innerText = fieldActions.length;
-  
   let list = document.getElementById('teacher-actions-list');
   if(fieldActions.length === 0) {
     list.innerHTML = "لا توجد مبادرات ميدانية مسجلة بعد.";
@@ -619,6 +620,7 @@ function exportDataReport() {
   downloadAnchor.remove();
 }
 
+nextEcoTip();
 renderChallenges();
 stepLesson(0);
 updateUI();

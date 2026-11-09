@@ -371,7 +371,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 <div id="teacherModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; justify-content:center; align-items:center;">
   <div style="background:var(--card-bg); padding:25px; border-radius:12px; max-width:350px; width:90%; text-align:center; border:1px solid var(--border-color);">
     <h3>فضاء الأستاذ جلال ذويبي</h3>
-    <input type="password" id="teacherPass" placeholder="كلمة السر (1234 أو فائض)" style="width:100%; padding:10px; margin:10px 0; border-radius:6px; border:1px solid #ccc;">
+    <input type="password" id="teacherPass" placeholder="كلمة السر ( svt456789)" style="width:100%; padding:10px; margin:10px 0; border-radius:6px; border:1px solid #ccc;">
     <button class="btn" onclick="loginTeacher()">دخول</button>
     <button class="btn btn-secondary" onclick="closeTeacherModal()">إلغاء</button>
   </div>
@@ -678,7 +678,7 @@ function closeTeacherModal() { document.getElementById('teacherModal').style.dis
 
 function loginTeacher() {
   let p = document.getElementById('teacherPass').value;
-  if(p === "جلالsvt" || p ==="جلالsvt") {
+  if(p === "svt456789") {
     closeTeacherModal();
     renderTeacherView();
     switchTab('teacher-page', document.querySelectorAll('nav button')[7]);

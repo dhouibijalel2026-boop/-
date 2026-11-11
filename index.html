@@ -17,7 +17,7 @@
   --border-radius: 14px;
   --shadow: 0 4px 18px rgba(0,0,0,0.06);
 }
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 body.dark-mode {
   --bg: #121e17;
   --card-bg: #1e2d24;
@@ -733,6 +733,12 @@ nextEcoTip();
 renderChallenges();
 stepLesson(0);
 updateUI();
+// توليد رمز QR بناءً على رابط الصفحة الحالي تلقائياً
+new QRCode(document.getElementById("qrcode"), {
+  text: window.location.href,
+  width: 150,
+  height: 150
+});
 </script>
 </body>
 </html>

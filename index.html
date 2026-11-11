@@ -389,7 +389,22 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
         <textarea id="teacher-summary-desc" placeholder="اكتب تفاصيل الملخص أو التوجيه هنا ليظهر في الصفحة الرئيسية..." style="width:100%; height:70px; padding:8px; margin-bottom:8px; border-radius:6px; border:1px solid #ccc;"></textarea>
         <button class="btn btn-gold" onclick="publishTeacherSummary()">نشر الملخص على الصفحة الرئيسية</button>
       </div>
-
+<!-- 🖨️ مولد ملصقات الـ QR للطباعة (جديد) -->
+      <div style="background: rgba(243, 156, 18, 0.08); padding: 15px; border-radius: 10px; margin: 20px 0; border: 1px dashed var(--accent);">
+        <h3>🖨️ مولد ملصقات الـ QR الرسمية للطباعة</h3>
+        <p style="font-size: 0.9rem;">أنشئ ملصقاً جاهزاً للطباعة لتعليقه بجدران الإعدادية وقاعات الأستاذة:</p>
+        <button class="btn btn-gold" onclick="generatePrintablePoster()">إنشاء ملصق الطباعة الآن</button>
+        
+        <!-- معاينة الملصق -->
+        <div id="poster-preview-container" style="display: none; margin-top: 15px; background: white; padding: 25px; border-radius: 8px; text-align: center; border: 3px double var(--primary);">
+          <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary-dark);">المدرسة الإعدادية بفائض 🇹🇳</div>
+          <p style="margin: 5px 0 15px 0; font-weight: bold;">مسح الكود للانضمام إلى منصة البصمة البيئية</p>
+          <div id="poster-qrcode" style="display: flex; justify-content: center; margin: 15px 0;"></div>
+          <p style="font-size: 0.85rem; color: #666; margin-top: 10px;">إشراف الأستاذ: جلال ذويبي (علوم الحياة والأرض)</p>
+          <button class="btn" style="margin-top: 15px;" onclick="window.print()">🖨️ طباعة هذا الملصق فوراً</button>
+        </div>
+      </div>
+      
       <h3>📥 مراجعة وموافقة مبادرات وتجارب التلاميذ:</h3>
       <div id="teacher-pending-list" style="background:var(--card-bg); border:1px solid var(--border-color); padding:15px; border-radius:8px;">
         لا توجد مبادرات قيد الانتظار حالياً.
@@ -769,7 +784,28 @@ function approveAction(id) {
     updateUI();
   }
 }
-
+function generatePrintablePoster() {
+  let container = document.getElementById('poster-preview-container');
+  let qrBox = document.getElementById('poster-qrcode');
+  
+  // إظهار صندوق المعاينة
+  container.style.display = "block";
+  
+  // تفريغ الكود القديم إن وجد لتجنب التكرار
+  qrBox.innerHTML = "";
+  
+  // توليد رمز QR خصيصاً للملصق بحجم أكبر ومناسب للطباعة
+  new QRCode(qrBox, {
+    text: window.location.origin + window.location.pathname,
+    width: 180,
+    height: 180,
+    colorDark: "#0f4c30",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H
+  });
+  
+  alert("✨ تم إنشاء ملصق الطباعة بنجاح في فضاء الأستاذ! يمكنك الآن النقر على زر الطباعة.");
+}
 function deleteAction(id) {
   if(confirm("هل أنت متأكد من حذف هذه المشاركة؟")) {
     fieldActions = fieldActions.filter(x => x.id !== id);

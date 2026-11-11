@@ -167,7 +167,24 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       <div id="qrcode"></div>
       <small style="color: #666;">وجه كاميرا هاتفك نحو الرمز للانتقال للموقع مباشرة بكل سهولة</small>
     </div>
-
+<!-- 📊 لوحة البيانات الإحصائية الحية للإعدادية (جديد) -->
+    <div class="card" style="background: linear-gradient(135deg, #ffffff, var(--accent-light, #f9fbe7)); border: 1px solid var(--primary-light);">
+      <h3>📊 الأثر البيئي الحي للمدرسة الإعدادية بفائض</h3>
+      <div style="display: flex; justify-content: space-around; flex-wrap: wrap; text-align: center; gap: 15px; margin-top: 15px;">
+        <div style="background: white; padding: 12px 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); flex: 1; min-width: 140px;">
+          <div style="font-size: 1.6rem; font-weight: bold; color: var(--primary);" id="stat-paper">0 كغ</div>
+          <small>أوراق تم جمعها وفرزها ♻️</small>
+        </div>
+        <div style="background: white; padding: 12px 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); flex: 1; min-width: 140px;">
+          <div style="font-size: 1.6rem; font-weight: bold; color: #0077b6;" id="stat-water">0 لتر</div>
+          <small>مياه تم ترشيدها 💧</small>
+        </div>
+        <div style="background: white; padding: 12px 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); flex: 1; min-width: 140px;">
+          <div style="font-size: 1.6rem; font-weight: bold; color: #e67e22;" id="stat-actions">0</div>
+          <small>مبادرة ميدانية منجزة 🚀</small>
+        </div>
+      </div>
+    </div>
     <!-- ملخصات نشاط الأستاذ الأسبوعية -->
     <div class="card" style="border: 2px dashed var(--primary); background: rgba(27, 122, 78, 0.03);">
       <h3>📢 ملخصات وتوجيهات أستاذ النادي (الأستاذ جلال ذويبي)</h3>
@@ -428,15 +445,33 @@ function toggleDarkMode() {
   document.body.classList.toggle('dark-mode');
 }
 
+function getStudentRank(pts) {
+  if (pts >= 100) return "🏆 سفير البيئة التونسي الأول";
+  if (pts >= 60) return "🌟 بطل إعدادية فائض الخضراء";
+  if (pts >= 30) return "🛡️ حارس الطبيعة والموارد";
+  return "🌱 مستكشف ناشئ";
+}
+
 function updateUI() {
   document.getElementById('display-student-name').innerText = studentData.name + " (" + studentData.class + ")";
   document.getElementById('user-points').innerText = studentData.points + " نقطة";
+  
+  // تحديث اللقب الشرفي تلقائياً بناءً على رصيد النقاط
+  let rank = getStudentRank(studentData.points);
+  document.getElementById('user-rank').innerText = rank;
+
   document.getElementById('cert-pts').innerText = studentData.points;
   document.getElementById('cert-name').innerText = studentData.name;
   document.getElementById('cert-class').innerText = studentData.class;
   
   let badgesDiv = document.getElementById('student-badges');
   badgesDiv.innerHTML = studentData.badges.map(b => `<span class="badge-tag">🏆 ${b}</span>`).join('');
+
+  // تحديث لوحة الإحصائيات الحية للمدرسة
+  let approvedCount = fieldActions.filter(a => a.approved).length;
+  document.getElementById('stat-paper').innerText = (approvedCount * 12 + 15) + " كغ";
+  document.getElementById('stat-water').innerText = (studentData.points * 25 + 150) + " لتر";
+  document.getElementById('stat-actions').innerText = fieldActions.length + " مبادرة";
 
   renderLeaderboard();
   renderClassRanking();

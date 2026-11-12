@@ -105,11 +105,13 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
   margin: 15px 0;
 }
 
+/* 🛠️ تم إصلاح عزل الطباعة هنا لتجنب إجبار فتح الشهادة عند طباعة العناصر الأخرى */
 @media print {
   header, nav, .no-print, .dark-toggle-btn { display: none !important; }
   body { background: white; color: black; }
+  /* الطباعة الافتراضية تعرض الصفحة النشطة حالياً فقط بدلاً من إجبار الشهادة */
   .page { display: none !important; }
-  #cert-page.page { display: block !important; }
+  .page.active { display: block !important; }
 }
 </style>
 </head>
@@ -161,13 +163,14 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       </div>
     </div>
 
-    <!-- بطاقة رمز الاستجابة السريعة QR Code الجديدة -->
+    <!-- بطاقة رمز الاستجابة السريعة QR Code -->
     <div class="card" style="text-align: center;">
       <h3>📱 امسح الرمز لفتح المنصة فوراً على هاتفك</h3>
       <div id="qrcode"></div>
       <small style="color: #666;">وجه كاميرا هاتفك نحو الرمز للانتقال للموقع مباشرة بكل سهولة</small>
     </div>
-<!-- 📊 لوحة البيانات الإحصائية الحية للإعدادية (جديد) -->
+
+    <!-- لوحة البيانات الإحصائية الحية للإعدادية -->
     <div class="card" style="background: linear-gradient(135deg, #ffffff, var(--accent-light, #f9fbe7)); border: 1px solid var(--primary-light);">
       <h3>📊 الأثر البيئي الحي للمدرسة الإعدادية بفائض</h3>
       <div style="display: flex; justify-content: space-around; flex-wrap: wrap; text-align: center; gap: 15px; margin-top: 15px;">
@@ -185,6 +188,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
         </div>
       </div>
     </div>
+
     <!-- ملخصات نشاط الأستاذ الأسبوعية -->
     <div class="card" style="border: 2px dashed var(--primary); background: rgba(27, 122, 78, 0.03);">
       <h3>📢 ملخصات وتوجيهات أستاذ النادي (الأستاذ جلال ذويبي)</h3>
@@ -253,7 +257,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
     </div>
   </section>
 
-  <!-- التحديات والمساهمة الميدانية مع رفع الصور والتقارير -->
+  <!-- التحديات والمساهمة الميدانية -->
   <section id="action-page" class="page">
     <div class="card">
       <h2>🚀 التحديات والمبادرات الميدانية (من التعلم إلى الفعل)</h2>
@@ -287,9 +291,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       <button class="btn" onclick="submitFieldAction()">إرسال المبادرة والملفات للأستاذ (+20 نقطة)</button>
       <p id="action-msg" style="color:var(--primary); font-weight:bold; margin-top:10px;"></p>
     </div>
-  </section>
-
-  <!-- معرض الابتكارات الخضراء -->
+  </section><!-- معرض الابتكارات الخضراء -->
   <section id="gallery-page" class="page">
     <div class="card">
       <h2>📸 معرض الابتكارات والمشاريع الخضراء بالإعدادية</h2>
@@ -389,7 +391,8 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
         <textarea id="teacher-summary-desc" placeholder="اكتب تفاصيل الملخص أو التوجيه هنا ليظهر في الصفحة الرئيسية..." style="width:100%; height:70px; padding:8px; margin-bottom:8px; border-radius:6px; border:1px solid #ccc;"></textarea>
         <button class="btn btn-gold" onclick="publishTeacherSummary()">نشر الملخص على الصفحة الرئيسية</button>
       </div>
-<!-- 🖨️ مولد ملصقات الـ QR للطباعة (جديد) -->
+
+      <!-- مولد ملصقات الـ QR للطباعة -->
       <div style="background: rgba(243, 156, 18, 0.08); padding: 15px; border-radius: 10px; margin: 20px 0; border: 1px dashed var(--accent);">
         <h3>🖨️ مولد ملصقات الـ QR الرسمية للطباعة</h3>
         <p style="font-size: 0.9rem;">أنشئ ملصقاً جاهزاً للطباعة لتعليقه بجدران الإعدادية وقاعات الأستاذة:</p>
@@ -417,7 +420,6 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 <div id="teacherModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; justify-content:center; align-items:center;">
   <div style="background:var(--card-bg); padding:25px; border-radius:12px; max-width:350px; width:90%; text-align:center; border:1px solid var(--border-color);">
     <h3>فضاء الأستاذ جلال ذويبي</h3>
-    <!-- كلمة السر الخاصة بك التي قمت بتأمينها -->
     <input type="password" id="teacherPass" placeholder="كلمة السر الخاصة..." style="width:100%; padding:10px; margin:10px 0; border-radius:6px; border:1px solid #ccc;">
     <button class="btn" onclick="loginTeacher()">دخول</button>
     <button class="btn btn-secondary" onclick="closeTeacherModal()">إلغاء</button>
@@ -471,7 +473,6 @@ function updateUI() {
   document.getElementById('display-student-name').innerText = studentData.name + " (" + studentData.class + ")";
   document.getElementById('user-points').innerText = studentData.points + " نقطة";
   
-  // تحديث اللقب الشرفي تلقائياً بناءً على رصيد النقاط
   let rank = getStudentRank(studentData.points);
   document.getElementById('user-rank').innerText = rank;
 
@@ -482,7 +483,6 @@ function updateUI() {
   let badgesDiv = document.getElementById('student-badges');
   badgesDiv.innerHTML = studentData.badges.map(b => `<span class="badge-tag">🏆 ${b}</span>`).join('');
 
-  // تحديث لوحة الإحصائيات الحية للمدرسة
   let approvedCount = fieldActions.filter(a => a.approved).length;
   document.getElementById('stat-paper').innerText = (approvedCount * 12 + 15) + " كغ";
   document.getElementById('stat-water').innerText = (studentData.points * 25 + 150) + " لتر";
@@ -638,7 +638,7 @@ function processFile(actionObj, fileInput) {
   document.getElementById('action-description').value = "";
   document.getElementById('action-image').value = "";
   document.getElementById('action-file').value = "";
-  document.getElementById('action-msg').innerText = "تم إرسال مبادرتك وتقريك بنجاح! وهي قيد المراجعة من طرف الأستاذ جلال لنشرها (+20 نقطة).";
+  document.getElementById('action-msg').innerText = "تم إرسال مبادرتك وتقريدك بنجاح! وهي قيد المراجعة من طرف الأستاذ جلال لنشرها (+20 نقطة).";
   updateUI();
 }
 
@@ -742,7 +742,6 @@ function closeTeacherModal() { document.getElementById('teacherModal').style.dis
 
 function loginTeacher() {
   let p = document.getElementById('teacherPass').value;
-  // كلمة السر الخاصة بك التي أمنتها سابقا (يمكنك تعديلها هنا متى أردت)
   if(p === "svt456789" || p === "1234" || p === "فائض") {
     closeTeacherModal();
     renderTeacherView();
@@ -784,17 +783,14 @@ function approveAction(id) {
     updateUI();
   }
 }
+
 function generatePrintablePoster() {
   let container = document.getElementById('poster-preview-container');
   let qrBox = document.getElementById('poster-qrcode');
   
-  // إظهار صندوق المعاينة
   container.style.display = "block";
-  
-  // تفريغ الكود القديم إن وجد لتجنب التكرار
   qrBox.innerHTML = "";
   
-  // توليد رمز QR خصيصاً للملصق بحجم أكبر ومناسب للطباعة
   new QRCode(qrBox, {
     text: window.location.origin + window.location.pathname,
     width: 180,
@@ -806,6 +802,7 @@ function generatePrintablePoster() {
   
   alert("✨ تم إنشاء ملصق الطباعة بنجاح في فضاء الأستاذ! يمكنك الآن النقر على زر الطباعة.");
 }
+
 function deleteAction(id) {
   if(confirm("هل أنت متأكد من حذف هذه المشاركة؟")) {
     fieldActions = fieldActions.filter(x => x.id !== id);
@@ -815,13 +812,11 @@ function deleteAction(id) {
   }
 }
 
-// تنفيذ المهام عند التحميل
 nextEcoTip();
 renderChallenges();
 stepLesson(0);
 updateUI();
 
-// توليد رمز QR تلقائياً بناءً على رابط الصفحة الحالي
 try {
   new QRCode(document.getElementById("qrcode"), {
     text: window.location.href,

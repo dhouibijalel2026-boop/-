@@ -637,25 +637,36 @@ function getStudentRank(pts) {
 }
 
 function updateUI() {
-  document.getElementById('display-student-name').innerText = studentData.name + " (" + studentData.class + ")";
-  document.getElementById('user-points').innerText = studentData.points + " نقطة";
+  let nameEl = document.getElementById('display-student-name');
+  if(nameEl) nameEl.innerText = studentData.name + " (" + studentData.class + ")";
+  let ptsEl = document.getElementById('user-points');
+  if(ptsEl) ptsEl.innerText = studentData.points + " نقطة";
   
   let rank = getStudentRank(studentData.points);
-  document.getElementById('user-rank').innerText = rank;
-  document.getElementById('card-student-name').innerText = studentData.name + " (" + studentData.class + ")";
-  document.getElementById('card-student-rank').innerText = rank;
+  let rankEl = document.getElementById('user-rank');
+  if(rankEl) rankEl.innerText = rank;
+  let cardName = document.getElementById('card-student-name');
+  if(cardName) cardName.innerText = studentData.name + " (" + studentData.class + ")";
+  let cardRank = document.getElementById('card-student-rank');
+  if(cardRank) cardRank.innerText = rank;
 
-  document.getElementById('cert-pts').innerText = studentData.points;
-  document.getElementById('cert-name').innerText = studentData.name;
-  document.getElementById('cert-class').innerText = studentData.class;
+  let certPts = document.getElementById('cert-pts');
+  if(certPts) certPts.innerText = studentData.points;
+  let certName = document.getElementById('cert-name');
+  if(certName) certName.innerText = studentData.name;
+  let certClass = document.getElementById('cert-class');
+  if(certClass) certClass.innerText = studentData.class;
   
   let badgesDiv = document.getElementById('student-badges');
-  badgesDiv.innerHTML = studentData.badges.map(b => `<span class="badge-tag">🏆 ${b}</span>`).join('');
+  if(badgesDiv) badgesDiv.innerHTML = studentData.badges.map(b => `<span class="badge-tag">🏆 ${b}</span>`).join('');
 
   let approvedCount = fieldActions.filter(a => a.approved).length;
-  document.getElementById('stat-paper').innerText = (approvedCount * 12 + 15) + " كغ";
-  document.getElementById('stat-water').innerText = (studentData.points * 25 + 150) + " لتر";
-  document.getElementById('stat-actions').innerText = fieldActions.length + " مبادرة";
+  let statPaper = document.getElementById('stat-paper');
+  if(statPaper) statPaper.innerText = (approvedCount * 12 + 15) + " كغ";
+  let statWater = document.getElementById('stat-water');
+  if(statWater) statWater.innerText = (studentData.points * 25 + 150) + " لتر";
+  let statActions = document.getElementById('stat-actions');
+  if(statActions) statActions.innerText = fieldActions.length + " مبادرة";
 
   renderLeaderboard();
   renderClassRanking();
@@ -1017,7 +1028,6 @@ window.addEventListener('DOMContentLoaded', () => {
   renderQuiz();
   updateUI();
 
-  // توليد رمز الـ QR في الصفحة الرئيسية
   setTimeout(() => {
     let qrContainer = document.getElementById("qrcode");
     if(qrContainer) {
@@ -1038,13 +1048,12 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 200);
 });
 
-// إصلاح زر توليد ملصق الطباعة ليعمل بكفاءة فور النقر
+// توليد ومعاينة ملصق الطباعة بوضوح ودون تداخل مع الشهادة
 function generatePrintablePoster() {
   let container = document.getElementById('poster-preview-container');
   let qrBox = document.getElementById('poster-qrcode');
   if(!container || !qrBox) return;
   
-  // إظهار المعاينة مباشرة
   container.style.display = "block";
   qrBox.innerHTML = "";
   
@@ -1061,9 +1070,33 @@ function generatePrintablePoster() {
     qrBox.innerText = "تعذر توليد الـ QR محلياً، سيظهر عند الرفع على GitHub.";
   }
   
-  showToast("✨ تم إنشاء ملصق الطباعة بنجاح! يمكنك الآن النقر على زر الطباعة.");
+  showToast("✨ تم إنشاء ملصق الطباعة بنجاح!");
 }
 
+// دالة طباعة الملصق حصرياً وعزلها عن الشهادة وبقية الصفحة
+function printPosterOnly() {
+  let posterContent = document.getElementById('poster-preview-container').innerHTML;
+  let originalBody = document.body.innerHTML;
+  
+  // استبدال محتوى الصفحة مؤقتاً بالملصق فقط لطباعته بنجاح
+  document.body.innerHTML = `
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh; background: white;">
+      <div style="padding: 30px; text-align: center; border: 4px double #1b7a4e; border-radius: 12px; width: 400px; font-family: Tahoma;">
+        ${posterContent}
+      </div>
+    </div>
+  `;
+  
+  // إزالة زر الطباعة من النسخة المطبوعة
+  let printBtns = document.querySelectorAll('#poster-preview-container button, body button');
+  printBtns.forEach(b => b.remove());
+
+  window.print();
+  
+  // استعادة الصفحة الأصلية بعد الانتهاء
+  document.body.innerHTML = originalBody;
+  location.reload();
+}
 </script>
 </body>
 </html>

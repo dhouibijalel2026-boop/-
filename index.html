@@ -518,6 +518,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 </div>
 
 <script>
+<script>
 let studentData = JSON.parse(localStorage.getItem('studentData_v7') || '{"name":"تلميذ مشارك","class":"7 أساسي","points":0,"badges":["🌱 صديق البيئة"]}');
 let fieldActions = JSON.parse(localStorage.getItem('fieldActions_v7') || '[]');
 let teacherSummaries = JSON.parse(localStorage.getItem('teacherSummaries_v7') || '[{"title":"إطلاق المشروع البيئي بالإعدادية","desc":"مرحباً بكافة التلاميذ في منصة البصمة البيئية. ننتظر مبادراتكم الميدانية في فرز النفايات والعناية بالحديقة المدرسية.","date":"09/11/2026"}]');
@@ -525,6 +526,7 @@ let teacherSummaries = JSON.parse(localStorage.getItem('teacherSummaries_v7') ||
 // إشعارات Toast وتأثيرات الاحتفال Confetti
 function showToast(msg) {
   let container = document.getElementById('toast-container');
+  if(!container) return;
   let t = document.createElement('div');
   t.className = 'toast-msg';
   t.innerHTML = `✨ ${msg}`;
@@ -567,7 +569,8 @@ const ecoTips = [
 let tipIdx = 0;
 function nextEcoTip() {
   tipIdx = (tipIdx + 1) % ecoTips.length;
-  document.getElementById('eco-tip-text').innerText = ecoTips[tipIdx];
+  let tipEl = document.getElementById('eco-tip-text');
+  if(tipEl) tipEl.innerText = ecoTips[tipIdx];
 }
 
 const defaultChallenges = [
@@ -595,7 +598,9 @@ let currentQuizIdx = 0;
 
 function renderQuiz() {
   let qObj = quizData[currentQuizIdx];
-  document.getElementById('quiz-question').innerText = `سؤال (${currentQuizIdx + 1}/${quizData.length}): ${qObj.q}`;
+  let qEl = document.getElementById('quiz-question');
+  if(!qEl) return;
+  qEl.innerText = `سؤال (${currentQuizIdx + 1}/${quizData.length}): ${qObj.q}`;
   let container = document.getElementById('quiz-options-container');
   container.innerHTML = qObj.opts.map((opt, idx) => `
     <button class="quiz-option" onclick="checkQuizAnswer(${idx})">${opt}</button>
@@ -744,6 +749,7 @@ function calculateEcoFootprint() {
 
 function renderChallenges() {
   let box = document.getElementById('challenges-container');
+  if(!box) return;
   box.innerHTML = defaultChallenges.map(c => `
     <div style="background:var(--card-bg); border:1px solid var(--border-color); padding:15px; border-radius:10px;">
       <h4>${c.title}</h4>
@@ -816,6 +822,7 @@ function processFile(actionObj, fileInput) {
 
 function renderTeacherSummariesOnHome() {
   let container = document.getElementById('weekly-summaries-container');
+  if(!container) return;
   if(teacherSummaries.length === 0) {
     container.innerHTML = "<p>لا توجد ملخصات منشورة حالياً.</p>";
     return;
@@ -852,6 +859,7 @@ function publishTeacherSummary() {
 
 function renderApprovedGallery() {
   let grid = document.getElementById('approved-gallery-grid');
+  if(!grid) return;
   let defaultCards = `
     <div class="gallery-card"><div style="font-size:3.5rem; background:#e8f5e9; padding:20px;">🛞 🌺</div><p>إعادة تدوير العجلات المطاطية</p></div>
     <div class="gallery-card"><div style="font-size:3.5rem; background:#e3f2fd; padding:20px;">📦 ♻️</div><p>فرز النفايات الورقية بالقاعات</p></div>
@@ -880,6 +888,7 @@ function stepLesson(d) {
 
 function renderLeaderboard() {
   let tbody = document.getElementById('leaderboard-body');
+  if(!tbody) return;
   tbody.innerHTML = `
     <tr>
       <td>${studentData.name}</td>
@@ -892,6 +901,7 @@ function renderLeaderboard() {
 
 function renderClassRanking() {
   let tbody = document.getElementById('class-ranking-body');
+  if(!tbody) return;
   let cls = studentData.class;
   let pts = studentData.points;
   tbody.innerHTML = `
@@ -905,7 +915,8 @@ function renderClassRanking() {
 function switchTab(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+  let targetPage = document.getElementById(id);
+  if(targetPage) targetPage.classList.add('active');
   if(btn) btn.classList.add('active');
 }
 
@@ -926,7 +937,9 @@ function loginTeacher() {
 
 function renderTeacherView() {
   let list = document.getElementById('teacher-pending-list');
-  let filterVal = document.getElementById('filter-class-select').value;
+  if(!list) return;
+  let filterEl = document.getElementById('filter-class-select');
+  let filterVal = filterEl ? filterEl.value : "all";
   
   let filteredActions = fieldActions;
   if(filterVal !== "all") {
@@ -1004,15 +1017,20 @@ stepLesson(0);
 renderQuiz();
 updateUI();
 
+// توليد رمز الـ QR في الصفحة الرئيسية بشكل مستقل وآمن
 try {
-  new QRCode(document.getElementById("qrcode"), {
-    text: window.location.href,
-    width: 140,
-    height: 140,
-    colorDark: "#1b7a4e",
-    colorLight: "#ffffff",
-    correctLevel: QRCode.CorrectLevel.H
-  });
+  let qrContainer = document.getElementById("qrcode");
+  if(qrContainer) {
+    qrContainer.innerHTML = "";
+    new QRCode(qrContainer, {
+      text: window.location.href,
+      width: 140,
+      height: 140,
+      colorDark: "#1b7a4e",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  }
 } catch(e) {
   console.log("QR Code generation skipped locally.");
 }
@@ -1020,17 +1038,23 @@ try {
 function generatePrintablePoster() {
   let container = document.getElementById('poster-preview-container');
   let qrBox = document.getElementById('poster-qrcode');
+  if(!container || !qrBox) return;
   container.style.display = "block";
   qrBox.innerHTML = "";
-  new QRCode(qrBox, {
-    text: window.location.origin + window.location.pathname,
-    width: 180,
-    height: 180,
-    colorDark: "#0f4c30",
-    colorLight: "#ffffff",
-    correctLevel: QRCode.CorrectLevel.H
-  });
+  try {
+    new QRCode(qrBox, {
+      text: window.location.origin + window.location.pathname,
+      width: 180,
+      height: 180,
+      colorDark: "#0f4c30",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  } catch(e) {
+    qrBox.innerText = "تعذر توليد الـ QR محلياً، سيظهر عند الرفع على GitHub.";
+  }
   showToast("تم إنشاء ملصق الطباعة بنجاح في فضاء الأستاذ!");
+
 }
 </script>
 </body>

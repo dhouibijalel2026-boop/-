@@ -1048,54 +1048,57 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 200);
 });
 
-// توليد ومعاينة ملصق الطباعة بوضوح ودون تداخل مع الشهادة
+// توليد ومعاينة ملصق الطباعة باستخدام صورة عالية الدقة
 function generatePrintablePoster() {
   let container = document.getElementById('poster-preview-container');
   let qrBox = document.getElementById('poster-qrcode');
-  if(!container || !qrBox) return;
-  
+  if (!container || !qrBox) return;
+
   container.style.display = "block";
-  qrBox.innerHTML = "";
-  
-  try {
-    new QRCode(qrBox, {
-      text: window.location.origin + window.location.pathname,
-      width: 180,
-      height: 180,
-      colorDark: "#0f4c30",
-      colorLight: "#ffffff",
-      correctLevel: QRCode.CorrectLevel.H
-    });
-  } catch(e) {
-    qrBox.innerText = "تعذر توليد الـ QR محلياً، سيظهر عند الرفع على GitHub.";
-  }
-  
+  let siteUrl = encodeURIComponent(window.location.origin + window.location.pathname);
+  let qrImgUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&color=0f4c30&data=${siteUrl}`;
+
+  qrBox.innerHTML = `<img id="poster-qr-img" src="${qrImgUrl}" alt="QR Code" style="width:200px; height:200px; border: 2px solid #e1ebe3; padding: 8px; border-radius: 8px; background: white;">`;
   showToast("✨ تم إنشاء ملصق الطباعة بنجاح!");
 }
 
-// دالة طباعة الملصق حصرياً وعزلها عن الشهادة وبقية الصفحة
+// طباعة الملصق في نافذة معزولة تماماً لتفادي ظهور الشهادة
 function printPosterOnly() {
-  let posterContent = document.getElementById('poster-preview-container').innerHTML;
-  let originalBody = document.body.innerHTML;
-  
-  // استبدال محتوى الصفحة مؤقتاً بالملصق فقط لطباعته بنجاح
-  document.body.innerHTML = `
-    <div style="display: flex; justify-content: center; align-items: center; height: 100vh; background: white;">
-      <div style="padding: 30px; text-align: center; border: 4px double #1b7a4e; border-radius: 12px; width: 400px; font-family: Tahoma;">
-        ${posterContent}
-      </div>
-    </div>
-  `;
-  
-  // إزالة زر الطباعة من النسخة المطبوعة
-  let printBtns = document.querySelectorAll('#poster-preview-container button, body button');
-  printBtns.forEach(b => b.remove());
+  let qrImg = document.getElementById('poster-qr-img');
+  if (!qrImg) {
+    generatePrintablePoster();
+    qrImg = document.getElementById('poster-qr-img');
+  }
 
-  window.print();
-  
-  // استعادة الصفحة الأصلية بعد الانتهاء
-  document.body.innerHTML = originalBody;
-  location.reload();
+  let printWin = window.open('', '_blank', 'width=650,height=750');
+  printWin.document.write(`
+    <!DOCTYPE html>
+    <html lang="ar" dir="rtl">
+    <head>
+      <meta charset="UTF-8">
+      <title>ملصق منصة البصمة البيئية - الإعدادية بفائض</title>
+      <style>
+        body { font-family: Tahoma, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #fff; }
+        .poster { border: 6px double #1b7a4e; border-radius: 16px; padding: 40px 30px; text-align: center; width: 420px; }
+        h1 { color: #0f4c30; font-size: 1.6rem; margin: 0 0 10px; }
+        h2 { color: #1b7a4e; font-size: 1.2rem; margin: 0 0 20px; }
+        img { width: 220px; height: 220px; margin: 15px 0; }
+        p { color: #333; font-size: 1rem; font-weight: bold; margin: 10px 0; }
+        .footer { margin-top: 20px; font-size: 0.9rem; color: #555; border-top: 1px dashed #ccc; padding-top: 12px; }
+      </style>
+    </head>
+    <body>
+      <div class="poster">
+        <h1>🇹🇳 المدرسة الإعدادية بفائض</h1>
+        <h2>🌱 منصة البصمة البيئية والمبادرات الميدانية</h2>
+        <p>امسح الرمز بكاميرا هاتفك للتصفح الفوري (بدون تحميل)</p>
+        <img src="${qrImg.src}" onload="window.print(); window.close();">
+        <div class="footer">إشراف وتطوير: الأستاذ جلال ذويبي<br>(علوم الحياة والأرض)</div>
+      </div>
+    </body>
+    </html>
+  `);
+  printWin.document.close();
 }
 </script>
 </body>

@@ -135,11 +135,24 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 <main>
   <!-- الصفحة الرئيسية -->
   <section id="home-page" class="page active">
+    
+    <!-- واجهة الاستكشاف الفوري ورسائل الأمان والطمأنة الجديدة -->
+    <div class="card" style="background: linear-gradient(135deg, rgba(27,122,78,0.08), rgba(243,156,18,0.08)); border: 2px solid var(--primary);">
+      <div style="text-align: center; padding: 10px;">
+        <h2 style="color: var(--primary-dark); font-size: 1.8rem; margin-top: 0;">🌿 أهلاً بك في منصة البصمة البيئية للإعدادية بفائض</h2>
+        <p style="font-size: 1.05rem; margin: 10px 0;">تطبيق تربوي تفاعلي لعلوم الحياة والأرض. <strong>تصفح واستكشف مباشرة عبر المتصفح بكل أمان ودون الحاجة لتنزيل أي ملفات أو برامج!</strong> 🛡️</p>
+        <div style="margin-top: 15px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+          <button class="btn" style="font-size: 1rem; padding: 12px 22px;" onclick="switchTab('calc-page', document.querySelectorAll('nav button')[1])">🧮 ابدأ باحتساب بصمتك الآن</button>
+          <button class="btn btn-gold" style="font-size: 1rem; padding: 12px 22px;" onclick="switchTab('action-page', document.querySelectorAll('nav button')[2])">🚀 شارك بمبادرتك الميدانية</button>
+        </div>
+      </div>
+    </div>
+
     <div class="card">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px;">
         <div>
-          <h2>مرحباً بك يا سفير البيئة ومستقبل تونس! 🌿</h2>
-          <p>مشروع تربوي يهدف لتحويل النوادي المدرسية التونسية من التوعية النظرية إلى مشاريع عملية وميدانية مستدامة (تعمل بدون إنترنت بالمنزل).</p>
+          <h3>مرحباً بك يا سفير البيئة ومستقبل تونس! 🌿</h3>
+          <p>مشروع تربوي يهدف لتحويل النوادي المدرسية التونسية من التوعية النظرية إلى مشاريع عملية وميدانية مستدامة.</p>
         </div>
         <div style="background:rgba(40, 167, 69, 0.12); padding:15px 25px; border-radius:12px; text-align:center; min-width:200px;">
           <small>بيانات المتعلم(ة)</small>
@@ -151,11 +164,11 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 
       <!-- تسجيل بيانات التلميذ -->
       <div style="margin-top:15px; background:rgba(0,0,0,0.03); padding:15px; border-radius:10px;" class="no-print">
-        <strong>تسجيل بيانات التلميذ(ة) (يحفظ محلياً بدون إنترنت):</strong>
+        <strong>تسجيل بيانات التلميذ(ة):</strong>
         <div style="display:flex; gap:10px; margin-top:8px; flex-wrap:wrap;">
           <input type="text" id="input-name" placeholder="الاسم واللقب" style="padding:8px; border-radius:6px; border:1px solid #ccc; flex:1;">
-          <input type="text" id="input-class" placeholder="المستوى والقسم (مثال: 7 أساسي 3)" style="padding:8px; border-radius:6px; border:1px solid #ccc; flex:1;">
-          <button class="btn" onclick="saveStudentProfile()">حفظ البيانات (+10 نقاط)</button>
+          <input type="text" id="input-class" placeholder="المستوى والقسم (مثال: 7 أساسي 3 أو 9 أساسي 1)" style="padding:8px; border-radius:6px; border:1px solid #ccc; flex:1;">
+          <button class="btn" onclick="saveStudentProfile()">حفظ البيانات</button>
         </div>
       </div>
     </div>
@@ -179,14 +192,11 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       </div>
     </div>
 
-    <!-- بطاقة رمز الاستجابة السريعة QR Code -->
+    <!-- بطاقة رمز الاستجابة السريعة QR Code ومعلومات الطمأنة -->
     <div class="card" style="text-align: center;">
-      <h3>📱 امسح الرمز للتحميل أول مرة بنادي البيئة والعمل دون إنترنت</h3>
+      <h3>📱 امسح الكود بكاميرا هاتفك للتصفح الفوري</h3>
+      <p style="color: #555; font-size: 0.9rem;">المنصة تعمل مباشرة أونلاين على متصفح هاتفك أو حاسوبك (بدون تحميل أو تثبيت برامج خارجية 🌐🔒)</p>
       <div id="qrcode"></div>
-      <small style="color: #666;">وجه كاميرا هاتفك نحو الرمز للانتقال للموقع وتثبيته محلياً بكل سهولة</small>
-      <div style="margin-top: 15px;" class="no-print">
-        <button class="btn btn-gold" onclick="openPosterModal()">🖨️ إنشاء ملصق QR البيئي للطباعة والتعليق</button>
-      </div>
     </div>
 
     <!-- ملخصات نشاط الأستاذ الأسبوعية -->
@@ -220,7 +230,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
   <section id="calc-page" class="page">
     <div class="card">
       <h2>🧮 مرصد البصمة البيئية الشخصية للتلميذ</h2>
-      <p>أجب عن الأسئلة اليومية البسيطة التالية لاحتساب بصمتك البيئية (محلياً بدون إنترنت):</p>
+      <p>أجب عن الأسئلة اليومية البسيطة التالية لاحتساب بصمتك البيئية:</p>
       
       <div style="margin:15px 0;">
         <label><strong>1. كيف تتنقل يومياً إلى الإعدادية؟</strong></label><br>
@@ -266,29 +276,16 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
     </div>
 
     <div class="card">
-      <h2>🌱 حاضنة المبادرات البيئية المدرسية (العمل دون إنترنت)</h2>
-      <p>شارك بفكرة مشروع بيئي أو ابتكار رسكلة (يحفظ محلياً بدون إنترنت) لتحصل على <strong>+50 نقطة</strong>:</p>
+      <h3>📝 إرسال مبادرة ميدانية، صورة، أو تقرير/بحث</h3>
+      <select id="action-axis" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; margin-bottom:10px;">
+        <option value="إدارة وتثمين النفايات والرسكلة">♻️ إدارة وتثمين النفايات والرسكلة</option>
+        <option value="ترشيد استهلاك الطاقة والماء">💧 ترشيد استهلاك الطاقة والماء</option>
+        <option value="إحياء وتطوير المساحات الخضراء">🌳 إحياء وتطوير المساحات الخضراء</option>
+        <option value="تحسين البيئة الفنية والجمالية">🎨 تحسين البيئة الفنية والجمالية</option>
+        <option value="التحول الرقمي والتكنولوجيا الخضراء">💻 التحول الرقمي والتكنولوجيا الخضراء</option>
+      </select>
       
-      <div class="form-group" style="margin-bottom:12px;">
-        <label>عنوان المبادرة أو المشروع البيئي:</label>
-        <input type="text" id="idea-title" class="form-control" placeholder="مثال: حملة رسكلة الأغطية البلاستيكية لصنع مقاعد الحديقة" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; margin-top:5px;">
-      </div>
-
-      <div class="form-group" style="margin-bottom:12px;">
-        <label>مجال المشروع:</label>
-        <select id="action-axis" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; margin-top:5px;">
-          <option value="رسكلة واقتصاد دائري">♻️ رسكلة واقتصاد دائري</option>
-          <option value="ترشيد طاقة ومياه">💧 ترشيد طاقة ومياه</option>
-          <option value="تشجير وحماية الغطاء النباتي">🌳 تشجير وحماية الغطاء النباتي</option>
-          <option value="تحسين البيئة الفنية والجمالية">🎨 تحسين البيئة الفنية والجمالية</option>
-          <option value="توعية ونظافة المحيط">🏫 توعية ونظافة المحيط المدرسي</option>
-        </select>
-      </div>
-
-      <div class="form-group" style="margin-bottom:12px;">
-        <label>شرح تفصيلي للمبادرة:</label>
-        <textarea id="action-description" placeholder="اشرح كيف ستنفذ المبادرة وما هي إضافتها لإعدادية فائض..." style="width:100%; height:80px; padding:10px; border-radius:8px; border:1px solid #ccc; margin-top:5px;"></textarea>
-      </div>
+      <textarea id="action-description" placeholder="اكتب تفاصيل المبادرة أو التقرير البيئي هنا..." style="width:100%; height:80px; padding:10px; border-radius:8px; border:1px solid #ccc; margin-bottom:10px;"></textarea>
       
       <div style="display:flex; gap:15px; flex-wrap:wrap; margin-bottom:12px;">
         <div style="flex:1; min-width:220px;">
@@ -301,7 +298,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
         </div>
       </div>
 
-      <button class="btn" onclick="submitFieldAction()">إرسال المبادرة والملفات للأستاذ (+50 نقطة)</button>
+      <button class="btn" onclick="submitFieldAction()">إرسال المبادرة والملفات للأستاذ (+20 نقطة)</button>
       <p id="action-msg" style="color:var(--primary); font-weight:bold; margin-top:10px;"></p>
     </div>
   </section>
@@ -334,7 +331,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
   <!-- لوحة الشرف وتنافس الأقسام -->
   <section id="honor-page" class="page">
     <div class="card">
-      <h2>🏅 الأوسمة البيئية الشرفية (تُفتح تلقائياً بنقاطك المحفوظة محلياً)</h2>
+      <h2>🏆 لوحة الشرف وتنافسية الأقسام بالإعدادية</h2>
       <p>الأوسمة الشرفية التي تحصلت عليها بفضل مبادراتك الميدانية:</p>
       <div id="student-badges">
         <span class="badge-tag">🌱 صديق البيئة (تلقائي)</span>
@@ -407,12 +404,6 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
         <button class="btn btn-gold" onclick="publishTeacherSummary()">نشر الملخص على الصفحة الرئيسية</button>
       </div>
 
-      <div style="margin: 20px 0; display:flex; gap:10px; flex-wrap:wrap;" class="no-print">
-        <button class="btn btn-accent" onclick="openPosterModal()">🖨️ إنشاء ملصق QR البيئي للطباعة</button>
-        <button class="btn btn-success" onclick="alert('ركن المزامنة وإدارة الوسائط البيئية: جاهز لاستقبال بيانات التلاميذ فور ارتباطهم بالشبكة بالنادي.')">🔄 مزامنة بيانات التلاميذ وإدارة المرفقات</button>
-        <button class="btn btn-danger" onclick="clearAllData()">🗑️ تهيئة كافة البيانات</button>
-      </div>
-
       <h3>📥 مراجعة وموافقة مبادرات وتجارب التلاميذ:</h3>
       <div id="teacher-pending-list" style="background:var(--card-bg); border:1px solid var(--border-color); padding:15px; border-radius:8px;">
         لا توجد مبادرات قيد الانتظار حالياً.
@@ -421,24 +412,20 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
   </section>
 </main>
 
-<!-- Modal ملصق الطباعة QR البيئي -->
-<div id="posterModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); z-index:250; justify-content:center; align-items:center; overflow-y:auto; padding:15px;">
-  <div style="background:var(--card-bg); padding:20px; border-radius:14px; max-width:600px; width:100%; text-align:center;">
-    <div id="print-area">
-      <div class="poster-box" style="border: 4px double var(--primary); border-radius: 18px; padding: 30px; text-align: center; background: #ffffff; color: var(--primary-dark); max-width: 550px; margin: 20px auto;">
-        <div style="font-weight:bold; font-size:0.95rem; margin-bottom:6px;">🇹🇳 الجمهورية التونسية - وزارة التربية</div>
-        <div style="font-weight:bold; font-size:1.15rem; color:var(--primary);">المدرسة الإعدادية بفائض</div>
-        <hr style="border:1px solid var(--border-color); margin:12px 0;">
-        <h2 style="margin:8px 0; font-size:1.6rem;">🌱 المرصد البيئي الذكي وبصمتنا الخضراء</h2>
-        <p style="font-size:1rem; color:#2c3e50;">حمل المنصة مرة بنادي البيئة، واحسب بصمتك البيئية وطور مبادراتك بالمنزل دون إنترنت!</p>
-        <div id="poster-qrcode"></div>
-        <p style="font-weight:bold; font-size:1.05rem; margin-top:10px;">📱 امسح الرمز بكاميرا هاتفك للدخول الفوري وتثبيت العمل</p>
-        <div style="font-size:0.85rem; color:#555; margin-top:12px;">إعداد وتطوير: الأستاذ جلال ذويبي (علوم الحياة والأرض)</div>
-      </div>
-    </div>
-    <div style="margin-top:15px; display:flex; gap:10px; justify-content:center;" class="no-print">
-      <button class="btn btn-success" onclick="window.print()">🖨️ طباعة الملصق الآن / حفظ PDF</button>
-      <button class="btn btn-secondary" onclick="closePosterModal()">إغلاق</button>
+<!-- 🖨️ مولد ملصقات الـ QR للطباعة -->
+<div style="max-width: 1080px; margin: 0 auto; padding: 0 15px;">
+  <div style="background: rgba(243, 156, 18, 0.08); padding: 15px; border-radius: 10px; margin: 20px 0; border: 1px dashed var(--accent);" class="no-print">
+    <h3>🖨️ مولد ملصقات الـ QR الرسمية للطباعة</h3>
+    <p style="font-size: 0.9rem;">أنشئ ملصقاً جاهزاً للطباعة لتعليقه بجدران الإعدادية وقاعات الأستاذة:</p>
+    <button class="btn btn-gold" onclick="generatePrintablePoster()">إنشاء ملصق الطباعة الآن</button>
+    
+    <!-- معاينة الملصق -->
+    <div id="poster-preview-container" style="display: none; margin-top: 15px; background: white; padding: 25px; border-radius: 8px; text-align: center; border: 3px double var(--primary);">
+      <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary-dark);">المدرسة الإعدادية بفائض 🇹🇳</div>
+      <p style="margin: 5px 0 15px 0; font-weight: bold;">امسح الكود للتصفح الفوري لمنصة البصمة البيئية (بدون تحميل)</p>
+      <div id="poster-qrcode"></div>
+      <p style="font-size: 0.85rem; color: #666; margin-top: 10px;">إشراف الأستاذ: جلال ذويبي (علوم الحياة والأرض)</p>
+      <button class="btn" style="margin-top: 15px;" onclick="window.print()">🖨️ طباعة هذا الملصق فوراً</button>
     </div>
   </div>
 </div>
@@ -447,7 +434,6 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 <div id="teacherModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; justify-content:center; align-items:center;">
   <div style="background:var(--card-bg); padding:25px; border-radius:12px; max-width:350px; width:90%; text-align:center; border:1px solid var(--border-color);">
     <h3>فضاء الأستاذ جلال ذويبي</h3>
-    <!-- كلمة السر الخاصة بك التي قمت بتأمينها -->
     <input type="password" id="teacherPass" placeholder="كلمة السر الخاصة..." style="width:100%; padding:10px; margin:10px 0; border-radius:6px; border:1px solid #ccc;">
     <button class="btn" onclick="loginTeacher()">دخول</button>
     <button class="btn btn-secondary" onclick="closeTeacherModal()">إلغاء</button>
@@ -455,10 +441,9 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 </div>
 
 <script>
-// تخزين محلي كامل ومستقل للعمل بدون إنترنت (Offline-First Storage)
-let studentData = JSON.parse(localStorage.getItem('eco_student_offline_v2') || '{"name":"تلميذ مشارك","class":"7 أساسي","points":0,"badges":["🌱 صديق البيئة"]}');
-let fieldActions = JSON.parse(localStorage.getItem('eco_actions_offline_v2') || '[]');
-let teacherSummaries = JSON.parse(localStorage.getItem('eco_summaries_offline_v2') || '[{"title":"إطلاق المشروع البيئي بالإعدادية","desc":"مرحباً بكافة التلاميذ في منصة البصمة البيئية. ننتظر مبادراتكم الميدانية في فرز النفايات والعناية بالحديقة المدرسية.","date":"09/11/2026"}]');
+let studentData = JSON.parse(localStorage.getItem('studentData_v7') || '{"name":"تلميذ مشارك","class":"7 أساسي","points":0,"badges":["🌱 صديق البيئة"]}');
+let fieldActions = JSON.parse(localStorage.getItem('fieldActions_v7') || '[]');
+let teacherSummaries = JSON.parse(localStorage.getItem('teacherSummaries_v7') || '[{"title":"إطلاق المشروع البيئي بالإعدادية","desc":"مرحباً بكافة التلاميذ في منصة البصمة البيئية. ننتظر مبادراتكم الميدانية في فرز النفايات والعناية بالحديقة المدرسية.","date":"09/11/2026"}]');
 
 const ecoTips = [
   "💡 هل تعلم؟ تتطلب زجاجة بلاستيكية واحدة في الطبيعة أكثر من 450 سنة لتتحلل كلياً!",
@@ -527,16 +512,11 @@ function saveStudentProfile() {
   let n = document.getElementById('input-name').value.trim();
   let c = document.getElementById('input-class').value.trim();
   if(n && c) {
-    let isFirstTime = !studentData.name || studentData.name === "تلميذ مشارك";
     studentData.name = n;
     studentData.class = c;
-    localStorage.setItem('eco_student_offline_v2', JSON.stringify(studentData));
-    if(isFirstTime) {
-      addPoints(10, "صديق البيئة");
-    } else {
-      updateUI();
-    }
-    alert("تم حفظ بياناتك محلياً بنجاح! (تعمل بدون إنترنت).");
+    localStorage.setItem('studentData_v7', JSON.stringify(studentData));
+    updateUI();
+    alert("تم حفظ بياناتك بنجاح في المنصة الوطنية!");
   } else {
     alert("يرجى إدخال الاسم والمستوى مع القسم بكامل الدقة.");
   }
@@ -581,7 +561,7 @@ function addPoints(pts, badgeName) {
   if(badgeName && !studentData.badges.includes(badgeName)) {
     studentData.badges.push(badgeName);
   }
-  localStorage.setItem('eco_student_offline_v2', JSON.stringify(studentData));
+  localStorage.setItem('studentData_v7', JSON.stringify(studentData));
   updateUI();
 }
 
@@ -621,24 +601,17 @@ function renderChallenges() {
 
 function acceptChallenge(badge) {
   addPoints(15, badge);
-  alert("رائع جداً! تم تسجيل إنجازك للتحدي وحصولك محلياً على " + badge);
+  alert("رائع جداً! تم تسجيل إنجازك للتحدي وحصولك على " + badge);
 }
 
 function submitFieldAction() {
-  if(!studentData.name || studentData.name === "تلميذ مشارك") {
-    alert("يرجى تسجيل بياناتك (الاسم والقسم) في الصفحة الرئيسية أولاً!");
-    switchTab('home-page', document.querySelectorAll('nav button')[0]);
-    return;
-  }
-
-  let title = document.getElementById('idea-title').value.trim();
   let axis = document.getElementById('action-axis').value;
   let desc = document.getElementById('action-description').value.trim();
   let imageInput = document.getElementById('action-image');
   let fileInput = document.getElementById('action-file');
 
-  if(!title || !desc) {
-    alert("يرجى إدخال عنوان المبادرة وشرحها التفصيلي أولاً!");
+  if(!desc) {
+    alert("يرجى كتابة تفاصيل المبادرة أو التقرير أولاً!");
     return;
   }
 
@@ -646,7 +619,6 @@ function submitFieldAction() {
     id: Date.now(),
     student: studentData.name,
     class: studentData.class,
-    title: title,
     axis: axis,
     desc: desc,
     image: null,
@@ -674,14 +646,13 @@ function processFile(actionObj, fileInput) {
   }
   
   fieldActions.push(actionObj);
-  localStorage.setItem('eco_actions_offline_v2', JSON.stringify(fieldActions));
-  addPoints(50, "رائد الرسكلة والمبادرات");
+  localStorage.setItem('fieldActions_v7', JSON.stringify(fieldActions));
+  addPoints(20, "سفير المبادرة والتقارير الميدانية");
 
-  document.getElementById('idea-title').value = "";
   document.getElementById('action-description').value = "";
   document.getElementById('action-image').value = "";
   document.getElementById('action-file').value = "";
-  document.getElementById('action-msg').innerText = "تم حفظ مبادرتك محلياً بنجاح! وهي بانتظار المزامنة ومراجعة الأستاذ جلال (+50 نقطة).";
+  document.getElementById('action-msg').innerText = "تم إرسال مبادرتك وتقريك بنجاح! وهي قيد المراجعة من طرف الأستاذ جلال لنشرها (+20 نقطة).";
   updateUI();
 }
 
@@ -714,10 +685,10 @@ function publishTeacherSummary() {
     date: new Date().toLocaleDateString('ar-TN')
   });
 
-  localStorage.setItem('eco_summaries_offline_v2', JSON.stringify(teacherSummaries));
+  localStorage.setItem('teacherSummaries_v7', JSON.stringify(teacherSummaries));
   document.getElementById('teacher-summary-title').value = "";
   document.getElementById('teacher-summary-desc').value = "";
-  alert("تم نشر الملخص بنجاح على الصفحة الرئيسية محلياً!");
+  alert("تم نشر الملخص بنجاح على الصفحة الرئيسية!");
   updateUI();
 }
 
@@ -731,7 +702,7 @@ function renderApprovedGallery() {
   let approvedCards = fieldActions.filter(a => a.approved && a.image).map(a => `
     <div class="gallery-card">
       <img src="${a.image}" alt="صورة معتمدة">
-      <p>${a.title || a.desc.substring(0, 30)}...<br><small style="color:var(--primary);">${a.student} (${a.class})</small></p>
+      <p>${a.desc.substring(0, 30)}...<br><small style="color:var(--primary);">${a.student} (${a.class})</small></p>
     </div>
   `).join('');
 
@@ -805,7 +776,7 @@ function renderTeacherView() {
       ${a.image ? `<img src="${a.image}" style="width:70px; height:70px; object-fit:cover; border-radius:6px; border:1px solid #ccc;">` : '<div style="width:70px; height:70px; background:#eee; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:1.2rem;">📄</div>'}
       <div style="flex:1;">
         <strong>${a.student} (${a.class})</strong> - <span style="color:var(--primary);">${a.axis}</span><br>
-        <strong>${a.title || 'مبادرة بيئية'}</strong>: <small>${a.desc}</small><br>
+        <small>${a.desc}</small><br>
         ${a.fileName ? `<small style="color:#d35400;">📁 ملف مرفق: ${a.fileName}</small><br>` : ''}
         <small style="color:#7f8c8d;">تاريخ الإرسال: ${a.date} | الحالة: <strong>${a.approved ? '✅ معتمد ومنشور' : '⏳ قيد الانتظار'}</strong></small>
       </div>
@@ -821,7 +792,7 @@ function approveAction(id) {
   let act = fieldActions.find(x => x.id === id);
   if(act) {
     act.approved = !act.approved;
-    localStorage.setItem('eco_actions_offline_v2', JSON.stringify(fieldActions));
+    localStorage.setItem('fieldActions_v7', JSON.stringify(fieldActions));
     renderTeacherView();
     updateUI();
   }
@@ -830,27 +801,13 @@ function approveAction(id) {
 function deleteAction(id) {
   if(confirm("هل أنت متأكد من حذف هذه المشاركة؟")) {
     fieldActions = fieldActions.filter(x => x.id !== id);
-    localStorage.setItem('eco_actions_offline_v2', JSON.stringify(fieldActions));
+    localStorage.setItem('fieldActions_v7', JSON.stringify(fieldActions));
     renderTeacherView();
     updateUI();
   }
 }
 
-function clearAllData() {
-  if(confirm("تحذير: هل تريد مسح كافة بيانات البصمة البيئية والمبادرات ولوحة الشرف محلياً؟")) {
-    localStorage.removeItem('eco_student_offline_v2');
-    localStorage.removeItem('eco_actions_offline_v2');
-    localStorage.removeItem('eco_summaries_offline_v2');
-    studentData = {"name":"تلميذ مشارك","class":"7 أساسي","points":0,"badges":["🌱 صديق البيئة"]};
-    fieldActions = [];
-    teacherSummaries = [];
-    updateUI();
-    renderTeacherView();
-    alert("تمت تهيئة البيانات البيئية بنجاح.");
-  }
-}
-
-// تنفيذ المهام عند التحميل
+// تشغيل الوظائف الأساسية عند تحميل الصفحة
 nextEcoTip();
 renderChallenges();
 stepLesson(0);
@@ -870,11 +827,14 @@ try {
   console.log("QR Code generation skipped locally.");
 }
 
-function openPosterModal() {
-  document.getElementById('posterModal').style.display = 'flex';
-  let posterQr = document.getElementById('poster-qrcode');
-  posterQr.innerHTML = "";
-  new QRCode(posterQr, {
+function generatePrintablePoster() {
+  let container = document.getElementById('poster-preview-container');
+  let qrBox = document.getElementById('poster-qrcode');
+  
+  container.style.display = "block";
+  qrBox.innerHTML = "";
+  
+  new QRCode(qrBox, {
     text: window.location.origin + window.location.pathname,
     width: 180,
     height: 180,
@@ -882,8 +842,9 @@ function openPosterModal() {
     colorLight: "#ffffff",
     correctLevel: QRCode.CorrectLevel.H
   });
+  
+  alert("✨ تم إنشاء ملصق الطباعة بنجاح في فضاء الأستاذ! يمكنك الآن النقر على زر الطباعة.");
 }
-function closePosterModal() { document.getElementById('posterModal').style.display = 'none'; }
 </script>
 </body>
 </html>

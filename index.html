@@ -518,7 +518,6 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 </div>
 
 <script>
-<script>
 let studentData = JSON.parse(localStorage.getItem('studentData_v7') || '{"name":"تلميذ مشارك","class":"7 أساسي","points":0,"badges":["🌱 صديق البيئة"]}');
 let fieldActions = JSON.parse(localStorage.getItem('fieldActions_v7') || '[]');
 let teacherSummaries = JSON.parse(localStorage.getItem('teacherSummaries_v7') || '[{"title":"إطلاق المشروع البيئي بالإعدادية","desc":"مرحباً بكافة التلاميذ في منصة البصمة البيئية. ننتظر مبادراتكم الميدانية في فرز النفايات والعناية بالحديقة المدرسية.","date":"09/11/2026"}]');
@@ -1010,37 +1009,45 @@ function deleteAction(id) {
   }
 }
 
-// تشغيل الوظائف عند التحميل
-nextEcoTip();
-renderChallenges();
-stepLesson(0);
-renderQuiz();
-updateUI();
+// تشغيل الوظائف عند التحميل وضمان توليد الـ QR بشكل مستقل وآمن
+window.addEventListener('DOMContentLoaded', () => {
+  nextEcoTip();
+  renderChallenges();
+  stepLesson(0);
+  renderQuiz();
+  updateUI();
 
-// توليد رمز الـ QR في الصفحة الرئيسية بشكل مستقل وآمن
-try {
-  let qrContainer = document.getElementById("qrcode");
-  if(qrContainer) {
-    qrContainer.innerHTML = "";
-    new QRCode(qrContainer, {
-      text: window.location.href,
-      width: 140,
-      height: 140,
-      colorDark: "#1b7a4e",
-      colorLight: "#ffffff",
-      correctLevel: QRCode.CorrectLevel.H
-    });
-  }
-} catch(e) {
-  console.log("QR Code generation skipped locally.");
-}
+  // توليد رمز الـ QR في الصفحة الرئيسية
+  setTimeout(() => {
+    let qrContainer = document.getElementById("qrcode");
+    if(qrContainer) {
+      qrContainer.innerHTML = "";
+      try {
+        new QRCode(qrContainer, {
+          text: window.location.href,
+          width: 140,
+          height: 140,
+          colorDark: "#1b7a4e",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+      } catch(e) {
+        console.log("QR Code error:", e);
+      }
+    }
+  }, 200);
+});
 
+// إصلاح زر توليد ملصق الطباعة ليعمل بكفاءة فور النقر
 function generatePrintablePoster() {
   let container = document.getElementById('poster-preview-container');
   let qrBox = document.getElementById('poster-qrcode');
   if(!container || !qrBox) return;
+  
+  // إظهار المعاينة مباشرة
   container.style.display = "block";
   qrBox.innerHTML = "";
+  
   try {
     new QRCode(qrBox, {
       text: window.location.origin + window.location.pathname,
@@ -1053,9 +1060,10 @@ function generatePrintablePoster() {
   } catch(e) {
     qrBox.innerText = "تعذر توليد الـ QR محلياً، سيظهر عند الرفع على GitHub.";
   }
-  showToast("تم إنشاء ملصق الطباعة بنجاح في فضاء الأستاذ!");
-
+  
+  showToast("✨ تم إنشاء ملصق الطباعة بنجاح! يمكنك الآن النقر على زر الطباعة.");
 }
+
 </script>
 </body>
 </html>

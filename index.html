@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>منصة البصمة البيئية | الإعدادية بفائض</title>
-<!-- مكتبة توليد رمز QR في مكانها الصحيح والآمن -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 :root {
@@ -28,7 +27,7 @@ body.dark-mode {
 }
 
 * { box-sizing: border-box; font-family: Tahoma, 'Segoe UI', Geneva, sans-serif; transition: background 0.3s, color 0.3s; }
-body { margin: 0; background: var(--bg); color: var(--text); line-height: 1.7; }
+body { margin: 0; background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; }
 
 header {
   background: linear-gradient(135deg, var(--primary-dark), var(--primary));
@@ -98,11 +97,47 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
   background: #fffdf5; color: #2c3e50; border: 8px double #c5a059; padding: 30px; text-align: center; border-radius: 8px; margin-top: 15px;
 }
 
-#qrcode, #poster-qrcode {
-  display: flex;
-  justify-content: center;
-  margin: 15px 0;
+/* بطاقة سفير البيئة القابلة للمشاركة */
+.share-badge-card {
+  background: linear-gradient(135deg, #0f4c30, #1b7a4e); color: white; padding: 20px; border-radius: 16px;
+  text-align: center; max-width: 420px; margin: 15px auto; border: 3px solid #f39c12; box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
+
+/* عداد تحدي الأسبوع */
+.quest-banner {
+  background: linear-gradient(90deg, #fff3cd, #ffeeba); color: #856404; border: 1px solid #ffeeba;
+  padding: 15px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+}
+.timer-box {
+  background: #856404; color: #fff; padding: 6px 14px; border-radius: 8px; font-weight: bold; font-family: monospace; font-size: 1.05rem;
+}
+
+/* إشعارات Toast */
+#toast-container {
+  position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px;
+}
+.toast-msg {
+  background: var(--primary-dark); color: white; padding: 12px 20px; border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2); border-right: 5px solid var(--accent); animation: slideIn 0.3s ease;
+}
+@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+/* قصاصات الاحتفال Confetti */
+.confetti-piece {
+  position: fixed; width: 10px; height: 10px; top: -10px; z-index: 9998; pointer-events: none;
+  animation: fall 3s linear forwards;
+}
+@keyframes fall {
+  to { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+}
+
+.quiz-option {
+  display: block; width: 100%; text-align: right; background: var(--bg); border: 1px solid var(--border-color);
+  padding: 10px 15px; border-radius: 8px; margin: 8px 0; cursor: pointer; color: var(--text); font-weight: bold;
+}
+.quiz-option:hover { background: rgba(27, 122, 78, 0.12); border-color: var(--primary); }
+
+#qrcode, #poster-qrcode { display: flex; justify-content: center; margin: 15px 0; }
 
 @media print {
   header, nav, .no-print, .dark-toggle-btn { display: none !important; }
@@ -113,6 +148,8 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 </style>
 </head>
 <body>
+
+<div id="toast-container"></div>
 
 <header>
   <button class="dark-toggle-btn" onclick="toggleDarkMode()">🌙 الوضع الليلي</button>
@@ -126,7 +163,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
   <button onclick="switchTab('calc-page', this)">🧮 حاسبة البصمة البيئية</button>
   <button onclick="switchTab('action-page', this)">🌱 المبادرة والتقارير</button>
   <button onclick="switchTab('gallery-page', this)">📸 معرض الابتكارات</button>
-  <button onclick="switchTab('learn-page', this)">📘 المسار التعليمي</button>
+  <button onclick="switchTab('learn-page', this)">📘 المسار والمسابقة</button>
   <button onclick="switchTab('honor-page', this)">🏆 لوحة الشرف والأقسام</button>
   <button onclick="switchTab('cert-page', this)">🏅 الشهادة الوطنية</button>
   <button class="teacher-btn" onclick="openTeacherModal()">🔒 فضاء الأستاذ</button>
@@ -136,7 +173,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
   <!-- الصفحة الرئيسية -->
   <section id="home-page" class="page active">
     
-    <!-- واجهة الاستكشاف الفوري ورسائل الأمان والطمأنة الجديدة -->
+    <!-- واجهة الاستكشاف الفوري ورسائل الأمان والطمأنة -->
     <div class="card" style="background: linear-gradient(135deg, rgba(27,122,78,0.08), rgba(243,156,18,0.08)); border: 2px solid var(--primary);">
       <div style="text-align: center; padding: 10px;">
         <h2 style="color: var(--primary-dark); font-size: 1.8rem; margin-top: 0;">🌿 أهلاً بك في منصة البصمة البيئية للإعدادية بفائض</h2>
@@ -146,6 +183,15 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
           <button class="btn btn-gold" style="font-size: 1rem; padding: 12px 22px;" onclick="switchTab('action-page', document.querySelectorAll('nav button')[2])">🚀 شارك بمبادرتك الميدانية</button>
         </div>
       </div>
+    </div>
+
+    <!-- شريط تحدي الأسبوع والعداد التنازلي -->
+    <div class="quest-banner no-print">
+      <div>
+        <strong>🔥 تحدي الأسبوع الحصري: «أسبوع ترشيد الماء والفرز الذكي»</strong><br>
+        <small>وثّق مبادرة ميدانية هذا الأسبوع واحصل على <strong>نقاط مضاعفة (+30 نقطة)</strong>!</small>
+      </div>
+      <div class="timer-box" id="weekly-countdown">ينتهي خلال: 04ي 12س 30د</div>
     </div>
 
     <div class="card">
@@ -162,7 +208,6 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
         </div>
       </div>
 
-      <!-- تسجيل بيانات التلميذ -->
       <div style="margin-top:15px; background:rgba(0,0,0,0.03); padding:15px; border-radius:10px;" class="no-print">
         <strong>تسجيل بيانات التلميذ(ة):</strong>
         <div style="display:flex; gap:10px; margin-top:8px; flex-wrap:wrap;">
@@ -267,7 +312,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
     </div>
   </section>
 
-  <!-- التحديات والمساهمة الميدانية مع رفع الصور والتقارير -->
+  <!-- التحديات والمساهمة الميدانية -->
   <section id="action-page" class="page">
     <div class="card">
       <h2>🚀 التحديات والمبادرات الميدانية (من التعلم إلى الفعل)</h2>
@@ -298,13 +343,19 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
         </div>
       </div>
 
-      <button class="btn" onclick="submitFieldAction()">إرسال المبادرة والملفات للأستاذ (+20 نقطة)</button>
+      <button class="btn" onclick="submitFieldAction()">إرسال المبادرة والملفات للأستاذ (+30 نقطة تحدي الأسبوع)</button>
       <p id="action-msg" style="color:var(--primary); font-weight:bold; margin-top:10px;"></p>
     </div>
   </section>
 
   <!-- معرض الابتكارات الخضراء -->
   <section id="gallery-page" class="page">
+    <div class="card" style="background: linear-gradient(135deg, #fffdf0, #e8f5e9); border: 2px solid var(--accent);">
+      <h3>🌟 ركن «مُبتكر إعدادية فائض» لهذا الشهر</h3>
+      <p><strong>المشروع المميز:</strong> نظام السقي بالتنقيط الذكي باستخدام القوارير البلاستيكية المعاد تدويرها في الحديقة البيداغوجية.</p>
+      <small style="color: var(--primary-dark); font-weight: bold;">إنجاز: تلاميذ نادي علوم الحياة والأرض (السابعة والتاسعة أساسي)</small>
+    </div>
+
     <div class="card">
       <h2>📸 معرض الابتكارات والمشاريع الخضراء بالإعدادية</h2>
       <p>معرض المبادرات والأنشطة المعتمدة رسمياً من طرف الأستاذ جلال:</p>
@@ -313,18 +364,24 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
         <div class="gallery-card"><div style="font-size:3.5rem; background:#e3f2fd; padding:20px;">📦 ♻️</div><p>فرز النفايات الورقية بالقاعات</p></div>
       </div>
     </div>
-  </section>
-
-  <!-- المسار التعليمي -->
+  </section><!-- المسار والمسابقة البيئية -->
   <section id="learn-page" class="page">
     <div class="card">
       <h3 id="lesson-title">المرحلة 1: إدارة وتثمين النفايات والرسكلة ♻️</h3>
       <div class="progress-bar"><div class="progress-fill" id="lesson-progress" style="width: 20%;"></div></div>
       <p id="lesson-text" style="font-size:1.05rem; margin:15px 0;">...</p>
-      <div style="display:flex; justify-content:space-between;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
         <button class="btn btn-secondary" id="prev-lesson" onclick="stepLesson(-1)" disabled>السابق</button>
         <button class="btn" id="next-lesson" onclick="stepLesson(1)">التالي ←</button>
       </div>
+    </div>
+
+    <!-- مسابقة الأسئلة السريعة (Quiz البيئي) -->
+    <div class="card" style="background: linear-gradient(135deg, rgba(27,122,78,0.05), rgba(40,167,69,0.05)); border: 2px dashed var(--primary);">
+      <h3>🧠 مسابقة التحدي البيئي السريع (علوم الحياة والأرض)</h3>
+      <p id="quiz-question" style="font-weight: bold; font-size: 1.05rem; margin-top: 10px;">جاري تحميل السؤال...</p>
+      <div id="quiz-options-container"></div>
+      <p id="quiz-feedback" style="font-weight: bold; margin-top: 10px;"></p>
     </div>
   </section>
 
@@ -335,6 +392,15 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       <p>الأوسمة الشرفية التي تحصلت عليها بفضل مبادراتك الميدانية:</p>
       <div id="student-badges">
         <span class="badge-tag">🌱 صديق البيئة (تلقائي)</span>
+      </div>
+
+      <!-- بطاقة سفير البيئة القابلة للمشاركة والتنزيل -->
+      <div class="share-badge-card">
+        <h3>🌟 بطاقة سفير البيئة الرسمية</h3>
+        <p style="margin: 5px 0; font-size: 1.1rem;" id="card-student-name">تلميذ مشارك</p>
+        <div style="font-size: 1.3rem; font-weight: bold; color: #ffe082; margin: 8px 0;" id="card-student-rank">🌱 مستكشف ناشئ</div>
+        <p style="font-size: 0.9rem; margin: 0;">المدرسة الإعدادية بفائض | الأستاذ جلال ذويبي</p>
+        <button class="btn btn-gold" style="margin-top: 12px; color: #2c3e50;" onclick="window.print()">🖨️ طباعة البطاقة / حفظ كـ PDF</button>
       </div>
 
       <h3 style="margin-top:25px;">📊 ترتيب الأقسام الأكثر مبادرة بيئية:</h3>
@@ -391,9 +457,12 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
   <!-- فضاء الأستاذ المطور -->
   <section id="teacher-page" class="page">
     <div class="card">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
         <h2>🔒 لوحة الإشراف والمتابعة للأستاذ جلال ذويبي</h2>
-        <button class="btn btn-secondary" onclick="switchTab('home-page', document.querySelectorAll('nav button')[0])">خروج</button>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-gold" onclick="exportReportsCSV()">📥 تصدير تقارير الأقسام (CSV)</button>
+          <button class="btn btn-secondary" onclick="switchTab('home-page', document.querySelectorAll('nav button')[0])">خروج</button>
+        </div>
       </div>
 
       <!-- قسم نشر الملخصات الأسبوعية للأستاذ -->
@@ -404,8 +473,17 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
         <button class="btn btn-gold" onclick="publishTeacherSummary()">نشر الملخص على الصفحة الرئيسية</button>
       </div>
 
-      <h3>📥 مراجعة وموافقة مبادرات وتجارب التلاميذ:</h3>
-      <div id="teacher-pending-list" style="background:var(--card-bg); border:1px solid var(--border-color); padding:15px; border-radius:8px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; flex-wrap: wrap; gap: 10px;">
+        <h3>📥 مراجعة وموافقة مبادرات وتجارب التلاميذ:</h3>
+        <select id="filter-class-select" onchange="renderTeacherView()" style="padding: 6px 12px; border-radius: 6px; border: 1px solid #ccc;">
+          <option value="all">عرض كافة الأقسام والمستويات</option>
+          <option value="7 أساسي">مستوى 7 أساسي</option>
+          <option value="8 أساسي">مستوى 8 أساسي</option>
+          <option value="9 أساسي">مستوى 9 أساسي</option>
+        </select>
+      </div>
+
+      <div id="teacher-pending-list" style="background:var(--card-bg); border:1px solid var(--border-color); padding:15px; border-radius:8px; margin-top: 10px;">
         لا توجد مبادرات قيد الانتظار حالياً.
       </div>
     </div>
@@ -419,7 +497,6 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
     <p style="font-size: 0.9rem;">أنشئ ملصقاً جاهزاً للطباعة لتعليقه بجدران الإعدادية وقاعات الأستاذة:</p>
     <button class="btn btn-gold" onclick="generatePrintablePoster()">إنشاء ملصق الطباعة الآن</button>
     
-    <!-- معاينة الملصق -->
     <div id="poster-preview-container" style="display: none; margin-top: 15px; background: white; padding: 25px; border-radius: 8px; text-align: center; border: 3px double var(--primary);">
       <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary-dark);">المدرسة الإعدادية بفائض 🇹🇳</div>
       <p style="margin: 5px 0 15px 0; font-weight: bold;">امسح الكود للتصفح الفوري لمنصة البصمة البيئية (بدون تحميل)</p>
@@ -444,6 +521,42 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 let studentData = JSON.parse(localStorage.getItem('studentData_v7') || '{"name":"تلميذ مشارك","class":"7 أساسي","points":0,"badges":["🌱 صديق البيئة"]}');
 let fieldActions = JSON.parse(localStorage.getItem('fieldActions_v7') || '[]');
 let teacherSummaries = JSON.parse(localStorage.getItem('teacherSummaries_v7') || '[{"title":"إطلاق المشروع البيئي بالإعدادية","desc":"مرحباً بكافة التلاميذ في منصة البصمة البيئية. ننتظر مبادراتكم الميدانية في فرز النفايات والعناية بالحديقة المدرسية.","date":"09/11/2026"}]');
+
+// إشعارات Toast وتأثيرات الاحتفال Confetti
+function showToast(msg) {
+  let container = document.getElementById('toast-container');
+  let t = document.createElement('div');
+  t.className = 'toast-msg';
+  t.innerHTML = `✨ ${msg}`;
+  container.appendChild(t);
+  setTimeout(() => { t.remove(); }, 4000);
+}
+
+function triggerConfetti() {
+  for(let i=0; i<35; i++) {
+    let c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.backgroundColor = ['#28a745', '#f39c12', '#0077b6', '#e74c3c', '#9b59b6'][Math.floor(Math.random()*5)];
+    c.style.animationDuration = (Math.random() * 2 + 2) + 's';
+    document.body.appendChild(c);
+    setTimeout(() => { c.remove(); }, 3500);
+  }
+}
+
+// العداد التنازلي لتحدي الأسبوع
+function updateCountdown() {
+  let timerEl = document.getElementById('weekly-countdown');
+  if(!timerEl) return;
+  let now = new Date().getTime();
+  let target = now + (4 * 24 + 12) * 3600 * 1000; 
+  let diff = target - now;
+  let d = Math.floor(diff / (1000 * 60 * 60 * 24));
+  let h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  timerEl.innerText = `ينتهي خلال: ${d}ي ${h}س ${m}د`;
+}
+setInterval(updateCountdown, 60000);
 
 const ecoTips = [
   "💡 هل تعلم؟ تتطلب زجاجة بلاستيكية واحدة في الطبيعة أكثر من 450 سنة لتتحلل كلياً!",
@@ -472,6 +585,42 @@ const lessons = [
 ];
 let lessonIdx = 0;
 
+// مسابقة الأسئلة السريعة (Quiz البيئي)
+const quizData = [
+  { q: "ما هي المدة التقديرية لتحلل زجاجة بلاستيكية في الطبيعة؟", opts: ["أقل من سنة", "أكثر من 450 سنة", "10 سنوات"], ans: 1 },
+  { q: "ما هي الفائدة الأساسية من عملية الفرز الانتقائي للأوراق؟", opts: ["إنقاذ الأشجار وتوفير الطاقة", "زيادة التلوث", "لا فائدة منها"], ans: 0 },
+  { q: "أي من وسائل النقل التالية يعتبر الأكثر صداقة للبيئة؟", opts: ["السيارة الخاصة", "المشي أو الدراجة", "الشاحنة الكبيرة"], ans: 1 }
+];
+let currentQuizIdx = 0;
+
+function renderQuiz() {
+  let qObj = quizData[currentQuizIdx];
+  document.getElementById('quiz-question').innerText = `سؤال (${currentQuizIdx + 1}/${quizData.length}): ${qObj.q}`;
+  let container = document.getElementById('quiz-options-container');
+  container.innerHTML = qObj.opts.map((opt, idx) => `
+    <button class="quiz-option" onclick="checkQuizAnswer(${idx})">${opt}</button>
+  `).join('');
+  document.getElementById('quiz-feedback').innerText = "";
+}
+
+function checkQuizAnswer(selectedIdx) {
+  let qObj = quizData[currentQuizIdx];
+  let feedback = document.getElementById('quiz-feedback');
+  if(selectedIdx === qObj.ans) {
+    feedback.style.color = "var(--primary)";
+    feedback.innerText = "إجابة صحيحة ومتازة! (+10 نقاط)";
+    addPoints(10, "خبير المسابقة البيئية");
+    triggerConfetti();
+    setTimeout(() => {
+      currentQuizIdx = (currentQuizIdx + 1) % quizData.length;
+      renderQuiz();
+    }, 2000);
+  } else {
+    feedback.style.color = "var(--danger, #e74c3c)";
+    feedback.innerText = "إجابة خاطئة، حاول مرة أخرى في السؤال الموالي!";
+  }
+}
+
 function toggleDarkMode() {
   document.body.classList.toggle('dark-mode');
 }
@@ -489,6 +638,8 @@ function updateUI() {
   
   let rank = getStudentRank(studentData.points);
   document.getElementById('user-rank').innerText = rank;
+  document.getElementById('card-student-name').innerText = studentData.name + " (" + studentData.class + ")";
+  document.getElementById('card-student-rank').innerText = rank;
 
   document.getElementById('cert-pts').innerText = studentData.points;
   document.getElementById('cert-name').innerText = studentData.name;
@@ -516,7 +667,8 @@ function saveStudentProfile() {
     studentData.class = c;
     localStorage.setItem('studentData_v7', JSON.stringify(studentData));
     updateUI();
-    alert("تم حفظ بياناتك بنجاح في المنصة الوطنية!");
+    showToast("تم حفظ بياناتك بنجاح في المنصة الوطنية!");
+    triggerConfetti();
   } else {
     alert("يرجى إدخال الاسم والمستوى مع القسم بكامل الدقة.");
   }
@@ -560,6 +712,7 @@ function addPoints(pts, badgeName) {
   studentData.points += pts;
   if(badgeName && !studentData.badges.includes(badgeName)) {
     studentData.badges.push(badgeName);
+    showToast(`مبارك! حصلت على وسام جديد: ${badgeName}`);
   }
   localStorage.setItem('studentData_v7', JSON.stringify(studentData));
   updateUI();
@@ -585,6 +738,8 @@ function calculateEcoFootprint() {
   }
 
   addPoints(15, "خبير البصمة الكربونية");
+  triggerConfetti();
+  showToast("تم احتساب بصمتك بنجاح وأضيفت 15 نقطة لرصيدك!");
 }
 
 function renderChallenges() {
@@ -601,7 +756,8 @@ function renderChallenges() {
 
 function acceptChallenge(badge) {
   addPoints(15, badge);
-  alert("رائع جداً! تم تسجيل إنجازك للتحدي وحصولك على " + badge);
+  triggerConfetti();
+  showToast("رائع جداً! تم تسجيل إنجازك للتحدي.");
 }
 
 function submitFieldAction() {
@@ -647,12 +803,14 @@ function processFile(actionObj, fileInput) {
   
   fieldActions.push(actionObj);
   localStorage.setItem('fieldActions_v7', JSON.stringify(fieldActions));
-  addPoints(20, "سفير المبادرة والتقارير الميدانية");
+  addPoints(30, "سفير المبادرة والتقارير الميدانية");
+  triggerConfetti();
 
   document.getElementById('action-description').value = "";
   document.getElementById('action-image').value = "";
   document.getElementById('action-file').value = "";
-  document.getElementById('action-msg').innerText = "تم إرسال مبادرتك وتقريك بنجاح! وهي قيد المراجعة من طرف الأستاذ جلال لنشرها (+20 نقطة).";
+  document.getElementById('action-msg').innerText = "تم إرسال مبادرتك بنجاح ضمن تحدي الأسبوع (تحصلت على +30 نقطة)!";
+  showToast("تم إرسال المبادرة ومراجعتها قيد الاعتماد من الأستاذ.");
   updateUI();
 }
 
@@ -688,7 +846,7 @@ function publishTeacherSummary() {
   localStorage.setItem('teacherSummaries_v7', JSON.stringify(teacherSummaries));
   document.getElementById('teacher-summary-title').value = "";
   document.getElementById('teacher-summary-desc').value = "";
-  alert("تم نشر الملخص بنجاح على الصفحة الرئيسية!");
+  showToast("تم نشر الملخص بنجاح على الصفحة الرئيسية!");
   updateUI();
 }
 
@@ -760,6 +918,7 @@ function loginTeacher() {
     closeTeacherModal();
     renderTeacherView();
     switchTab('teacher-page', document.querySelectorAll('nav button')[7]);
+    showToast("أهلاً بك يا أستاذ جلال في لوحة التحكم الإدارية.");
   } else {
     alert("❌ كلمة السر خاطئة!");
   }
@@ -767,11 +926,18 @@ function loginTeacher() {
 
 function renderTeacherView() {
   let list = document.getElementById('teacher-pending-list');
-  if(fieldActions.length === 0) {
-    list.innerHTML = "لا توجد مبادرات أو تقارير مرسلة بعد.";
+  let filterVal = document.getElementById('filter-class-select').value;
+  
+  let filteredActions = fieldActions;
+  if(filterVal !== "all") {
+    filteredActions = fieldActions.filter(a => a.class.includes(filterVal));
+  }
+
+  if(filteredActions.length === 0) {
+    list.innerHTML = "لا توجد مبادرات أو تقارير مطابقة حالياً.";
     return;
   }
-  list.innerHTML = fieldActions.map(a => `
+  list.innerHTML = filteredActions.map(a => `
     <div style="border-bottom:1px solid var(--border-color); padding:12px 0; display:flex; gap:15px; align-items:center; flex-wrap:wrap;">
       ${a.image ? `<img src="${a.image}" style="width:70px; height:70px; object-fit:cover; border-radius:6px; border:1px solid #ccc;">` : '<div style="width:70px; height:70px; background:#eee; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:1.2rem;">📄</div>'}
       <div style="flex:1;">
@@ -788,6 +954,28 @@ function renderTeacherView() {
   `).join('');
 }
 
+// تصدير التقارير بصيغة CSV للأستاذ
+function exportReportsCSV() {
+  if(fieldActions.length === 0) {
+    alert("لا توجد بيانات مبادرات لتصديرها حالياً.");
+    return;
+  }
+  let csvContent = "\uFEFFالاسم واللقب,القسم,المحور البيئي,التفاصيل,الحالة,التاريخ\n";
+  fieldActions.forEach(a => {
+    let status = a.approved ? "معتمد" : "قيد الانتظار";
+    csvContent += `"${a.student}","${a.class}","${a.axis}","${a.desc.replace(/"/g, '""')}","${status}","${a.date}"\n`;
+  });
+  let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  let url = URL.createObjectURL(blob);
+  let link = document.createElement("a");
+  link.setAttribute("href", url);
+  link.setAttribute("download", "تقارير_البصمة_البيئية_اعدادية_فائض.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  showToast("تم تصدير ملف التقارير بنجاح!");
+}
+
 function approveAction(id) {
   let act = fieldActions.find(x => x.id === id);
   if(act) {
@@ -795,6 +983,7 @@ function approveAction(id) {
     localStorage.setItem('fieldActions_v7', JSON.stringify(fieldActions));
     renderTeacherView();
     updateUI();
+    showToast("تم تحديث حالة المبادرة بنجاح.");
   }
 }
 
@@ -804,16 +993,17 @@ function deleteAction(id) {
     localStorage.setItem('fieldActions_v7', JSON.stringify(fieldActions));
     renderTeacherView();
     updateUI();
+    showToast("تم حذف المشاركة بنجاح.");
   }
 }
 
-// تشغيل الوظائف الأساسية عند تحميل الصفحة
+// تشغيل الوظائف عند التحميل
 nextEcoTip();
 renderChallenges();
 stepLesson(0);
+renderQuiz();
 updateUI();
 
-// توليد رمز QR تلقائياً بناءً على رابط الصفحة الحالي
 try {
   new QRCode(document.getElementById("qrcode"), {
     text: window.location.href,
@@ -830,10 +1020,8 @@ try {
 function generatePrintablePoster() {
   let container = document.getElementById('poster-preview-container');
   let qrBox = document.getElementById('poster-qrcode');
-  
   container.style.display = "block";
   qrBox.innerHTML = "";
-  
   new QRCode(qrBox, {
     text: window.location.origin + window.location.pathname,
     width: 180,
@@ -842,8 +1030,7 @@ function generatePrintablePoster() {
     colorLight: "#ffffff",
     correctLevel: QRCode.CorrectLevel.H
   });
-  
-  alert("✨ تم إنشاء ملصق الطباعة بنجاح في فضاء الأستاذ! يمكنك الآن النقر على زر الطباعة.");
+  showToast("تم إنشاء ملصق الطباعة بنجاح في فضاء الأستاذ!");
 }
 </script>
 </body>

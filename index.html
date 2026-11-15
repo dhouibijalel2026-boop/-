@@ -139,11 +139,12 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 
 #qrcode, #poster-qrcode { display: flex; justify-content: center; margin: 15px 0; }
 
+/* إعدادات الطباعة المحسنة لعدم إجبار الشهادة على الظهور في كل مكان */
 @media print {
   header, nav, .no-print, .dark-toggle-btn { display: none !important; }
   body { background: white; color: black; }
   .page { display: none !important; }
-  #cert-page.page { display: block !important; }
+  .page.active { display: block !important; }
 }
 </style>
 </head>

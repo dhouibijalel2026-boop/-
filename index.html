@@ -97,13 +97,11 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
   background: #fffdf5; color: #2c3e50; border: 8px double #c5a059; padding: 30px; text-align: center; border-radius: 8px; margin-top: 15px;
 }
 
-/* بطاقة سفير البيئة القابلة للمشاركة */
 .share-badge-card {
   background: linear-gradient(135deg, #0f4c30, #1b7a4e); color: white; padding: 20px; border-radius: 16px;
   text-align: center; max-width: 420px; margin: 15px auto; border: 3px solid #f39c12; box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-/* عداد تحدي الأسبوع */
 .quest-banner {
   background: linear-gradient(90deg, #fff3cd, #ffeeba); color: #856404; border: 1px solid #ffeeba;
   padding: 15px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
@@ -112,7 +110,6 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
   background: #856404; color: #fff; padding: 6px 14px; border-radius: 8px; font-weight: bold; font-family: monospace; font-size: 1.05rem;
 }
 
-/* إشعارات Toast */
 #toast-container {
   position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px;
 }
@@ -122,7 +119,6 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 }
 @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-/* قصاصات الاحتفال Confetti */
 .confetti-piece {
   position: fixed; width: 10px; height: 10px; top: -10px; z-index: 9998; pointer-events: none;
   animation: fall 3s linear forwards;
@@ -137,9 +133,32 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 }
 .quiz-option:hover { background: rgba(27, 122, 78, 0.12); border-color: var(--primary); }
 
+/* تنسيقات الشجرة الافتراضية وخريطة المدرسة */
+.tree-stage-box {
+  background: linear-gradient(135deg, #e8f5e9, #f1f8e9); border: 2px solid var(--primary);
+  border-radius: 14px; padding: 20px; text-align: center;
+}
+.tree-visual {
+  font-size: 4.5rem; margin: 10px 0; transition: transform 0.4s ease; display: inline-block;
+}
+.tree-visual:hover { transform: scale(1.1); }
+
+.school-map-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 15px;
+}
+.map-zone {
+  background: var(--bg); border: 2px dashed var(--primary); border-radius: 10px; padding: 14px;
+  cursor: pointer; transition: 0.2s; text-align: center;
+}
+.map-zone:hover { background: rgba(27, 122, 78, 0.1); transform: translateY(-2px); }
+
+.podcast-item {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+  background: var(--bg); padding: 12px 15px; border-radius: 10px; border-right: 4px solid var(--accent); margin-bottom: 10px;
+}
+
 #qrcode, #poster-qrcode { display: flex; justify-content: center; margin: 15px 0; }
 
-/* إعدادات الطباعة المحسنة لعدم إجبار الشهادة على الظهور في كل مكان */
 @media print {
   header, nav, .no-print, .dark-toggle-btn { display: none !important; }
   body { background: white; color: black; }
@@ -238,6 +257,18 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       </div>
     </div>
 
+    <!-- 🌳 تحدي الشجرة الافتراضية التفاعلية (ميزة جديدة 1) -->
+    <div class="card tree-stage-box">
+      <h3 style="margin-top:0; color:var(--primary-dark);">🌳 شجرة القسم الافتراضية (تحدي النمو الأخضر)</h3>
+      <p style="font-size:0.95rem; margin-bottom:5px;">تنمو شجرتك وتزهر كلما أنجزت تحديات ومبادرات ميدانية جديدة!</p>
+      <div class="tree-visual" id="virtual-tree-icon">🌱</div>
+      <div style="font-weight:bold; font-size:1.1rem; color:var(--primary-dark);" id="virtual-tree-stage">المرحلة 1: بذرة الأمل (0 / 100 نقطة)</div>
+      <div class="progress-bar" style="max-width:450px; margin:10px auto; height:14px;">
+        <div class="progress-fill" id="virtual-tree-bar" style="width: 10%;"></div>
+      </div>
+      <small id="virtual-tree-hint" style="color:#555;">أنجز مبادرة أو أجب عن مسابقة الكويز لسقي الشجرة وتكبيرها!</small>
+    </div>
+
     <!-- بطاقة رمز الاستجابة السريعة QR Code ومعلومات الطمأنة -->
     <div class="card" style="text-align: center;">
       <h3>📱 امسح الكود بكاميرا هاتفك للتصفح الفوري</h3>
@@ -321,6 +352,31 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       <div class="grid-3" id="challenges-container"></div>
     </div>
 
+    <!-- 🗺️ خريطة التدخلات الميدانية بالإعدادية (ميزة جديدة 2) -->
+    <div class="card" style="border: 1px solid var(--primary);">
+      <h3>🗺️ خريطة التدخلات الميدانية بالمدرسة الإعدادية بفائض</h3>
+      <p style="font-size:0.9rem;">انقر على أي فضاء داخل الإعدادية لمعاينة خطة التدخل الميداني وتحديد موقع مبادرتك:</p>
+      <div class="school-map-grid">
+        <div class="map-zone" onclick="selectMapZone('الحديقة البيداغوجية والساحة 🌳', 'سقي النباتات بنظام التنقيط، غرس شتلات جديدة، وتنظيف المساحات الخضراء.')">
+          <div style="font-size:2rem;">🌳</div>
+          <strong>الحديقة البيداغوجية</strong><br><small>نقطة التشجير والسقي</small>
+        </div>
+        <div class="map-zone" onclick="selectMapZone('قاعات الدرس والإدارة ♻️', 'تثبيت صناديق الفرز الانتقائي للأوراق المستعملة والقوارير البلاستيكية.')">
+          <div style="font-size:2rem;">♻️</div>
+          <strong>قاعات الدرس</strong><br><small>نقطة الفرز الانتقائي</small>
+        </div>
+        <div class="map-zone" onclick="selectMapZone('المجموعة الصحية والحنفيات 💧', 'مراقبة الصنابير، الإبلاغ عن أي تسرب مائي، وتعليق ملصقات ترشيد الماء.')">
+          <div style="font-size:2rem;">💧</div>
+          <strong>نقاط المياه والحنفيات</strong><br><small>نقطة ترشيد الماء</small>
+        </div>
+        <div class="map-zone" onclick="selectMapZone('جدران الساحة والنادي 🎨', 'رسم جداريات توعوية وتدوير العجلات المطاطية إلى مقاعد وأصص جمالية.')">
+          <div style="font-size:2rem;">🎨</div>
+          <strong>ساحة الإعدادية</strong><br><small>التجميل والتدوير الفني</small>
+        </div>
+      </div>
+      <div id="map-zone-details" style="display:none; margin-top:12px; background:rgba(27,122,78,0.08); padding:12px; border-radius:8px; border-right:4px solid var(--primary);"></div>
+    </div>
+
     <div class="card">
       <h3>📝 إرسال مبادرة ميدانية، صورة، أو تقرير/بحث</h3>
       <select id="action-axis" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; margin-bottom:10px;">
@@ -357,6 +413,17 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       <small style="color: var(--primary-dark); font-weight: bold;">إنجاز: تلاميذ نادي علوم الحياة والأرض (السابعة والتاسعة أساسي)</small>
     </div>
 
+    <!-- 🎙️ ركن البودكاست والرسائل الصوتية التوعوية (ميزة جديدة 3) -->
+    <div class="card" style="border: 1px solid var(--accent);">
+      <h3>🎙️ إذاعة النادي البيئي (رسائل صوتية توعوية للتلاميذ)</h3>
+      <p style="font-size:0.9rem;">استمع إلى ومضات توعوية حول البيئة أو أضف رسالة صوتية قصيرة ليسمعها زملاؤك:</p>
+      <div id="podcast-list"></div>
+      <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
+        <input type="text" id="new-podcast-text" placeholder="اكتب نص رسالة توعوية قصيرة لتحويلها لبث صوتي..." style="flex:1; padding:8px; border-radius:6px; border:1px solid #ccc; min-width:220px;">
+        <button class="btn btn-gold" onclick="addNewPodcast()">➕ إضافة رسالة للإذاعة</button>
+      </div>
+    </div>
+
     <div class="card">
       <h2>📸 معرض الابتكارات والمشاريع الخضراء بالإعدادية</h2>
       <p>معرض المبادرات والأنشطة المعتمدة رسمياً من طرف الأستاذ جلال:</p>
@@ -377,10 +444,10 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       </div>
     </div>
 
-    <!-- مسابقة الأسئلة السريعة (Quiz البيئي) -->
+    <!-- مسابقة الأسئلة السريعة (Quiz البيئي التلقائي حسب الأسبوع) -->
     <div class="card" style="background: linear-gradient(135deg, rgba(27,122,78,0.05), rgba(40,167,69,0.05)); border: 2px dashed var(--primary);">
-      <h3>🧠 مسابقة التحدي البيئي السريع (علوم الحياة والأرض)</h3>
-      <p id="quiz-question" style="font-weight: bold; font-size: 1.05rem; margin-top: 10px;">جاري تحميل السؤال...</p>
+      <h3 id="quiz-section-title">🧠 مسابقة التحدي البيئي الأسبوعي المتجدد (علوم الحياة والأرض)</h3>
+      <p id="quiz-question" style="font-weight: bold; font-size: 1.05rem; margin-top: 10px;">جاري تحميل سؤال الأسبوع...</p>
       <div id="quiz-options-container"></div>
       <p id="quiz-feedback" style="font-weight: bold; margin-top: 10px;"></p>
     </div>
@@ -460,7 +527,8 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
     <div class="card">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
         <h2>🔒 لوحة الإشراف والمتابعة للأستاذ جلال ذويبي</h2>
-        <div style="display: flex; gap: 8px;">
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button class="btn btn-gold" onclick="syncOfflineData()">🔄 مزامنة الأعمال والملفات</button>
           <button class="btn btn-gold" onclick="exportReportsCSV()">📥 تصدير تقارير الأقسام (CSV)</button>
           <button class="btn btn-secondary" onclick="switchTab('home-page', document.querySelectorAll('nav button')[0])">خروج</button>
         </div>
@@ -473,11 +541,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
         <textarea id="teacher-summary-desc" placeholder="اكتب تفاصيل الملخص أو التوجيه هنا ليظهر في الصفحة الرئيسية..." style="width:100%; height:70px; padding:8px; margin-bottom:8px; border-radius:6px; border:1px solid #ccc;"></textarea>
         <button class="btn btn-gold" onclick="publishTeacherSummary()">نشر الملخص على الصفحة الرئيسية</button>
       </div>
-<div style="display: flex; gap: 8px; flex-wrap: wrap;">
-  <button class="btn btn-gold" onclick="syncOfflineData()">🔄 مزامنة الأعمال والملفات</button>
-  <button class="btn btn-gold" onclick="exportReportsCSV()">📥 تصدير تقارير الأقسام (CSV)</button>
-  <button class="btn btn-secondary" onclick="switchTab('home-page', document.querySelectorAll('nav button')[0])">خروج</button>
-</div>
+
       <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; flex-wrap: wrap; gap: 10px;">
         <h3>📥 مراجعة وموافقة مبادرات وتجارب التلاميذ:</h3>
         <select id="filter-class-select" onchange="renderTeacherView()" style="padding: 6px 12px; border-radius: 6px; border: 1px solid #ccc;">
@@ -526,6 +590,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 let studentData = JSON.parse(localStorage.getItem('studentData_v7') || '{"name":"تلميذ مشارك","class":"7 أساسي","points":0,"badges":["🌱 صديق البيئة"]}');
 let fieldActions = JSON.parse(localStorage.getItem('fieldActions_v7') || '[]');
 let teacherSummaries = JSON.parse(localStorage.getItem('teacherSummaries_v7') || '[{"title":"إطلاق المشروع البيئي بالإعدادية","desc":"مرحباً بكافة التلاميذ في منصة البصمة البيئية. ننتظر مبادراتكم الميدانية في فرز النفايات والعناية بالحديقة المدرسية.","date":"09/11/2026"}]');
+let podcastData = JSON.parse(localStorage.getItem('podcastData_v7') || '[{"id":1, "title":"🎙️ نصيحة الأسبوع: قطرة الماء صنبور الحياة","author":"نادي علوم الحياة والأرض"}]');
 
 // إشعارات Toast وتأثيرات الاحتفال Confetti
 function showToast(msg) {
@@ -612,42 +677,107 @@ const lessons = [
 ];
 let lessonIdx = 0;
 
-// مسابقة الأسئلة السريعة (Quiz البيئي)
-const quizData = [
-  { q: "ما هي المدة التقديرية لتحلل زجاجة بلاستيكية في الطبيعة؟", opts: ["أقل من سنة", "أكثر من 450 سنة", "10 سنوات"], ans: 1 },
-  { q: "ما هي الفائدة الأساسية من عملية الفرز الانتقائي للأوراق؟", opts: ["إنقاذ الأشجار وتوفير الطاقة", "زيادة التلوث", "لا فائدة منها"], ans: 0 },
-  { q: "أي من وسائل النقل التالية يعتبر الأكثر صداقة للبيئة؟", opts: ["السيارة الخاصة", "المشي أو الدراجة", "الشاحنة الكبيرة"], ans: 1 }
+// 🧠 بنك الأسئلة المتجدد تلقائياً حسب الأسبوع (ميزة 4)
+const weeklyQuizPool = [
+  [
+    { q: "ما هي المدة التقديرية لتحلل زجاجة بلاستيكية في الطبيعة؟", opts: ["أقل من سنة", "أكثر من 450 سنة", "10 سنوات"], ans: 1 },
+    { q: "ما هي الفائدة الأساسية من عملية الفرز الانتقائي للأوراق؟", opts: ["إنقاذ الأشجار وتوفير الطاقة", "زيادة التلوث", "لا فائدة منها"], ans: 0 },
+    { q: "أي من وسائل النقل التالية يعتبر الأكثر صداقة للبيئة؟", opts: ["السيارة الخاصة", "المشي أو الدراجة", "الشاحنة الكبيرة"], ans: 1 }
+  ],
+  [
+    { q: "ما هي نسبة المياه العذبة المتاحة للاستخدام البشري على سطح الأرض تقريباً؟", opts: ["حوالي 50%", "أقل من 3%", "90%"], ans: 1 },
+    { q: "أي من العمليات التالية تساهم في تثمين النفايات العضوية؟", opts: ["الكومبوست (السماد الطبيعي)", "الحرق العشوائي", "الرمي في الأنهار"], ans: 0 },
+    { q: "ما هو دور الغطاء النباتي في محيط المدرسة الإعدادية؟", opts: ["خفض الحرارة وتنقية الهواء", "زيادة التلوث", "لا دور له"], ans: 0 }
+  ]
 ];
+let currentQuizWeekIdx = 0;
 let currentQuizIdx = 0;
 
+function getWeeklyQuizData() {
+  let weekNum = Math.floor(Date.now() / (1000 * 60 * 60 * 24 * 7)) % weeklyQuizPool.length;
+  return weeklyQuizPool[weekNum];
+}
+
 function renderQuiz() {
-  let qObj = quizData[currentQuizIdx];
+  let qData = getWeeklyQuizData();
+  let qObj = qData[currentQuizIdx % qData.length];
   let qEl = document.getElementById('quiz-question');
   if(!qEl) return;
-  qEl.innerText = `سؤال (${currentQuizIdx + 1}/${quizData.length}): ${qObj.q}`;
+  qEl.innerText = `سؤال الأسبوع (${(currentQuizIdx % qData.length) + 1}/${qData.length}): ${qObj.q}`;
   let container = document.getElementById('quiz-options-container');
   container.innerHTML = qObj.opts.map((opt, idx) => `
-    <button class="quiz-option" onclick="checkQuizAnswer(${idx})">${opt}</button>
+    <button class="quiz-option" onclick="checkQuizAnswer(${idx}, ${qObj.ans}, ${qData.length})">${opt}</button>
   `).join('');
   document.getElementById('quiz-feedback').innerText = "";
 }
 
-function checkQuizAnswer(selectedIdx) {
-  let qObj = quizData[currentQuizIdx];
+function checkQuizAnswer(selectedIdx, correctAns, totalQ) {
   let feedback = document.getElementById('quiz-feedback');
-  if(selectedIdx === qObj.ans) {
+  if(selectedIdx === correctAns) {
     feedback.style.color = "var(--primary)";
-    feedback.innerText = "إجابة صحيحة ومتازة! (+10 نقاط)";
+    feedback.innerText = "إجابة صحيحة ومتازة! (+10 نقاط وسقي الشجرة الافتراضية)";
     addPoints(10, "خبير المسابقة البيئية");
     triggerConfetti();
     setTimeout(() => {
-      currentQuizIdx = (currentQuizIdx + 1) % quizData.length;
+      currentQuizIdx++;
       renderQuiz();
     }, 2000);
   } else {
     feedback.style.color = "var(--danger, #e74c3c)";
-    feedback.innerText = "إجابة خاطئة، حاول مرة أخرى في السؤال الموالي!";
+    feedback.innerText = "إجابة خاطئة، حاول مرة أخرى في الاختيارات أو السؤال الموالي!";
   }
+}
+
+// تفاعلات خريطة المدرسة الإعدادية
+function selectMapZone(title, desc) {
+  let box = document.getElementById('map-zone-details');
+  if(!box) return;
+  box.style.display = "block";
+  box.innerHTML = `<strong>📍 تفاصيل الفضاء: ${title}</strong><p style="margin:5px 0;">${desc}</p><small style="color:var(--primary);">💡 يمكنك توثيق مبادرتك في هذا الفضاء عبر نموذج الإرسال أسفل الخريطة مباشرة لتحصيل نقاط إضافية!</small>`;
+}
+
+// إدارة البودكاست الصوتي
+function renderPodcastList() {
+  let list = document.getElementById('podcast-list');
+  if(!list) return;
+  list.innerHTML = podcastData.map((p, idx) => `
+    <div class="podcast-item">
+      <div><strong>${p.title}</strong><br><small style="color:#666;">بواسطة: ${p.author}</small></div>
+      <button class="btn" style="padding:6px 14px; font-size:0.85rem;" onclick="playPodcastSpeech('${p.title}')">🔊 استماع للرسالة</button>
+    </div>
+  `).join('');
+}
+
+function playPodcastSpeech(text) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    let utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'ar-SA';
+    utterance.rate = 0.95;
+    window.speechSynthesis.speak(utterance);
+    showToast("🔊 جاري إذاعة الرسالة الصوتية التوعوية عبر المتصفح...");
+  } else {
+    alert("متصفحك لا يدعم خاصية القراءة الصوتية المدمجة.");
+  }
+}
+
+function addNewPodcast() {
+  let input = document.getElementById('new-podcast-text');
+  let txt = input ? input.value.trim() : "";
+  if(!txt) {
+    alert("يرجى كتابة نص الرسالة أولاً!");
+    return;
+  }
+  podcastData.unshift({
+    id: Date.now(),
+    title: `🎙️ ${txt}`,
+    author: studentData.name + " (" + studentData.class + ")"
+  });
+  localStorage.setItem('podcastData_v7', JSON.stringify(podcastData));
+  input.value = "";
+  renderPodcastList();
+  showToast("تمت إضافة رسالتك للإذاعة البيئية بنجاح!");
+  triggerConfetti();
 }
 
 function toggleDarkMode() {
@@ -659,6 +789,36 @@ function getStudentRank(pts) {
   if (pts >= 60) return "🌟 بطل إعدادية فائض الخضراء";
   if (pts >= 30) return "🛡️ حارس الطبيعة والموارد";
   return "🌱 مستكشف ناشئ";
+}
+
+// 🌳 تحديث مراحل الشجرة الافتراضية بصرياً
+function updateVirtualTree(pts) {
+  let icon = document.getElementById('virtual-tree-icon');
+  let stageText = document.getElementById('virtual-tree-stage');
+  let bar = document.getElementById('virtual-tree-bar');
+  let hint = document.getElementById('virtual-tree-hint');
+  if(!icon || !stageText || !bar) return;
+
+  let progressPct = Math.min(100, (pts / 100) * 100);
+  bar.style.width = progressPct + '%';
+
+  if (pts >= 100) {
+    icon.innerHTML = "🌸🌳✨";
+    stageText.innerText = "المرحلة 4: الشجرة المثمرة والمزهرة (أكملت التحدي بامتياز!)";
+    hint.innerText = "أنت نموذج وطني رائع في العناية بالبيئة المدرسية!";
+  } else if (pts >= 60) {
+    icon.innerHTML = "🌳🌿";
+    stageText.innerText = "المرحلة 3: شجرة فتية نامية (" + pts + " / 100 نقطة)";
+    hint.innerText = "تنمو شجرتك باستمرار بفضل مبادراتك الميدانية!";
+  } else if (pts >= 30) {
+    icon.innerHTML = "🌿🌱";
+    stageText.innerText = "المرحلة 2: نبتة خضراء متسلقة (" + pts + " / 100 نقطة)";
+    hint.innerText = "جيد جداً! واصل إنجاز التحديات لسقي الشجرة.";
+  } else {
+    icon.innerHTML = "🌱";
+    stageText.innerText = "المرحلة 1: بذرة الأمل البيئي (" + pts + " / 100 نقطة)";
+    hint.innerText = "أنجز مبادرة أو أجب عن الكويز لسقي الشجرة وتكبيرها!";
+  }
 }
 
 function updateUI() {
@@ -693,10 +853,12 @@ function updateUI() {
   let statActions = document.getElementById('stat-actions');
   if(statActions) statActions.innerText = fieldActions.length + " مبادرة";
 
+  updateVirtualTree(studentData.points);
   renderLeaderboard();
   renderClassRanking();
   renderApprovedGallery();
   renderTeacherSummariesOnHome();
+  renderPodcastList();
 }
 
 function saveStudentProfile() {
@@ -798,7 +960,7 @@ function renderChallenges() {
 function acceptChallenge(badge) {
   addPoints(15, badge);
   triggerConfetti();
-  showToast("رائع جداً! تم تسجيل إنجازك للتحدي.");
+  showToast("رائع جداً! تم تسجيل إنجازك للتحدي وسقي الشجرة الافتراضية.");
 }
 
 function submitFieldAction() {
@@ -1045,7 +1207,7 @@ function deleteAction(id) {
   }
 }
 
-// تشغيل الوظائف عند التحميل وضمان توليد الـ QR بشكل مستقل وآمن
+// تشغيل الوظائف عند التحميل وضمان توليد الـ QR ودعم أوفلاين
 window.addEventListener('DOMContentLoaded', () => {
   nextEcoTip();
   renderChallenges();

@@ -106,6 +106,10 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
   background: linear-gradient(90deg, #fff3cd, #ffeeba); color: #856404; border: 1px solid #ffeeba;
   padding: 15px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
 }
+.eco-event-banner {
+  background: linear-gradient(90deg, #e0f7fa, #e8f5e9); color: #004d40; border: 2px solid #26a69a;
+  padding: 14px 18px; border-radius: 12px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+}
 .timer-box {
   background: #856404; color: #fff; padding: 6px 14px; border-radius: 8px; font-weight: bold; font-family: monospace; font-size: 1.05rem;
 }
@@ -133,7 +137,6 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 }
 .quiz-option:hover { background: rgba(27, 122, 78, 0.12); border-color: var(--primary); }
 
-/* تنسيقات الشجرة الافتراضية وخريطة المدرسة */
 .tree-stage-box {
   background: linear-gradient(135deg, #e8f5e9, #f1f8e9); border: 2px solid var(--primary);
   border-radius: 14px; padding: 20px; text-align: center;
@@ -155,6 +158,22 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 .podcast-item {
   display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
   background: var(--bg); padding: 12px 15px; border-radius: 10px; border-right: 4px solid var(--accent); margin-bottom: 10px;
+}
+
+/* تنسيقات جواز السفر البيئي وصندوق المقترحات */
+.passport-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 12px;
+}
+.stamp-card {
+  border: 2px dashed #bdc3c7; border-radius: 12px; padding: 14px 10px; text-align: center;
+  background: var(--bg); opacity: 0.65; transition: 0.3s;
+}
+.stamp-card.unlocked {
+  border: 2px solid var(--primary); background: rgba(40, 167, 69, 0.12); opacity: 1; transform: scale(1.02);
+}
+.idea-item {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+  background: var(--bg); padding: 12px 15px; border-radius: 10px; border-right: 4px solid var(--primary); margin-bottom: 10px;
 }
 
 #qrcode, #poster-qrcode { display: flex; justify-content: center; margin: 15px 0; }
@@ -180,11 +199,11 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 
 <nav class="no-print">
   <button class="active" onclick="switchTab('home-page', this)">🏡 الرئيسة</button>
-  <button onclick="switchTab('calc-page', this)">🧮 حاسبة البصمة البيئية</button>
-  <button onclick="switchTab('action-page', this)">🌱 المبادرة والتقارير</button>
-  <button onclick="switchTab('gallery-page', this)">📸 معرض الابتكارات</button>
+  <button onclick="switchTab('calc-page', this)">🧮 الحاسبة والمختبر</button>
+  <button onclick="switchTab('action-page', this)">🌱 المبادرات والأفكار</button>
+  <button onclick="switchTab('gallery-page', this)">📸 المعرض والموسوعة</button>
   <button onclick="switchTab('learn-page', this)">📘 المسار والمسابقة</button>
-  <button onclick="switchTab('honor-page', this)">🏆 لوحة الشرف والأقسام</button>
+  <button onclick="switchTab('honor-page', this)">🏆 الجواز ولوحة الشرف</button>
   <button onclick="switchTab('cert-page', this)">🏅 الشهادة الوطنية</button>
   <button class="teacher-btn" onclick="openTeacherModal()">🔒 فضاء الأستاذ</button>
 </nav>
@@ -193,14 +212,23 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
   <!-- الصفحة الرئيسية -->
   <section id="home-page" class="page active">
     
-    <!-- واجهة الاستكشاف الفوري ورسائل الأمان والطمأنة -->
+    <!-- 📅 شريط أجندة الأيام العالمية للبيئة (تنبيه ذكي تلقائي) -->
+    <div class="eco-event-banner no-print" id="eco-calendar-banner">
+      <div>
+        <strong id="eco-event-title">📅 أجندة المناسبات البيئية: متابعة مستمرة طوال السنة الدراسية</strong><br>
+        <small id="eco-event-desc">كل يوم في المدرسة الإعدادية بفائض هو فرصة لحماية الطبيعة وترشيد الموارد.</small>
+      </div>
+      <span style="background: #00695c; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: bold;" id="eco-event-date">تاريخ اليوم</span>
+    </div>
+
+    <!-- واجهة الاستكشاف الفوري -->
     <div class="card" style="background: linear-gradient(135deg, rgba(27,122,78,0.08), rgba(243,156,18,0.08)); border: 2px solid var(--primary);">
       <div style="text-align: center; padding: 10px;">
         <h2 style="color: var(--primary-dark); font-size: 1.8rem; margin-top: 0;">🌿 أهلاً بك في منصة البصمة البيئية للإعدادية بفائض</h2>
         <p style="font-size: 1.05rem; margin: 10px 0;">تطبيق تربوي تفاعلي لعلوم الحياة والأرض. <strong>تصفح واستكشف مباشرة عبر المتصفح بكل أمان ودون الحاجة لتنزيل أي ملفات أو برامج!</strong> 🛡️</p>
         <div style="margin-top: 15px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-          <button class="btn" style="font-size: 1rem; padding: 12px 22px;" onclick="switchTab('calc-page', document.querySelectorAll('nav button')[1])">🧮 ابدأ باحتساب بصمتك الآن</button>
-          <button class="btn btn-gold" style="font-size: 1rem; padding: 12px 22px;" onclick="switchTab('action-page', document.querySelectorAll('nav button')[2])">🚀 شارك بمبادرتك الميدانية</button>
+          <button class="btn" style="font-size: 1rem; padding: 12px 22px;" onclick="switchTab('calc-page', document.querySelectorAll('nav button')[1])">🔬 مختبر التشخيص وحاسبة البصمة</button>
+          <button class="btn btn-gold" style="font-size: 1rem; padding: 12px 22px;" onclick="switchTab('action-page', document.querySelectorAll('nav button')[2])">🚀 شارك بمبادرتك أو فكرتك</button>
         </div>
       </div>
     </div>
@@ -238,10 +266,14 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       </div>
     </div>
 
-    <!-- 📊 لوحة البيانات الإحصائية الحية للإعدادية -->
+    <!-- 📊 لوحة البيانات الإحصائية الحية ومؤشر جودة البيئة بالإعدادية -->
     <div class="card" style="background: linear-gradient(135deg, #ffffff, #f9fbe7); border: 1px solid var(--primary-light);">
-      <h3>📊 الأثر البيئي الحي للمدرسة الإعدادية بفائض</h3>
+      <h3>📊 الأثر البيئي الحي ومؤشر جودة البيئة بالإعدادية بفائض</h3>
       <div style="display: flex; justify-content: space-around; flex-wrap: wrap; text-align: center; gap: 15px; margin-top: 15px;">
+        <div style="background: white; padding: 12px 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); flex: 1; min-width: 140px;">
+          <div style="font-size: 1.6rem; font-weight: bold; color: #2e7d32;" id="stat-quality-index">85% ممتازة</div>
+          <small>مؤشر جودة البيئة 🔬</small>
+        </div>
         <div style="background: white; padding: 12px 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); flex: 1; min-width: 140px;">
           <div style="font-size: 1.6rem; font-weight: bold; color: var(--primary);" id="stat-paper">0 كغ</div>
           <small>أوراق تم جمعها وفرزها ♻️</small>
@@ -269,7 +301,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       <small id="virtual-tree-hint" style="color:#555;">أنجز مبادرة أو أجب عن مسابقة الكويز لسقي الشجرة وتكبيرها!</small>
     </div>
 
-    <!-- بطاقة رمز الاستجابة السريعة QR Code ومعلومات الطمأنة -->
+    <!-- بطاقة رمز الاستجابة السريعة QR Code -->
     <div class="card" style="text-align: center;">
       <h3>📱 امسح الكود بكاميرا هاتفك للتصفح الفوري</h3>
       <p style="color: #555; font-size: 0.9rem;">المنصة تعمل مباشرة أونلاين على متصفح هاتفك أو حاسوبك (بدون تحميل أو تثبيت برامج خارجية 🌐🔒)</p>
@@ -303,8 +335,42 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
     </div>
   </section>
 
-  <!-- حاسبة البصمة البيئية -->
+  <!-- حاسبة البصمة البيئية + مختبر التشخيص البيئي -->
   <section id="calc-page" class="page">
+    <!-- 🔬 مختبر التشخيص البيئي (مفتش التلوث المدرسي) -->
+    <div class="card" style="border: 2px solid #26a69a; background: rgba(38, 166, 154, 0.04);">
+      <h2>🔬 مختبر التشخيص البيئي (مفتش جودة البيئة بالإعدادية)</h2>
+      <p>قم بدور المحقق البيئي وقيّم حالة فضاءات الإعدادية اليوم لتحديث <strong>مؤشر جودة البيئة</strong>:</p>
+      <div class="grid-3">
+        <div>
+          <label><strong>نظافة الساحة والمساحات الخضراء:</strong></label>
+          <select id="diag-yard" style="width:100%; padding:8px; margin-top:5px; border-radius:6px;">
+            <option value="35">نظيفة جداً وخالية من البلاستيك (35/35)</option>
+            <option value="20">تحتاج لبعض التنظيف (20/35)</option>
+            <option value="10">تتطلب تدخلاً عاجلاً (10/35)</option>
+          </select>
+        </div>
+        <div>
+          <label><strong>حالة الصنابير وترشيد المياه:</strong></label>
+          <select id="diag-water" style="width:100%; padding:8px; margin-top:5px; border-radius:6px;">
+            <option value="35">مغلقة بإحكام ولا يوجد تسرب (35/35)</option>
+            <option value="20">استهلاك متوسط (20/35)</option>
+            <option value="5">يوجد تسرب أو هدر للماء (5/35)</option>
+          </select>
+        </div>
+        <div>
+          <label><strong>الفرز الانتقائي في القاعات:</strong></label>
+          <select id="diag-sort" style="width:100%; padding:8px; margin-top:5px; border-radius:6px;">
+            <option value="30">مفعّل ومنظم في الحاويات (30/30)</option>
+            <option value="15">مفعّل جزئياً (15/30)</option>
+            <option value="5">غير مفعّل حالياً (5/30)</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn" style="margin-top:15px;" onclick="submitEcoDiagnosis()">📊 اعتماد نتيجة التشخيص وتحديث المؤشر (+15 نقطة)</button>
+      <div id="diag-result" style="display:none; margin-top:12px; padding:12px; border-radius:8px; background:white; border-right:4px solid #26a69a;"></div>
+    </div>
+
     <div class="card">
       <h2>🧮 مرصد البصمة البيئية الشخصية للتلميذ</h2>
       <p>أجب عن الأسئلة اليومية البسيطة التالية لاحتساب بصمتك البيئية:</p>
@@ -344,7 +410,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
     </div>
   </section>
 
-  <!-- التحديات والمساهمة الميدانية -->
+  <!-- التحديات والمساهمة الميدانية + صندوق الأفكار الخضراء -->
   <section id="action-page" class="page">
     <div class="card">
       <h2>🚀 التحديات والمبادرات الميدانية (من التعلم إلى الفعل)</h2>
@@ -403,14 +469,39 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       <button class="btn" onclick="submitFieldAction()">إرسال المبادرة والملفات للأستاذ (+30 نقطة تحدي الأسبوع)</button>
       <p id="action-msg" style="color:var(--primary); font-weight:bold; margin-top:10px;"></p>
     </div>
+
+    <!-- 💬 ركن مقترحات التلاميذ (صندوق الأفكار الخضراء) -->
+    <div class="card" style="border: 1px solid var(--accent); background: rgba(243, 156, 18, 0.04);">
+      <h3>💬 صندوق الأفكار الخضراء (مقترحات وتصويت التلاميذ)</h3>
+      <p style="font-size:0.9rem;">هل لديك فكرة لتحسين بيئة إعداديتك أو لاحظت مشكلة تحتاج لحل؟ اطرحها هنا ليصوّت عليها زملاؤك:</p>
+      <div style="display:flex; gap:8px; margin-bottom:15px; flex-wrap:wrap;">
+        <input type="text" id="new-idea-input" placeholder="مثال: توفير حاويات فرز إضافية أمام قاعات العلوم..." style="flex:1; padding:9px; border-radius:6px; border:1px solid #ccc; min-width:220px;">
+        <button class="btn btn-gold" onclick="addStudentIdea()">💡 طرح الفكرة للتصويت</button>
+      </div>
+      <div id="student-ideas-list"></div>
+    </div>
   </section>
 
-  <!-- معرض الابتكارات الخضراء -->
+  <!-- معرض الابتكارات + موسوعة التنوع البيولوجي بالإعدادية -->
   <section id="gallery-page" class="page">
     <div class="card" style="background: linear-gradient(135deg, #fffdf0, #e8f5e9); border: 2px solid var(--accent);">
       <h3>🌟 ركن «مُبتكر إعدادية فائض» لهذا الشهر</h3>
       <p><strong>المشروع المميز:</strong> نظام السقي بالتنقيط الذكي باستخدام القوارير البلاستيكية المعاد تدويرها في الحديقة البيداغوجية.</p>
       <small style="color: var(--primary-dark); font-weight: bold;">إنجاز: تلاميذ نادي علوم الحياة والأرض (السابعة والتاسعة أساسي)</small>
+    </div>
+
+    <!-- 🌿 موسوعة النباتات والكائنات الحية بالإعدادية (دليل التنوع البيولوجي) -->
+    <div class="card" style="border: 1px solid var(--primary);">
+      <h3>🌿 موسوعة التنوع البيولوجي بالإعدادية (دليل النباتات والكائنات الحية)</h3>
+      <p style="font-size:0.9rem;">وثّق الكائنات الحية الموجودة في الحديقة البيداغوجية ومحيط الإعدادية لإثراء الأرشيف العلمي:</p>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:15px; background:var(--bg); padding:12px; border-radius:8px;">
+        <input type="text" id="bio-name" placeholder="اسم الكائن الحي (مثال: شجرة الزيتون / النحلة)" style="flex:1; padding:8px; border-radius:6px; border:1px solid #ccc; min-width:160px;">
+        <input type="text" id="bio-type" placeholder="التصنيف (نبات معمر / حشرة ملقحة...)" style="flex:1; padding:8px; border-radius:6px; border:1px solid #ccc; min-width:150px;">
+        <input type="text" id="bio-notes" placeholder="دوره البيئي وملاحظات علمية..." style="flex:2; padding:8px; border-radius:6px; border:1px solid #ccc; min-width:200px;">
+        <input type="file" id="bio-image" accept="image/*" style="padding:6px; border:1px solid #ccc; border-radius:6px; background:white;">
+        <button class="btn" onclick="addBioEntry()">➕ إضافة للموسوعة (+15 نقطة)</button>
+      </div>
+      <div class="gallery-grid" id="biodiversity-grid"></div>
     </div>
 
     <!-- 🎙️ ركن البودكاست والرسائل الصوتية التوعوية -->
@@ -453,8 +544,16 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
     </div>
   </section>
 
-  <!-- لوحة الشرف وتنافس الأقسام -->
+  <!-- جواز السفر البيئي + لوحة الشرف وتنافس الأقسام -->
   <section id="honor-page" class="page">
+    <!-- 🪪 جواز السفر البيئي الرقمي (الأختام الخمسة) -->
+    <div class="card" style="border: 2px solid var(--primary); background: linear-gradient(135deg, #ffffff, #f1f8e9);">
+      <h2>🪪 جواز السفر البيئي الرقمي للتلميذ</h2>
+      <p>أكمل المهام الميدانية المختلفة لجمع الأختام الخمسة والحصول تلقائياً على <strong>وسام سفير البيئة المعتمد</strong>:</p>
+      <div class="passport-grid" id="passport-stamps-grid"></div>
+      <div id="passport-status-msg" style="margin-top: 12px; font-weight: bold; color: var(--primary-dark); text-align: center;"></div>
+    </div>
+
     <div class="card">
       <h2>🏆 لوحة الشرف وتنافسية الأقسام بالإعدادية</h2>
       <p>الأوسمة الشرفية التي تحصلت عليها بفضل مبادراتك الميدانية:</p>
@@ -534,6 +633,16 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
         </div>
       </div>
 
+      <!-- 🔑 إعدادات تغيير كلمة سر الأستاذ مباشرة من المنصة -->
+      <div style="background: rgba(52, 73, 94, 0.08); padding: 15px; border-radius: 10px; margin: 20px 0; border-right: 4px solid #34495e;">
+        <h3 style="margin-top:0;">🔑 تغيير كلمة سر فضاء الأستاذ</h3>
+        <p style="font-size:0.88rem; margin-bottom:10px;">يمكنك تعيين كلمة سر خاصة بك تُحفظ مباشرة في المتصفح دون الحاجة لتعديل الكود المصدري:</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <input type="password" id="new-teacher-pass" placeholder="أدخل كلمة السر الجديدة (4 أحرف على الأقل)..." style="flex:1; padding:8px; border-radius:6px; border:1px solid #ccc; min-width:220px;">
+          <button class="btn" style="background:#34495e;" onclick="changeTeacherPassword()">💾 حفظ كلمة السر الجديدة</button>
+        </div>
+      </div>
+
       <!-- قسم نشر الملخصات الأسبوعية للأستاذ -->
       <div style="background: rgba(40,167,69,0.06); padding: 15px; border-radius: 10px; margin: 20px 0;">
         <h3>✍️ نشر ملخص أو توجيه جديد لنشاط النادي</h3>
@@ -585,10 +694,17 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 </div>
 
 <script>
-let studentData = JSON.parse(localStorage.getItem('studentData_v7') || '{"name":"تلميذ مشارك","class":"7 أساسي","points":0,"badges":["🌱 صديق البيئة"]}');
+let studentData = JSON.parse(localStorage.getItem('studentData_v7') || '{"name":"تلميذ مشارك","class":"7 أساسي","points":0,"badges":["🌱 صديق البيئة"],"stamps":[]}');
+if(!studentData.stamps) studentData.stamps = [];
+
 let fieldActions = JSON.parse(localStorage.getItem('fieldActions_v7') || '[]');
 let teacherSummaries = JSON.parse(localStorage.getItem('teacherSummaries_v7') || '[{"title":"إطلاق المشروع البيئي بالإعدادية","desc":"مرحباً بكافة التلاميذ في منصة البصمة البيئية. ننتظر مبادراتكم الميدانية في فرز النفايات والعناية بالحديقة المدرسية.","date":"09/11/2026"}]');
 let podcastData = JSON.parse(localStorage.getItem('podcastData_v7') || '[{"id":1, "title":"🎙️ نصيحة الأسبوع: قطرة الماء صنبور الحياة","author":"نادي علوم الحياة والأرض"}]');
+let schoolQualityScore = parseInt(localStorage.getItem('schoolQualityScore_v7') || '85');
+
+let studentIdeas = JSON.parse(localStorage.getItem('studentIdeas_v7') || '[{"id":1, "text":"توفير حاويات فرز انتقائي للأوراق أمام قاعات علوم الحياة والأرض", "author":"تلاميذ 7 أساسي", "votes":14}, {"id":2, "text":"تنظيم حملة غرس شتلات زيتون ونباتات عطرية في ساحة الإعدادية", "author":"نادي البيئة", "votes":19}]');
+
+let biodiversityData = JSON.parse(localStorage.getItem('biodiversityData_v7') || '[{"id":1, "name":"شجرة الزيتون (Olea europaea)", "type":"نبات معمر مثمر", "notes":"رمز الصمود في البيئة التونسية، تساهم في تثبيت التربة وتنقية الهواء.", "image":null, "emoji":"🫒🌳"}, {"id":2, "name":"نحلة العسل (Apis mellifera)", "type":"حشرة ملقحة", "notes":"دور أساسي في تأبير أزهار الحديقة البيداغوجية والحفاظ على التوازن البيئي.", "image":null, "emoji":"🐝🌼"}]');
 
 // إشعارات Toast وتأثيرات الاحتفال Confetti
 function showToast(msg) {
@@ -610,6 +726,210 @@ function triggerConfetti() {
     c.style.animationDuration = (Math.random() * 2 + 2) + 's';
     document.body.appendChild(c);
     setTimeout(() => { c.remove(); }, 3500);
+  }
+}
+
+// 📅 أجندة الأيام العالمية والوطنية للبيئة
+function updateEcoCalendar() {
+  let now = new Date();
+  let m = now.getMonth() + 1;
+  let d = now.getDate();
+  let dateStr = now.toLocaleDateString('ar-TN');
+  let dateEl = document.getElementById('eco-event-date');
+  if(dateEl) dateEl.innerText = dateStr;
+
+  let titleEl = document.getElementById('eco-event-title');
+  let descEl = document.getElementById('eco-event-desc');
+  if(!titleEl || !descEl) return;
+
+  if(m === 11) {
+    titleEl.innerText = "🌳 مناسبة وطنية: العيد الوطني للشجرة في الجمهورية التونسية (نوفمبر)";
+    descEl.innerText = "شهر التشجير والعناية بالحديقة البيداغوجية في المدرسة الإعدادية بفائض! شارك بغرس شتلة.";
+  } else if(m === 3 && d >= 18 && d <= 25) {
+    titleEl.innerText = "💧 مناسبة عالمية: اليوم العالمي للمياه (22 مارس)";
+    descEl.innerText = "تحدي ترشيد استهلاك الماء وحماية الموارد المائية بالإعدادية.";
+  } else if(m === 4 && d >= 18 && d <= 25) {
+    titleEl.innerText = "🌍 مناسبة عالمية: يوم الأرض العالمي (22 أفريل)";
+    descEl.innerText = "معاً لحماية كوكبنا وتقليص البصمة الكربونية والنفايات البلاستيكية.";
+  } else if(m === 6 && d >= 1 && d <= 8) {
+    titleEl.innerText = "🌿 مناسبة عالمية: اليوم العالمي للبيئة (5 جوان)";
+    descEl.innerText = "تتويج حصاد السنة الدراسية ومبادرات تلاميذ الإعدادية بفائض.";
+  } else {
+    titleEl.innerText = "📅 أجندة المناسبات البيئية: متابعة مستمرة طوال السنة الدراسية";
+    descEl.innerText = "كل يوم في المدرسة الإعدادية بفائض هو فرصة لحماية الطبيعة وترشيد الموارد.";
+  }
+}
+
+// 🔬 مختبر التشخيص البيئي
+function submitEcoDiagnosis() {
+  let y = parseInt(document.getElementById('diag-yard').value);
+  let w = parseInt(document.getElementById('diag-water').value);
+  let s = parseInt(document.getElementById('diag-sort').value);
+  let total = y + w + s;
+
+  schoolQualityScore = Math.round((schoolQualityScore + total) / 2);
+  localStorage.setItem('schoolQualityScore_v7', schoolQualityScore);
+
+  let resBox = document.getElementById('diag-result');
+  resBox.style.display = "block";
+  let statusLabel = total >= 80 ? "ممتازة 🌟" : (total >= 55 ? "متوسطة تحتاج لتحسين 💡" : "حرجة تتطلب تدخلاً عاجلاً ⚠️");
+  resBox.innerHTML = `<strong>نتيجة تشخيص اليوم: ${total}% (${statusLabel})</strong><br><small>تم تحديث مؤشر جودة البيئة بالإعدادية في الصفحة الرئيسية بنجاح.</small>`;
+
+  unlockStamp('diagnosis');
+  addPoints(15, "محقق الجودة البيئية");
+  triggerConfetti();
+  showToast("تم تسجيل تقرير التشخيص وتحديث مؤشر الإعدادية!");
+}
+
+// 💬 صندوق الأفكار الخضراء (التصويت والاقتراح)
+function renderStudentIdeas() {
+  let list = document.getElementById('student-ideas-list');
+  if(!list) return;
+  let sorted = [...studentIdeas].sort((a, b) => b.votes - a.votes);
+  list.innerHTML = sorted.map(idea => `
+    <div class="idea-item">
+      <div style="flex:1;">
+        <strong>💡 ${idea.text}</strong><br>
+        <small style="color:#666;">مقترح من: ${idea.author}</small>
+      </div>
+      <button class="btn" style="padding:6px 14px; font-size:0.85rem;" onclick="voteStudentIdea(${idea.id})">👍 أدعم الفكرة (${idea.votes})</button>
+    </div>
+  `).join('');
+}
+
+function addStudentIdea() {
+  let input = document.getElementById('new-idea-input');
+  let txt = input ? input.value.trim() : "";
+  if(!txt) {
+    alert("يرجى كتابة فكرتك أو مقترحك أولاً!");
+    return;
+  }
+  studentIdeas.unshift({
+    id: Date.now(),
+    text: txt,
+    author: studentData.name + " (" + studentData.class + ")",
+    votes: 1
+  });
+  localStorage.setItem('studentIdeas_v7', JSON.stringify(studentIdeas));
+  input.value = "";
+  renderStudentIdeas();
+  addPoints(10, "صاحب فكرة خضراء");
+  showToast("تم نشر مقترحك في صندوق الأفكار الخضراء!");
+}
+
+function voteStudentIdea(id) {
+  let idea = studentIdeas.find(x => x.id === id);
+  if(idea) {
+    idea.votes++;
+    localStorage.setItem('studentIdeas_v7', JSON.stringify(studentIdeas));
+    renderStudentIdeas();
+    showToast("تم تسجيل دعمك للفكرة! 👍");
+  }
+}
+
+// 🌿 موسوعة التنوع البيولوجي بالإعدادية
+function renderBiodiversity() {
+  let grid = document.getElementById('biodiversity-grid');
+  if(!grid) return;
+  grid.innerHTML = biodiversityData.map(b => `
+    <div class="gallery-card" style="padding-bottom:10px;">
+      ${b.image ? `<img src="${b.image}" alt="${b.name}">` : `<div style="font-size:3.5rem; background:#e8f5e9; padding:22px;">${b.emoji || '🌿🔬'}</div>`}
+      <p style="color:var(--primary-dark); font-size:1rem; padding-bottom:4px;">${b.name}</p>
+      <span class="badge-tag" style="font-size:0.75rem;">${b.type}</span>
+      <div style="padding:6px 10px; font-size:0.82rem; color:#555;">${b.notes}</div>
+    </div>
+  `).join('');
+}
+
+function addBioEntry() {
+  let name = document.getElementById('bio-name').value.trim();
+  let type = document.getElementById('bio-type').value.trim();
+  let notes = document.getElementById('bio-notes').value.trim();
+  let imgInput = document.getElementById('bio-image');
+
+  if(!name || !type) {
+    alert("يرجى إدخال اسم الكائن الحي وتصنيفه على الأقل!");
+    return;
+  }
+
+  let entry = {
+    id: Date.now(),
+    name: name,
+    type: type,
+    notes: notes || "تم رصده في محيط المدرسة الإعدادية بفائض.",
+    image: null,
+    emoji: "🌱🦋"
+  };
+
+  if(imgInput.files && imgInput.files[0]) {
+    let reader = new FileReader();
+    reader.onload = function(e) {
+      entry.image = e.target.result;
+      saveBioEntry(entry);
+    };
+    reader.readAsDataURL(imgInput.files[0]);
+  } else {
+    saveBioEntry(entry);
+  }
+}
+
+function saveBioEntry(entry) {
+  biodiversityData.unshift(entry);
+  localStorage.setItem('biodiversityData_v7', JSON.stringify(biodiversityData));
+  document.getElementById('bio-name').value = "";
+  document.getElementById('bio-type').value = "";
+  document.getElementById('bio-notes').value = "";
+  document.getElementById('bio-image').value = "";
+  renderBiodiversity();
+  unlockStamp('biodiversity');
+  addPoints(15, "مستكشف التنوع البيولوجي");
+  triggerConfetti();
+  showToast("تمت إضافة الكائن الحي إلى موسوعة الإعدادية!");
+}
+
+// 🪪 جواز السفر البيئي الرقمي (الأختام الخمسة)
+const passportStampsList = [
+  { key: 'calc', icon: '🧮', title: 'ختم البصمة', desc: 'احتساب البصمة البيئية' },
+  { key: 'diagnosis', icon: '🔬', title: 'ختم التشخيص', desc: 'فحص جودة بيئة الإعدادية' },
+  { key: 'action', icon: '🚀', title: 'ختم المبادرة', desc: 'إرسال مبادرة ميدانية' },
+  { key: 'biodiversity', icon: '🌿', title: 'ختم التنوع', desc: 'توثيق كائن حي بالموسوعة' },
+  { key: 'quiz', icon: '🧠', title: 'ختم المعرفة', desc: 'اجتياز مسابقة الكويز' }
+];
+
+function unlockStamp(key) {
+  if(!studentData.stamps) studentData.stamps = [];
+  if(!studentData.stamps.includes(key)) {
+    studentData.stamps.push(key);
+    localStorage.setItem('studentData_v7', JSON.stringify(studentData));
+    if(studentData.stamps.length === 5) {
+      addPoints(25, "🏅 سفير البيئة المعتمد (اكتمل جواز السفر)");
+      triggerConfetti();
+      showToast("🎉 مبروك! أكملت كافة أختام جواز السفر البيئي!");
+    }
+  }
+  renderPassport();
+}
+
+function renderPassport() {
+  let grid = document.getElementById('passport-stamps-grid');
+  let msg = document.getElementById('passport-status-msg');
+  if(!grid) return;
+  let unlocked = studentData.stamps || [];
+  grid.innerHTML = passportStampsList.map(s => {
+    let isDone = unlocked.includes(s.key);
+    return `
+      <div class="stamp-card ${isDone ? 'unlocked' : ''}">
+        <div style="font-size:2.2rem;">${isDone ? s.icon + ' ✅' : s.icon}</div>
+        <strong>${s.title}</strong><br>
+        <small style="font-size:0.78rem;">${s.desc}</small>
+      </div>
+    `;
+  }).join('');
+
+  if(msg) {
+    msg.innerText = unlocked.length === 5
+      ? "🏆 تهانينا! جواز سفرك البيئي مكتمل (5 / 5 أختام) — أنت سفير البيئة المعتمد!"
+      : `رصيد الأختام المجمعة: ${unlocked.length} من 5 أختام (أكمل المهام لفتح جميع الأختام)`;
   }
 }
 
@@ -713,6 +1033,7 @@ function checkQuizAnswer(selectedIdx, correctAns, totalQ) {
   if(selectedIdx === correctAns) {
     feedback.style.color = "var(--primary)";
     feedback.innerText = "إجابة صحيحة وممتازة! (+10 نقاط وسقي الشجرة الافتراضية)";
+    unlockStamp('quiz');
     addPoints(10, "خبير المسابقة البيئية");
     triggerConfetti();
     setTimeout(() => {
@@ -842,6 +1163,12 @@ function updateUI() {
   let badgesDiv = document.getElementById('student-badges');
   if(badgesDiv) badgesDiv.innerHTML = studentData.badges.map(b => `<span class="badge-tag">🏆 ${b}</span>`).join('');
 
+  let qualityEl = document.getElementById('stat-quality-index');
+  if(qualityEl) {
+    let qLabel = schoolQualityScore >= 80 ? "ممتازة" : (schoolQualityScore >= 55 ? "متوسطة" : "تحتاج تدخلاً");
+    qualityEl.innerText = `${schoolQualityScore}% ${qLabel}`;
+  }
+
   let approvedCount = fieldActions.filter(a => a.approved).length;
   let statPaper = document.getElementById('stat-paper');
   if(statPaper) statPaper.innerText = (approvedCount * 12 + 15) + " كغ";
@@ -856,6 +1183,9 @@ function updateUI() {
   renderApprovedGallery();
   renderTeacherSummariesOnHome();
   renderPodcastList();
+  renderStudentIdeas();
+  renderBiodiversity();
+  renderPassport();
 }
 
 function saveStudentProfile() {
@@ -888,7 +1218,7 @@ function askEcoAssistant() {
   setTimeout(() => {
     let lowerQ = queryInput.toLowerCase();
     let scientificAnalysis = "🔬 <strong>التحليل العلمي البيئي:</strong> كل سلوك بشري يومي يخلق بصمة بيئية تؤثر مباشرة على استدامة الموارد للأجيال القادمة.";
-    let fieldAction = "💡 <strong>الحل الميداني المقترح:</strong> حول هذا التساؤل إلى مشروع مبادرة ميدانية صغيرة داخل قسمك وقم بتوثيقها في تبويب «المبادرة والتقارير»!";
+    let fieldAction = "💡 <strong>الحل الميداني المقترح:</strong> حول هذا التساؤل إلى مشروع مبادرة ميدانية صغيرة داخل قسمك وقم بتوثيقها في تبويب «المبادرات والأفكار»!";
 
     if(lowerQ.includes("بلاستيك") || lowerQ.includes("أكياس") || lowerQ.includes("نفايات")) {
       scientificAnalysis = "🔬 <strong>التحليل العلمي:</strong> البلاستيك مادة غير قابلة للتحلل الحيوي بسهولة، مما يتسبب في تلوث التربة وتدمير السلاسل الغذائية.";
@@ -936,6 +1266,7 @@ function calculateEcoFootprint() {
     adviceText.innerText = "حاول الاقتصاد أكثر في استعمال المياه وشارك في مبادرات الفرز الانتقائي بالنوادي المدرسية.";
   }
 
+  unlockStamp('calc');
   addPoints(15, "خبير البصمة الكربونية");
   triggerConfetti();
   showToast("تم احتساب بصمتك بنجاح وأضيفت 15 نقطة لرصيدك!");
@@ -1003,6 +1334,7 @@ function processFile(actionObj, fileInput) {
   
   fieldActions.push(actionObj);
   localStorage.setItem('fieldActions_v7', JSON.stringify(fieldActions));
+  unlockStamp('action');
   addPoints(30, "سفير المبادرة والتقارير الميدانية");
   triggerConfetti();
 
@@ -1117,9 +1449,14 @@ function switchTab(id, btn) {
 function openTeacherModal() { document.getElementById('teacherModal').style.display = 'flex'; }
 function closeTeacherModal() { document.getElementById('teacherModal').style.display = 'none'; }
 
+// 🔑 تسجيل الدخول وتغيير كلمة سر الأستاذ من الواجهة
 function loginTeacher() {
   let p = document.getElementById('teacherPass').value;
-  if(p === "svt456789" || p === "1234" || p === "فائض") {
+  let customPass = localStorage.getItem('teacherPass_v7');
+  let isValid = customPass ? (p === customPass) : (p === "svt456789" || p === "1234" || p === "فائض");
+
+  if(isValid) {
+    document.getElementById('teacherPass').value = "";
     closeTeacherModal();
     renderTeacherView();
     switchTab('teacher-page', document.querySelectorAll('nav button')[7]);
@@ -1127,6 +1464,17 @@ function loginTeacher() {
   } else {
     alert("❌ كلمة السر خاطئة!");
   }
+}
+
+function changeTeacherPassword() {
+  let newP = document.getElementById('new-teacher-pass').value.trim();
+  if(newP.length < 4) {
+    alert("يرجى إدخال كلمة سر جديدة تتكون من 4 أحرف أو أرقام على الأقل!");
+    return;
+  }
+  localStorage.setItem('teacherPass_v7', newP);
+  document.getElementById('new-teacher-pass').value = "";
+  showToast("✅ تم تحديث وحفظ كلمة سر فضاء الأستاذ بنجاح!");
 }
 
 function renderTeacherView() {
@@ -1206,6 +1554,7 @@ function deleteAction(id) {
 
 // تشغيل الوظائف عند التحميل وضمان توليد الـ QR ودعم أوفلاين
 window.addEventListener('DOMContentLoaded', () => {
+  updateEcoCalendar();
   nextEcoTip();
   renderChallenges();
   stepLesson(0);

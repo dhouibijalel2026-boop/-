@@ -257,7 +257,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       </div>
     </div>
 
-    <!-- 🌳 تحدي الشجرة الافتراضية التفاعلية (ميزة جديدة 1) -->
+    <!-- 🌳 تحدي الشجرة الافتراضية التفاعلية -->
     <div class="card tree-stage-box">
       <h3 style="margin-top:0; color:var(--primary-dark);">🌳 شجرة القسم الافتراضية (تحدي النمو الأخضر)</h3>
       <p style="font-size:0.95rem; margin-bottom:5px;">تنمو شجرتك وتزهر كلما أنجزت تحديات ومبادرات ميدانية جديدة!</p>
@@ -352,7 +352,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       <div class="grid-3" id="challenges-container"></div>
     </div>
 
-    <!-- 🗺️ خريطة التدخلات الميدانية بالإعدادية (ميزة جديدة 2) -->
+    <!-- 🗺️ خريطة التدخلات الميدانية بالإعدادية -->
     <div class="card" style="border: 1px solid var(--primary);">
       <h3>🗺️ خريطة التدخلات الميدانية بالمدرسة الإعدادية بفائض</h3>
       <p style="font-size:0.9rem;">انقر على أي فضاء داخل الإعدادية لمعاينة خطة التدخل الميداني وتحديد موقع مبادرتك:</p>
@@ -413,7 +413,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       <small style="color: var(--primary-dark); font-weight: bold;">إنجاز: تلاميذ نادي علوم الحياة والأرض (السابعة والتاسعة أساسي)</small>
     </div>
 
-    <!-- 🎙️ ركن البودكاست والرسائل الصوتية التوعوية (ميزة جديدة 3) -->
+    <!-- 🎙️ ركن البودكاست والرسائل الصوتية التوعوية -->
     <div class="card" style="border: 1px solid var(--accent);">
       <h3>🎙️ إذاعة النادي البيئي (رسائل صوتية توعوية للتلاميذ)</h3>
       <p style="font-size:0.9rem;">استمع إلى ومضات توعوية حول البيئة أو أضف رسالة صوتية قصيرة ليسمعها زملاؤك:</p>
@@ -555,26 +555,24 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
       <div id="teacher-pending-list" style="background:var(--card-bg); border:1px solid var(--border-color); padding:15px; border-radius:8px; margin-top: 10px;">
         لا توجد مبادرات قيد الانتظار حالياً.
       </div>
+
+      <!-- 🖨️ مولد ملصقات الـ QR الرسمية للطباعة (حصرياً في فضاء الأستاذ) -->
+      <div style="background: rgba(243, 156, 18, 0.08); padding: 15px; border-radius: 10px; margin-top: 25px; border: 1px dashed var(--accent);" class="no-print">
+        <h3>🖨️ مولد ملصقات الـ QR الرسمية للطباعة</h3>
+        <p style="font-size: 0.9rem;">أنشئ ملصقاً جاهزاً للطباعة لتعليقه بجدران الإعدادية وقاعات الأساتذة:</p>
+        <button class="btn btn-gold" onclick="generatePrintablePoster()">إنشاء ملصق الطباعة الآن</button>
+        
+        <div id="poster-preview-container" style="display: none; margin-top: 15px; background: white; padding: 25px; border-radius: 8px; text-align: center; border: 3px double var(--primary);">
+          <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary-dark);">المدرسة الإعدادية بفائض 🇹🇳</div>
+          <p style="margin: 5px 0 15px 0; font-weight: bold;">امسح الكود للتصفح الفوري لمنصة البصمة البيئية (بدون تحميل)</p>
+          <div id="poster-qrcode"></div>
+          <p style="font-size: 0.85rem; color: #666; margin-top: 10px;">إشراف الأستاذ: جلال ذويبي (علوم الحياة والأرض)</p>
+          <button class="btn" style="margin-top: 15px;" onclick="printPosterOnly()">🖨️ طباعة هذا الملصق فوراً</button>
+        </div>
+      </div>
     </div>
   </section>
 </main>
-
-<!-- 🖨️ مولد ملصقات الـ QR للطباعة -->
-<div style="max-width: 1080px; margin: 0 auto; padding: 0 15px;">
-  <div style="background: rgba(243, 156, 18, 0.08); padding: 15px; border-radius: 10px; margin: 20px 0; border: 1px dashed var(--accent);" class="no-print">
-    <h3>🖨️ مولد ملصقات الـ QR الرسمية للطباعة</h3>
-    <p style="font-size: 0.9rem;">أنشئ ملصقاً جاهزاً للطباعة لتعليقه بجدران الإعدادية وقاعات الأستاذة:</p>
-    <button class="btn btn-gold" onclick="generatePrintablePoster()">إنشاء ملصق الطباعة الآن</button>
-    
-    <div id="poster-preview-container" style="display: none; margin-top: 15px; background: white; padding: 25px; border-radius: 8px; text-align: center; border: 3px double var(--primary);">
-      <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary-dark);">المدرسة الإعدادية بفائض 🇹🇳</div>
-      <p style="margin: 5px 0 15px 0; font-weight: bold;">امسح الكود للتصفح الفوري لمنصة البصمة البيئية (بدون تحميل)</p>
-      <div id="poster-qrcode"></div>
-      <p style="font-size: 0.85rem; color: #666; margin-top: 10px;">إشراف الأستاذ: جلال ذويبي (علوم الحياة والأرض)</p>
-      <button class="btn" style="margin-top: 15px;" onclick="printPosterOnly()">🖨️ طباعة هذا الملصق فوراً</button>
-    </div>
-  </div>
-</div>
 
 <!-- Modal الأستاذ -->
 <div id="teacherModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; justify-content:center; align-items:center;">
@@ -677,7 +675,7 @@ const lessons = [
 ];
 let lessonIdx = 0;
 
-// 🧠 بنك الأسئلة المتجدد تلقائياً حسب الأسبوع (ميزة 4)
+// 🧠 بنك الأسئلة المتجدد تلقائياً حسب الأسبوع
 const weeklyQuizPool = [
   [
     { q: "ما هي المدة التقديرية لتحلل زجاجة بلاستيكية في الطبيعة؟", opts: ["أقل من سنة", "أكثر من 450 سنة", "10 سنوات"], ans: 1 },
@@ -690,7 +688,6 @@ const weeklyQuizPool = [
     { q: "ما هو دور الغطاء النباتي في محيط المدرسة الإعدادية؟", opts: ["خفض الحرارة وتنقية الهواء", "زيادة التلوث", "لا دور له"], ans: 0 }
   ]
 ];
-let currentQuizWeekIdx = 0;
 let currentQuizIdx = 0;
 
 function getWeeklyQuizData() {
@@ -715,7 +712,7 @@ function checkQuizAnswer(selectedIdx, correctAns, totalQ) {
   let feedback = document.getElementById('quiz-feedback');
   if(selectedIdx === correctAns) {
     feedback.style.color = "var(--primary)";
-    feedback.innerText = "إجابة صحيحة ومتازة! (+10 نقاط وسقي الشجرة الافتراضية)";
+    feedback.innerText = "إجابة صحيحة وممتازة! (+10 نقاط وسقي الشجرة الافتراضية)";
     addPoints(10, "خبير المسابقة البيئية");
     triggerConfetti();
     setTimeout(() => {
@@ -740,10 +737,10 @@ function selectMapZone(title, desc) {
 function renderPodcastList() {
   let list = document.getElementById('podcast-list');
   if(!list) return;
-  list.innerHTML = podcastData.map((p, idx) => `
+  list.innerHTML = podcastData.map((p) => `
     <div class="podcast-item">
       <div><strong>${p.title}</strong><br><small style="color:#666;">بواسطة: ${p.author}</small></div>
-      <button class="btn" style="padding:6px 14px; font-size:0.85rem;" onclick="playPodcastSpeech('${p.title}')">🔊 استماع للرسالة</button>
+      <button class="btn" style="padding:6px 14px; font-size:0.85rem;" onclick="playPodcastSpeech('${p.title.replace(/'/g, "\\'")}')">🔊 استماع للرسالة</button>
     </div>
   `).join('');
 }

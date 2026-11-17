@@ -225,7 +225,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
     <div class="card" style="background: linear-gradient(135deg, rgba(27,122,78,0.08), rgba(243,156,18,0.08)); border: 2px solid var(--primary);">
       <div style="text-align: center; padding: 10px;">
         <h2 style="color: var(--primary-dark); font-size: 1.8rem; margin-top: 0;">🌿 أهلاً بك في منصة البصمة البيئية للإعدادية بفائض</h2>
-        <p style="font-size: 1.05rem; margin: 10px 0;">تطبيق تربوي تفاعلي لعلوم الحياة والأرض. <strong>تصفح واستكشف مباشرة عبر المتصفح بكل أمان ودون الحاجة لتنزيل أي ملفات أو برامج!</strong> 🛡️</p>
+        <p style="font-size: 1.05rem; margin: 10px 0;">تطبيق تربوي تفاعلي للبيئة. <strong>تصفح واستكشف مباشرة عبر المتصفح بكل أمان ودون الحاجة لتنزيل أي ملفات أو برامج!</strong> 🛡️</p>
         <div style="margin-top: 15px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
           <button class="btn" style="font-size: 1rem; padding: 12px 22px;" onclick="switchTab('calc-page', document.querySelectorAll('nav button')[1])">🔬 مختبر التشخيص وحاسبة البصمة</button>
           <button class="btn btn-gold" style="font-size: 1rem; padding: 12px 22px;" onclick="switchTab('action-page', document.querySelectorAll('nav button')[2])">🚀 شارك بمبادرتك أو فكرتك</button>
@@ -318,14 +318,14 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 
     <!-- بطاقة هل تعلم البيئية -->
     <div class="card" style="background: linear-gradient(135deg, rgba(40,167,69,0.08), rgba(243,156,18,0.08)); border: 1px solid var(--primary-light);">
-      <h3>💡 هل تعلم؟ (ومضات علوم الحياة والأرض)</h3>
+      <h3>💡 هل تعلم؟ (ومضات بيئية)</h3>
       <p id="eco-tip-text" style="font-size: 1.05rem; font-weight: bold; color: var(--primary-dark);">جاري تحميل المعلومة البيئية...</p>
       <button class="btn btn-secondary" style="padding: 5px 12px; font-size: 0.8rem;" onclick="nextEcoTip()">معلومة أخرى 🔄</button>
     </div>
 
     <!-- مساعد البيئة الذكي المطور -->
     <div class="card">
-      <h3>🤖 مساعد البيئة الذكي للإعدادية (خبير علوم الحياة والأرض)</h3>
+      <h3>🤖 مساعد البيئة الذكي للإعدادية (خبير البيئة)</h3>
       <p>اكتب أي تساؤل بيئي وسيقدم لك المساعد تحليلاً علمياً وحلاً ميدانياً:</p>
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
         <input type="text" id="ai-query" placeholder="مثال: كيف نقلل من استهلاك البلاستيك في الإعدادية؟" style="padding:10px; border-radius:8px; border:1px solid #ccc; flex:1; min-width:250px;">
@@ -487,7 +487,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
     <div class="card" style="background: linear-gradient(135deg, #fffdf0, #e8f5e9); border: 2px solid var(--accent);">
       <h3>🌟 ركن «مُبتكر إعدادية فائض» لهذا الشهر</h3>
       <p><strong>المشروع المميز:</strong> نظام السقي بالتنقيط الذكي باستخدام القوارير البلاستيكية المعاد تدويرها في الحديقة البيداغوجية.</p>
-      <small style="color: var(--primary-dark); font-weight: bold;">إنجاز: تلاميذ نادي علوم الحياة والأرض (السابعة والتاسعة أساسي)</small>
+      <small style="color: var(--primary-dark); font-weight: bold;">إنجاز: تلاميذ نادي البيئة (السابعة والتاسعة أساسي)</small>
     </div>
 
     <!-- 🌿 موسوعة النباتات والكائنات الحية بالإعدادية (دليل التنوع البيولوجي) -->
@@ -537,7 +537,7 @@ main { max-width: 1080px; margin: 25px auto; padding: 0 15px 50px; }
 
     <!-- مسابقة الأسئلة السريعة (Quiz البيئي التلقائي حسب الأسبوع) -->
     <div class="card" style="background: linear-gradient(135deg, rgba(27,122,78,0.05), rgba(40,167,69,0.05)); border: 2px dashed var(--primary);">
-      <h3 id="quiz-section-title">🧠 مسابقة التحدي البيئي الأسبوعي المتجدد (علوم الحياة والأرض)</h3>
+      <h3 id="quiz-section-title">🧠 مسابقة التحدي البيئي الأسبوعي المتجدد </h3>
       <p id="quiz-question" style="font-weight: bold; font-size: 1.05rem; margin-top: 10px;">جاري تحميل سؤال الأسبوع...</p>
       <div id="quiz-options-container"></div>
       <p id="quiz-feedback" style="font-weight: bold; margin-top: 10px;"></p>
@@ -689,7 +689,7 @@ if(!studentData.stamps) studentData.stamps = [];
 
 let fieldActions = JSON.parse(localStorage.getItem('fieldActions_v7') || '[]');
 let teacherSummaries = JSON.parse(localStorage.getItem('teacherSummaries_v7') || '[{"title":"إطلاق المشروع البيئي بالإعدادية","desc":"مرحباً بكافة التلاميذ في منصة البصمة البيئية. ننتظر مبادراتكم الميدانية في فرز النفايات والعناية بالحديقة المدرسية.","date":"09/11/2026"}]');
-let podcastData = JSON.parse(localStorage.getItem('podcastData_v7') || '[{"id":1, "title":"🎙️ نصيحة الأسبوع: قطرة الماء صنبور الحياة","author":"نادي علوم الحياة والأرض"}]');
+let podcastData = JSON.parse(localStorage.getItem('podcastData_v7') || '[{"id":1, "title":"🎙️ نصيحة الأسبوع: قطرة الماء صنبور الحياة","author":"نادي البيئة"}]');
 let schoolQualityScore = parseInt(localStorage.getItem('schoolQualityScore_v7') || '85');
 
 let studentIdeas = JSON.parse(localStorage.getItem('studentIdeas_v7') || '[{"id":1, "text":"توفير حاويات فرز انتقائي للأوراق أمام قاعات علوم الحياة والأرض", "author":"تلاميذ 7 أساسي", "votes":14}, {"id":2, "text":"تنظيم حملة غرس شتلات زيتون ونباتات عطرية في ساحة الإعدادية", "author":"نادي البيئة", "votes":19}]');
@@ -1203,7 +1203,7 @@ function askEcoAssistant() {
   }
 
   replyBox.style.display = "block";
-  replyBox.innerHTML = "⏳ <em>جاري تحليل السؤال علمياً وميدانياً عبر خبير علوم الحياة والأرض...</em>";
+  replyBox.innerHTML = "⏳ <em>جاري تحليل السؤال علمياً وميدانياً عبر خبير البيئة...</em>";
 
   setTimeout(() => {
     let lowerQ = queryInput.toLowerCase();
